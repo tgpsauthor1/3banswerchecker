@@ -1,0 +1,132 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mass and Volume Check</title>
+<style>
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.35;margin:16px;color:#222}
+h1{font-size:18px;margin:0 0 14px}
+h2{font-size:16px;margin:18px 0 8px}
+.q{margin:10px 0;padding:10px 12px;border:1px solid #ddd;border-radius:8px}
+.row{margin:6px 0}
+.tag{font-size:12px;color:#555;margin-right:6px;display:none}
+.units{margin:0 2px}
+input.answer{font-size:18px;padding:6px 10px;width:9ch;border:2px solid #999;border-radius:6px;outline:none}
+input.answer.wrong{background:#ffd9d9;border-color:#c44}
+input.answer.correct{background:#c9f7c5;border-color:#2a8a2a}
+.small{width:6ch}
+.med{width:8ch}
+.large{width:10ch}
+.controls{margin-top:12px}
+button{padding:6px 10px;border:1px solid #999;background:#f3f3f3;border-radius:6px;cursor:pointer}
+.subnote{font-size:12px;color:#777}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+
+<div class="q">
+<h2>8. Write in kilograms and grams.</h2>
+
+
+<div class="row">
+8(a)
+<input class="answer med" data-ans="2000" inputmode="numeric"> <span class="units">g</span> +
+<input class="answer med" data-ans="760" inputmode="numeric"> <span class="units">g</span>
+</div>
+<div class="row">
+=
+<input class="answer small" data-ans="2" inputmode="numeric"> <span class="units">kg</span>
+<input class="answer med" data-ans="760" inputmode="numeric"> <span class="units">g</span>
+</div>
+
+
+<div class="row">
+8(b)
+<input class="answer small" data-ans="5" inputmode="numeric"> <span class="units">kg</span>
+<input class="answer small" data-ans="6" inputmode="numeric"> <span class="units">g</span>
+</div>
+
+
+<div class="row">
+8(c)
+<input class="answer small" data-ans="4" inputmode="numeric"> <span class="units">kg</span>
+<input class="answer med" data-ans="64" inputmode="numeric"> <span class="units">g</span>
+</div>
+
+
+<div class="row">
+8(d)
+<input class="answer small" data-ans="3" inputmode="numeric"> <span class="units">kg</span>
+<input class="answer large" data-ans="859" inputmode="numeric"> <span class="units">g</span>
+</div>
+</div>
+
+
+<div class="q">
+<h2>9. Find the volume of water in each beaker.</h2>
+
+
+<div class="row">
+9(a)
+<input class="answer med" data-ans="700" inputmode="numeric"> <span class="units">ml</span>
+</div>
+
+
+<div class="row">
+9(b)
+<input class="answer med" data-ans="650" inputmode="numeric"> <span class="units">ml</span>
+</div>
+</div>
+
+
+<div class="controls">
+<button type="button" id="reset">Reset all</button>
+<span class="subnote">Type the number only. Units are already shown.</span>
+</div>
+
+
+<script>
+(function(){
+const inputs=[...document.querySelectorAll('input.answer')];
+const isNum=(v)=>/^[-+]?\d+(\.\d+)?$/.test(v);
+function normalize(v){return v.trim();}
+
+
+function sameNumeric(a,b){
+if(!isNum(a)||!isNum(b)) return false;
+return Number(a)==Number(b);
+}
+
+
+function check(el){
+const val=normalize(el.value);
+const ans=el.dataset.ans;
+if(val===""){el.classList.remove('correct','wrong');return;}
+// Allow multiple acceptable answers separated by |
+const options=ans.split('|').map(s=>s.trim());
+let ok=false;
+for(const opt of options){
+if(isNum(opt) && isNum(val)){ if(sameNumeric(val,opt)){ ok=true; break; } }
+else if(val.toLowerCase()===opt.toLowerCase()){ ok=true; break; }
+}
+el.classList.toggle('correct',ok);
+el.classList.toggle('wrong',!ok);
+}
+
+
+inputs.forEach(el=>{
+el.addEventListener('input',()=>check(el));
+el.addEventListener('blur',()=>check(el));
+});
+
+
+document.getElementById('reset').addEventListener('click',()=>{
+inputs.forEach(i=>{i.value='';i.classList.remove('correct','wrong');});
+inputs[0]?.focus();
+});
+})();
+</script>
+</body>
+</html>

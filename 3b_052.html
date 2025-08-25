@@ -1,0 +1,103 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Compare and order the heights — Self-check</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;margin:16px;color:#111}
+h1{font-size:18px;margin:0 0 14px}
+.q{margin:12px 0}
+.q label{display:block;margin-bottom:6px;font-weight:600}
+.inputs{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input[type=text]{padding:8px 10px;font-size:16px;width:160px;border:2px solid #888;border-radius:6px;outline:0}
+input.num{width:110px}
+input.ok{background:#c7f5c4;border-color:#2e7d32}
+input.bad{background:#ffc9c9;border-color:#c62828}
+small{color:#555}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="q">
+  <label for="qa">Q(a): Merlion is how many metres shorter than Changi Airport Control Tower?</label>
+  <div class="inputs">
+    <input id="qa" class="num" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="enter m" aria-label="Field for Question a" data-answer="43">
+    <small>Type the number of metres.</small>
+  </div>
+</div>
+
+<div class="q">
+  <label for="qb">Q(b): Supertree Grove is how many metres taller than the Merlion?</label>
+  <div class="inputs">
+    <input id="qb" class="num" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="enter m" aria-label="Field for Question b" data-answer="13">
+    <small>Type the number of metres.</small>
+  </div>
+</div>
+
+<div class="q">
+  <label for="qc">Q(c): Changi Airport Control Tower is how many metres taller than Supertree Grove?</label>
+  <div class="inputs">
+    <input id="qc" class="num" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="enter m" aria-label="Field for Question c" data-answer="30">
+    <small>Type the number of metres.</small>
+  </div>
+</div>
+
+<div class="q">
+  <label>Q(d): Arrange the structures according to their heights (shortest to tallest).</label>
+  <div class="inputs">
+    <input id="qd1" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="1st (shortest)" aria-label="Field for Question d, first place" data-type="text" data-answer="Merlion">
+    <span>,</span>
+    <input id="qd2" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="2nd" aria-label="Field for Question d, second place" data-type="text" data-answer="Supertree Grove">
+    <span>,</span>
+    <input id="qd3" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="3rd (tallest)" aria-label="Field for Question d, third place" data-type="text" data-answer="Changi Airport Control Tower">
+  </div>
+  <small>Answers can be in lowercase.</small>
+</div>
+
+<script>
+(function(){
+  const norm=t=>t.toLowerCase().replace(/\s+/g,' ').trim();
+
+  function paint(el,ok){
+    el.classList.remove('ok','bad');
+    if(!el.value.trim()){ return; }
+    el.classList.add(ok?'ok':'bad');
+  }
+
+  function checkSimple(el){
+    const expected=el.dataset.answer||'';
+    const isText = el.dataset.type==='text';
+    let ok=false;
+    if(isText){
+      ok = norm(el.value)===norm(expected);
+    }else{
+      const n = el.value.trim().replace(/[^\d-]/g,'');
+      ok = n!=='' && Number(n)===Number(expected);
+    }
+    paint(el,ok);
+  }
+
+  // Optional fraction support: pair inputs with data-frac, data-num, data-den
+  function checkFraction(groupName){
+    const parts=[...document.querySelectorAll('input[data-frac="'+groupName+'"]')];
+    if(parts.length!==2) return;
+    const numEl=parts.find(p=>p.dataset.part==='num');
+    const denEl=parts.find(p=>p.dataset.part==='den');
+    const numOk = numEl.value.trim()!=='' && Number(numEl.value.trim())===Number(numEl.dataset.num);
+    const denOk = denEl.value.trim()!=='' && Number(denEl.value.trim())===Number(denEl.dataset.den);
+    const ok = numOk && denOk;
+    paint(numEl,ok); paint(denEl,ok);
+  }
+
+  document.querySelectorAll('input[data-answer]').forEach(el=>{
+    el.addEventListener('input',()=>checkSimple(el));
+  });
+
+  document.querySelectorAll('input[data-frac]').forEach(el=>{
+    el.addEventListener('input',()=>checkFraction(el.dataset.frac));
+  });
+})();
+</script>
+</body>
+</html>

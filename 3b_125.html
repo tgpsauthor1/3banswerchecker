@@ -1,0 +1,206 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Area and Perimeter Check</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+ body{font-family:Arial,Helvetica,sans-serif;margin:16px;line-height:1.2}
+ h1{font-size:18px;margin:0 0 8px}
+ .note{background:#f0f7ff;padding:8px;border-radius:6px;margin:8px 0;font-size:14px}
+ .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+ .q{border:1px solid #ddd;border-radius:8px;padding:10px}
+ .q h2{font-size:16px;margin:0 0 6px}
+ .item{margin:8px 0}
+ .lbl{font-weight:600;margin-bottom:4px}
+ .val{width:8em;font-size:18px;padding:6px;border:1px solid #bbb;border-radius:6px}
+ .val.ok{background:#c8f7c5}
+ .val.bad{background:#ffd5d5}
+ .units{display:inline-flex;gap:6px;margin-left:8px;vertical-align:middle}
+ .u{border:1px solid #bbb;background:#fff;border-radius:16px;padding:4px 10px;cursor:pointer;font-size:14px}
+ .u.active{background:#222;color:#fff;border-color:#222}
+ small{display:block;color:#666;margin-top:6px}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<div class="note">Remember: write the correct units in your workbook.</div>
+
+<div class="grid" id="qs">
+  <div class="q" data-group="a">
+    <h2>Question 3(a)</h2>
+    <div class="item" data-answer="16" data-unit="cm2">
+      <div class="lbl">Q3(a) Area</div>
+      <input class="val" type="text" inputmode="numeric" autocomplete="off" aria-label="Q3(a) Area value">
+      <div class="units" role="group" aria-label="Units for Q3(a) Area">
+        <button class="u" data-u="cm" type="button">cm</button>
+        <button class="u" data-u="m" type="button">m</button>
+        <button class="u" data-u="m2" type="button">m<sup>2</sup></button>
+        <button class="u" data-u="cm2" type="button">cm<sup>2</sup></button>
+      </div>
+      <small>Type the value then select the unit.</small>
+    </div>
+    <div class="item" data-answer="16" data-unit="cm">
+      <div class="lbl">Q3(a) Perimeter</div>
+      <input class="val" type="text" inputmode="numeric" autocomplete="off" aria-label="Q3(a) Perimeter value">
+      <div class="units" role="group" aria-label="Units for Q3(a) Perimeter">
+        <button class="u" data-u="cm" type="button">cm</button>
+        <button class="u" data-u="m" type="button">m</button>
+        <button class="u" data-u="m2" type="button">m<sup>2</sup></button>
+        <button class="u" data-u="cm2" type="button">cm<sup>2</sup></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="q" data-group="b">
+    <h2>Question 3(b)</h2>
+    <div class="item" data-answer="64" data-unit="m2">
+      <div class="lbl">Q3(b) Area</div>
+      <input class="val" type="text" inputmode="numeric" autocomplete="off" aria-label="Q3(b) Area value">
+      <div class="units" role="group" aria-label="Units for Q3(b) Area">
+        <button class="u" data-u="cm" type="button">cm</button>
+        <button class="u" data-u="m" type="button">m</button>
+        <button class="u" data-u="m2" type="button">m<sup>2</sup></button>
+        <button class="u" data-u="cm2" type="button">cm<sup>2</sup></button>
+      </div>
+    </div>
+    <div class="item" data-answer="32" data-unit="m">
+      <div class="lbl">Q3(b) Perimeter</div>
+      <input class="val" type="text" inputmode="numeric" autocomplete="off" aria-label="Q3(b) Perimeter value">
+      <div class="units" role="group" aria-label="Units for Q3(b) Perimeter">
+        <button class="u" data-u="cm" type="button">cm</button>
+        <button class="u" data-u="m" type="button">m</button>
+        <button class="u" data-u="m2" type="button">m<sup>2</sup></button>
+        <button class="u" data-u="cm2" type="button">cm<sup>2</sup></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="q" data-group="c">
+    <h2>Question 3(c)</h2>
+    <div class="item" data-answer="30" data-unit="m2">
+      <div class="lbl">Q3(c) Area</div>
+      <input class="val" type="text" inputmode="numeric" autocomplete="off" aria-label="Q3(c) Area value">
+      <div class="units" role="group" aria-label="Units for Q3(c) Area">
+        <button class="u" data-u="cm" type="button">cm</button>
+        <button class="u" data-u="m" type="button">m</button>
+        <button class="u" data-u="m2" type="button">m<sup>2</sup></button>
+        <button class="u" data-u="cm2" type="button">cm<sup>2</sup></button>
+      </div>
+    </div>
+    <div class="item" data-answer="22" data-unit="m">
+      <div class="lbl">Q3(c) Perimeter</div>
+      <input class="val" type="text" inputmode="numeric" autocomplete="off" aria-label="Q3(c) Perimeter value">
+      <div class="units" role="group" aria-label="Units for Q3(c) Perimeter">
+        <button class="u" data-u="cm" type="button">cm</button>
+        <button class="u" data-u="m" type="button">m</button>
+        <button class="u" data-u="m2" type="button">m<sup>2</sup></button>
+        <button class="u" data-u="cm2" type="button">cm<sup>2</sup></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="q" data-group="d">
+    <h2>Question 3(d)</h2>
+    <div class="item" data-answer="27" data-unit="cm2">
+      <div class="lbl">Q3(d) Area</div>
+      <input class="val" type="text" inputmode="numeric" autocomplete="off" aria-label="Q3(d) Area value">
+      <div class="units" role="group" aria-label="Units for Q3(d) Area">
+        <button class="u" data-u="cm" type="button">cm</button>
+        <button class="u" data-u="m" type="button">m</button>
+        <button class="u" data-u="m2" type="button">m<sup>2</sup></button>
+        <button class="u" data-u="cm2" type="button">cm<sup>2</sup></button>
+      </div>
+    </div>
+    <div class="item" data-answer="24" data-unit="cm">
+      <div class="lbl">Q3(d) Perimeter</div>
+      <input class="val" type="text" inputmode="numeric" autocomplete="off" aria-label="Q3(d) Perimeter value">
+      <div class="units" role="group" aria-label="Units for Q3(d) Perimeter">
+        <button class="u" data-u="cm" type="button">cm</button>
+        <button class="u" data-u="m" type="button">m</button>
+        <button class="u" data-u="m2" type="button">m<sup>2</sup></button>
+        <button class="u" data-u="cm2" type="button">cm<sup>2</sup></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="q" data-group="e">
+    <h2>Question 3(e)</h2>
+    <div class="item" data-answer="36" data-unit="m2">
+      <div class="lbl">Q3(e) Area</div>
+      <input class="val" type="text" inputmode="numeric" autocomplete="off" aria-label="Q3(e) Area value">
+      <div class="units" role="group" aria-label="Units for Q3(e) Area">
+        <button class="u" data-u="cm" type="button">cm</button>
+        <button class="u" data-u="m" type="button">m</button>
+        <button class="u" data-u="m2" type="button">m<sup>2</sup></button>
+        <button class="u" data-u="cm2" type="button">cm<sup>2</sup></button>
+      </div>
+    </div>
+    <div class="item" data-answer="24" data-unit="m">
+      <div class="lbl">Q3(e) Perimeter</div>
+      <input class="val" type="text" inputmode="numeric" autocomplete="off" aria-label="Q3(e) Perimeter value">
+      <div class="units" role="group" aria-label="Units for Q3(e) Perimeter">
+        <button class="u" data-u="cm" type="button">cm</button>
+        <button class="u" data-u="m" type="button">m</button>
+        <button class="u" data-u="m2" type="button">m<sup>2</sup></button>
+        <button class="u" data-u="cm2" type="button">cm<sup>2</sup></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="q" data-group="f">
+    <h2>Question 3(f)</h2>
+    <div class="item" data-answer="14" data-unit="cm2">
+      <div class="lbl">Q3(f) Area</div>
+      <input class="val" type="text" inputmode="numeric" autocomplete="off" aria-label="Q3(f) Area value">
+      <div class="units" role="group" aria-label="Units for Q3(f) Area">
+        <button class="u" data-u="cm" type="button">cm</button>
+        <button class="u" data-u="m" type="button">m</button>
+        <button class="u" data-u="m2" type="button">m<sup>2</sup></button>
+        <button class="u" data-u="cm2" type="button">cm<sup>2</sup></button>
+      </div>
+    </div>
+    <div class="item" data-answer="18" data-unit="cm">
+      <div class="lbl">Q3(f) Perimeter</div>
+      <input class="val" type="text" inputmode="numeric" autocomplete="off" aria-label="Q3(f) Perimeter value">
+      <div class="units" role="group" aria-label="Units for Q3(f) Perimeter">
+        <button class="u" data-u="cm" type="button">cm</button>
+        <button class="u" data-u="m" type="button">m</button>
+        <button class="u" data-u="m2" type="button">m<sup>2</sup></button>
+        <button class="u" data-u="cm2" type="button">cm<sup>2</sup></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  function normalize(v){ if(typeof v!=='string') return ''; v=v.trim(); if(v==='') return ''; return String(+v); }
+  function checkItem(it){
+    var valInput = it.querySelector('.val');
+    var typed = normalize(valInput.value);
+    var needVal = normalize(it.dataset.answer || '');
+    var needU = it.dataset.unit;
+    var selU = it.dataset.selunit || '';
+    var ok = (typed!=='' && typed===needVal && selU===needU);
+    var touched = (typed!=='' || selU!=='');
+    valInput.classList.remove('ok','bad');
+    if(ok){ valInput.classList.add('ok'); }
+    else if(touched){ valInput.classList.add('bad'); }
+  }
+  document.querySelectorAll('.item').forEach(function(it){
+    var buttons = it.querySelectorAll('.u');
+    buttons.forEach(function(b){
+      b.addEventListener('click',function(){
+        buttons.forEach(function(x){x.classList.remove('active');});
+        b.classList.add('active');
+        it.dataset.selunit = b.getAttribute('data-u');
+        checkItem(it);
+      });
+    });
+    var val = it.querySelector('.val');
+    val.addEventListener('input', function(){ checkItem(it); });
+  });
+})();
+</script>
+</body>
+</html>

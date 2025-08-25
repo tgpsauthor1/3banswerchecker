@@ -1,0 +1,89 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Check – Questions 7–8</title>
+<style>
+body{font-family:system-ui,Arial,sans-serif;line-height:1.4;margin:0;padding:16px;max-width:900px}
+h1{font-size:1.1rem;margin:0 0 6px}
+.note{font-size:.95rem;color:#333;margin:0 0 14px}
+.q{margin:12px 0}
+.q b{margin-right:6px}
+input[type=text]{padding:8px 10px;font-size:1rem;width:16ch}
+input.time{width:18ch}
+.ok{background:#c8f7c5!important}
+.bad{background:#ffd9d9!important}
+.hint{font-size:.85rem;color:#666;margin-top:4px}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<p class="note">Reminder: Use your timeline to work it out. Type your final time only; operations like + or - will not be accepted.</p>
+
+<div class="q" id="q7a">
+  <b>Q7(a)</b>
+  <label>She worked <input aria-label="Q7a hours every day" class="ans" type="text" inputmode="numeric" data-kind="number" data-answer="9"> hours every day.</label>
+</div>
+
+<div class="q" id="q7b">
+  <b>Q7(b)</b>
+  <label>She worked for <input aria-label="Q7b hours in a week" class="ans" type="text" inputmode="numeric" data-kind="number" data-answer="45"> hours in a week.</label>
+</div>
+
+<div class="q" id="q8a">
+  <b>Q8(a)</b>
+  <label>Actual time he started: <input aria-label="Q8a actual start time" class="ans time" type="text" data-kind="time" data-answer="11:35"></label>
+</div>
+
+<div class="q" id="q8b">
+  <b>Q8(b)</b>
+  <label>Actual finishing time: <input aria-label="Q8b finish time" class="ans time" type="text" data-kind="time" data-answer="14:10"></label>
+</div>
+
+<script>
+(function(){
+  const toMin=t=>{const [h,m]=t.split(':').map(Number);return h*60+m};
+  function parseTime(s){
+    if(!s)return null;
+    let x=s.trim().toLowerCase();
+    if(/[+\-]/.test(x)) return NaN;
+    x=x.replace(/\s+/g,'');
+    let mer=null;
+    if(/am$|pm$/.test(x)){mer=x.slice(-2);x=x.slice(0,-2)}
+    let h,m;
+    if(x.includes(':')){const p=x.split(':');h=parseInt(p[0],10);m=parseInt(p[1],10)}
+    else if(x.length>=3&&x.length<=4){h=parseInt(x.slice(0,-2),10);m=parseInt(x.slice(-2),10)}
+    else return NaN;
+    if(Number.isNaN(h)||Number.isNaN(m)||m<0||m>59) return NaN;
+    if(mer==='am'){if(h===12)h=0}
+    if(mer==='pm'){if(h<12)h+=12}
+    if(h<0||h>23) return NaN;
+    return h*60+m;
+  }
+  function setState(el,good){
+    el.classList.remove('ok','bad');
+    if(el.value.trim()==='')return;
+    el.classList.add(good?'ok':'bad');
+  }
+  function check(el){
+    const kind=el.dataset.kind;
+    let good=false;
+    if(kind==='number'){
+      const val=el.value.replace(/\s+/g,'');
+      if(val===''){setState(el,null);return}
+      good = !Number.isNaN(Number(val)) && Number(val)==Number(el.dataset.answer);
+    }else if(kind==='time'){
+      const mins=parseTime(el.value);
+      if(el.value.trim()===''){setState(el,null);return}
+      good = !Number.isNaN(mins) && mins===toMin(el.dataset.answer);
+    }
+    setState(el,good);
+  }
+  document.querySelectorAll('input[data-kind]').forEach(i=>{
+    i.addEventListener('input',()=>check(i));
+    i.addEventListener('blur',()=>check(i));
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>KM and m Checker</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:16px;font-size:18px;line-height:1.4}
+ h1{font-size:20px;margin:0 0 16px}
+ .qgrp{margin:12px 0}
+ .row{margin:6px 0}
+ .ans{width:110px;font-size:20px;padding:6px 8px;margin:0 4px;border:2px solid #888;border-radius:6px;outline:0}
+ .ok{background:#c8f7c5;border-color:#2e7d32}
+ .bad{background:#ffd1d1;border-color:#c62828}
+ .tag{font-size:12px;color:#555;margin:0 6px 0 10px}
+ .light{color:#444}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="qgrp">
+  <div class="row light"><strong>3(e)</strong> Convert to metres.</div>
+  <div class="row">4 km 31 m = <span class="tag">Q3e-1</span><input class="ans" type="text" aria-label="Q3e part 1 (metres from kilometres)" data-ans="4000"> m + <span class="tag">Q3e-2</span><input class="ans" type="text" aria-label="Q3e part 2 (metres)" data-ans="31"> m = <span class="tag">Q3e-3</span><input class="ans" type="text" aria-label="Q3e total metres" data-ans="4031"> m</div>
+</div>
+
+<div class="qgrp">
+  <div class="row light"><strong>3(f)</strong> Convert to metres.</div>
+  <div class="row">6 km 7 m = <span class="tag">Q3f-1</span><input class="ans" type="text" aria-label="Q3f part 1 (metres from kilometres)" data-ans="6000"> m + <span class="tag">Q3f-2</span><input class="ans" type="text" aria-label="Q3f part 2 (metres)" data-ans="7"> m = <span class="tag">Q3f-3</span><input class="ans" type="text" aria-label="Q3f total metres" data-ans="6007"> m</div>
+</div>
+
+<div class="qgrp">
+  <div class="row light"><strong>4</strong> Write in kilometres and metres.</div>
+
+  <!-- Adjusted Q4(a) to require only the km answer -->
+  <div class="row"><strong>(a)</strong> 4000 m = <span class="tag">Q4a-Only</span><input class="ans" type="text" aria-label="Q4a kilometres only" data-ans="4"> km</div>
+
+  <div class="row"><strong>(b)</strong> 3850 m = <span class="tag">Q4b-1</span><input class="ans" type="text" aria-label="Q4b first split (metres)" data-ans="3000"> m + <span class="tag">Q4b-2</span><input class="ans" type="text" aria-label="Q4b second split (metres)" data-ans="850"> m = <span class="tag">Q4b-3</span><input class="ans" type="text" aria-label="Q4b kilometres" data-ans="3"> km <span class="tag">Q4b-4</span><input class="ans" type="text" aria-label="Q4b metres" data-ans="850"> m</div>
+
+  <div class="row"><strong>(c)</strong> 1261 m = <span class="tag">Q4c-1</span><input class="ans" type="text" aria-label="Q4c first split (metres)" data-ans="1000"> m + <span class="tag">Q4c-2</span><input class="ans" type="text" aria-label="Q4c second split (metres)" data-ans="261"> m = <span class="tag">Q4c-3</span><input class="ans" type="text" aria-label="Q4c kilometres" data-ans="1"> km <span class="tag">Q4c-4</span><input class="ans" type="text" aria-label="Q4c metres" data-ans="261"> m</div>
+
+  <div class="row"><strong>(d)</strong> 9346 m = <span class="tag">Q4d-1</span><input class="ans" type="text" aria-label="Q4d first split (metres)" data-ans="9000"> m + <span class="tag">Q4d-2</span><input class="ans" type="text" aria-label="Q4d second split (metres)" data-ans="346"> m = <span class="tag">Q4d-3</span><input class="ans" type="text" aria-label="Q4d kilometres" data-ans="9"> km <span class="tag">Q4d-4</span><input class="ans" type="text" aria-label="Q4d metres" data-ans="346"> m</div>
+
+  <div class="row"><strong>(e)</strong> 4703 m = <span class="tag">Q4e-1</span><input class="ans" type="text" aria-label="Q4e first split (metres)" data-ans="4000"> m + <span class="tag">Q4e-2</span><input class="ans" type="text" aria-label="Q4e second split (metres)" data-ans="703"> m = <span class="tag">Q4e-3</span><input class="ans" type="text" aria-label="Q4e kilometres" data-ans="4"> km <span class="tag">Q4e-4</span><input class="ans" type="text" aria-label="Q4e metres" data-ans="703"> m</div>
+
+  <div class="row"><strong>(f)</strong> 2020 m = <span class="tag">Q4f-1</span><input class="ans" type="text" aria-label="Q4f first split (metres)" data-ans="2000"> m + <span class="tag">Q4f-2</span><input class="ans" type="text" aria-label="Q4f second split (metres)" data-ans="20"> m = <span class="tag">Q4f-3</span><input class="ans" type="text" aria-label="Q4f kilometres" data-ans="2"> km <span class="tag">Q4f-4</span><input class="ans" type="text" aria-label="Q4f metres" data-ans="20"> m</div>
+
+  <div class="row"><strong>(g)</strong> 1008 m = <span class="tag">Q4g-1</span><input class="ans" type="text" aria-label="Q4g first split (metres)" data-ans="1000"> m + <span class="tag">Q4g-2</span><input class="ans" type="text" aria-label="Q4g second split (metres)" data-ans="8"> m = <span class="tag">Q4g-3</span><input class="ans" type="text" aria-label="Q4g kilometres" data-ans="1"> km <span class="tag">Q4g-4</span><input class="ans" type="text" aria-label="Q4g metres" data-ans="8"> m</div>
+</div>
+
+<script>
+(function(){
+  function checkOne(el){
+    var v = (el.value||"").trim();
+    if(!v){ el.classList.remove('ok','bad'); return; }
+    var norm = v.replace(/[, ]+/g,'');
+    if(/^-?\d+$/.test(norm) && parseInt(norm,10)===parseInt(el.dataset.ans,10)){
+      el.classList.add('ok'); el.classList.remove('bad');
+    }else{
+      el.classList.add('bad'); el.classList.remove('ok');
+    }
+  }
+  document.querySelectorAll('.ans').forEach(function(i){
+    i.setAttribute('inputmode','numeric');
+    i.addEventListener('input',function(){checkOne(i);});
+    i.addEventListener('blur',function(){checkOne(i);});
+  });
+})();
+</script>
+</body>
+</html>

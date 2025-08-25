@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fraction Checker</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 { text-align: center; }
+    #hint-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    #hint {
+      flex: 1;
+      min-height: 1.5em;
+      padding: 8px;
+      background: #fffbcc;
+      border: 1px solid #ffeb3b;
+      border-radius: 4px;
+      font-size: 0.95em;
+    }
+    #speakBtn {
+      margin-left: 10px;
+      padding: 6px 12px;
+      font-size: 0.95em;
+      cursor: pointer;
+    }
+    .question {
+      margin-bottom: 16px;
+    }
+    .question label {
+      display: inline-block;
+      width: 40px;
+      font-weight: bold;
+    }
+    .question input {
+      width: 60px;
+      padding: 4px;
+      margin-right: 8px;
+      font-size: 1em;
+      border-radius: 4px;
+      border: 1px solid #bbb;
+    }
+  </style>
+</head>
+<body>
+  <h1>Fraction Checker</h1>
+  <div id="hint-container">
+    <div id="hint"></div>
+    <button id="speakBtn">Speak</button>
+  </div>
+
+  <!-- Questions a–j -->
+  <div class="question">
+    <label for="a_num">a)</label>
+    <input type="number" id="a_num" placeholder="num" min="1" />
+    <input type="number" id="a_den" placeholder="den" min="1" />
+  </div>
+  <div class="question">
+    <label for="b_num">b)</label>
+    <input type="number" id="b_num" placeholder="num" min="1" />
+    <input type="number" id="b_den" placeholder="den" min="1" />
+  </div>
+  <div class="question">
+    <label for="c_num">c)</label>
+    <input type="number" id="c_num" placeholder="num" min="1" />
+    <input type="number" id="c_den" placeholder="den" min="1" />
+  </div>
+  <div class="question">
+    <label for="d_num">d)</label>
+    <input type="number" id="d_num" placeholder="num" min="1" />
+    <input type="number" id="d_den" placeholder="den" min="1" />
+  </div>
+  <div class="question">
+    <label for="e_num">e)</label>
+    <input type="number" id="e_num" placeholder="num" min="1" />
+    <input type="number" id="e_den" placeholder="den" min="1" />
+  </div>
+  <div class="question">
+    <label for="f_num">f)</label>
+    <input type="number" id="f_num" placeholder="num" min="1" />
+    <input type="number" id="f_den" placeholder="den" min="1" />
+  </div>
+  <div class="question">
+    <label for="g_num">g)</label>
+    <input type="number" id="g_num" placeholder="num" min="1" />
+    <input type="number" id="g_den" placeholder="den" min="1" />
+  </div>
+  <div class="question">
+    <label for="h_num">h)</label>
+    <input type="number" id="h_num" placeholder="num" min="1" />
+    <input type="number" id="h_den" placeholder="den" min="1" />
+  </div>
+  <div class="question">
+    <label for="i_num">i)</label>
+    <input type="number" id="i_num" placeholder="num" min="1" />
+    <input type="number" id="i_den" placeholder="den" min="1" />
+  </div>
+  <div class="question">
+    <label for="j_num">j)</label>
+    <input type="number" id="j_num" placeholder="num" min="1" />
+    <input type="number" id="j_den" placeholder="den" min="1" />
+  </div>
+
+  <script>
+    // expected answers
+    const expected = {
+      a: [{num:1, den:4}], b: [{num:1, den:3}], c: [{num:3, den:5}],
+      d: [{num:4, den:5}], e: [{num:5, den:6}], f: [{num:4, den:11}],
+      g: [{num:7, den:8}], h: [{num:2, den:7}], i: [{num:4, den:9}],
+      j: [{num:3, den:10}]
+    };
+    const genericHint =
+      "First count all the equal parts of the whole (that’s the denominator), " +
+      "then count how many of those parts are shaded (that’s the numerator).";
+
+    const hintEl = document.getElementById("hint");
+    const speakBtn = document.getElementById("speakBtn");
+
+    function check(q) {
+      const numEl = document.getElementById(q + "_num");
+      const denEl = document.getElementById(q + "_den");
+      const n = parseInt(numEl.value, 10);
+      const d = parseInt(denEl.value, 10);
+      if (!(n > 0 && d > 0)) return;
+
+      const ok = expected[q].some(ans => ans.num === n && ans.den === d);
+      if (ok) {
+        numEl.style.backgroundColor = "lightgreen";
+        denEl.style.backgroundColor = "lightgreen";
+        hintEl.textContent = "";
+      } else {
+        numEl.style.backgroundColor = "lightcoral";
+        denEl.style.backgroundColor = "lightcoral";
+        hintEl.textContent = genericHint;
+      }
+    }
+
+    // attach input listeners
+    Object.keys(expected).forEach(q => {
+      ["num","den"].forEach(part => {
+        document.getElementById(q + "_" + part)
+          .addEventListener("input", () => check(q));
+      });
+    });
+
+    // speak hint
+    speakBtn.addEventListener('click', () => {
+      const text = hintEl.textContent.trim();
+      if (!text) return;
+      const msg = new SpeechSynthesisUtterance(text);
+      speechSynthesis.speak(msg);
+    });
+  </script>
+</body>
+</html>

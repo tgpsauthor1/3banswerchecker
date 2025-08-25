@@ -1,0 +1,122 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Area Check – Figures M, N, O, P</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;line-height:1.45;margin:16px;color:#222}
+  h1{font-size:18px;margin:0 0 8px}
+  .note{font-size:14px;margin:0 0 14px}
+  .q{margin:10px 0}
+  .ans{width:84px;max-width:40vw;padding:.35rem .5rem;font-size:1rem;border:1px solid #777;border-radius:6px;outline:0}
+  .ans.letter{width:56px;text-transform:uppercase}
+  .unit{margin-left:6px}
+  .ok{background:#c9f6c5}
+  .err{background:#ffd9d9}
+  .ql{font-weight:600}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<p class="note">Reminder: for area questions, type only the number; the unit m<sup>2</sup> is already shown next to the box.</p>
+
+<div class="q">
+  <span class="ql">(a) Area of Figure M =</span>
+  <input id="qa" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Question a: Area of Figure M">
+  <span class="unit">m<sup>2</sup></span>
+</div>
+
+<div class="q">
+  <span class="ql">(b) Area of Figure N =</span>
+  <input id="qb" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Question b: Area of Figure N">
+  <span class="unit">m<sup>2</sup></span>
+</div>
+
+<div class="q">
+  <span class="ql">(c) Area of Figure O =</span>
+  <input id="qc" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Question c: Area of Figure O">
+  <span class="unit">m<sup>2</sup></span>
+</div>
+
+<div class="q">
+  <span class="ql">(d) Area of Figure P =</span>
+  <input id="qd" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Question d: Area of Figure P">
+  <span class="unit">m<sup>2</sup></span>
+</div>
+
+<div class="q">
+  <span class="ql">(e)</span> Figure
+  <input id="qe" class="ans letter" type="text" maxlength="1" autocomplete="off" aria-label="Question e: Figure with the smallest area">
+  has the smallest area.
+</div>
+
+<div class="q">
+  <span class="ql">(f)</span> Figure
+  <input id="qf" class="ans letter" type="text" maxlength="1" autocomplete="off" aria-label="Question f: Figure with the greatest area">
+  has the greatest area.
+</div>
+
+<div class="q">
+  <span class="ql">(g)</span> Figure
+  <input id="qg1" class="ans letter" type="text" maxlength="1" autocomplete="off" aria-label="Question g first figure: Two figures that have the same area">
+  and Figure
+  <input id="qg2" class="ans letter" type="text" maxlength="1" autocomplete="off" aria-label="Question g second figure: Two figures that have the same area">
+  have the same area.
+</div>
+
+<script>
+  const idsNum = [
+    {id:'qa', ans:'7'},
+    {id:'qb', ans:'6'},
+    {id:'qc', ans:'7'},
+    {id:'qd', ans:'9'}
+  ];
+  const idsLet = [
+    {id:'qe', ans:'N'},
+    {id:'qf', ans:'P'}
+  ];
+  const pair = {a:'M', b:'O', i1:'qg1', i2:'qg2'};
+
+  function setState(el, state){
+    el.classList.remove('ok','err');
+    if(state==='ok') el.classList.add('ok');
+    else if(state==='err') el.classList.add('err');
+  }
+
+  function checkNum(el, correct){
+    const v = el.value.trim();
+    if(!v){ setState(el,''); return; }
+    setState(el, v===correct ? 'ok' : 'err');
+  }
+
+  function checkLet(el, correct){
+    const v = el.value.trim();
+    if(!v){ setState(el,''); return; }
+    setState(el, v.toUpperCase()===correct ? 'ok' : 'err');
+  }
+
+  function checkPair(){
+    const e1 = document.getElementById(pair.i1);
+    const e2 = document.getElementById(pair.i2);
+    const v1 = e1.value.trim().toUpperCase();
+    const v2 = e2.value.trim().toUpperCase();
+    if(!v1 || !v2){ setState(e1,''); setState(e2,''); return; }
+    const ok = (v1===pair.a && v2===pair.b) || (v1===pair.b && v2===pair.a);
+    setState(e1, ok?'ok':'err'); setState(e2, ok?'ok':'err');
+  }
+
+  idsNum.forEach(({id,ans})=>{
+    const el = document.getElementById(id);
+    el.addEventListener('input', ()=>checkNum(el, ans));
+  });
+
+  idsLet.forEach(({id,ans})=>{
+    const el = document.getElementById(id);
+    el.addEventListener('input', ()=>checkLet(el, ans));
+  });
+
+  document.getElementById(pair.i1).addEventListener('input', checkPair);
+  document.getElementById(pair.i2).addEventListener('input', checkPair);
+</script>
+</body>
+</html>

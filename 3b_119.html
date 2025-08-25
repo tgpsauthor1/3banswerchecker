@@ -1,0 +1,51 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Starting, Finishing Time and Duration — Checker</title>
+<style>
+body{font-family:system-ui,Arial,sans-serif;margin:16px;line-height:1.35;max-width:860px}
+h1{font-size:18px;margin:0 0 8px}
+.notice{background:#eef7ff;border-left:4px solid #2a78d1;padding:8px 10px;margin:0 0 14px}
+.q{border:1px solid #ddd;border-radius:8px;padding:10px 12px;margin:12px 0}
+label{font-weight:600;display:block;margin-bottom:6px}
+input[type=text]{font-size:1.15rem;padding:9px 10px;width:22ch;border:1px solid #999;border-radius:6px}
+.correct{background:#d9fdd3}
+.wrong{background:#ffd6d6}
+.note{color:#c00;font-size:.95rem;margin-top:6px}
+small{color:#666}
+</style>
+</head>
+<body>
+<div class="notice"><strong>If you keep getting it wrong, raise your hand and ask your teacher for help.</strong><br>Reminder: Use your timeline to think. Do not type operations like + or -; enter the final time only.</div>
+
+<section class="q" id="q1">
+  <label for="a1">Q1 — He stopped jogging at (enter time):</label>
+  <input type="text" id="a1" autocomplete="off" inputmode="text">
+  <small>Field for Question 1</small>
+</section>
+
+<section class="q" id="q2">
+  <label for="a2">Q2 — The movie started at (enter time):</label>
+  <input type="text" id="a2" autocomplete="off" inputmode="text">
+  <small>Field for Question 2</small>
+</section>
+
+<script>
+const allow={a1:["1800","18 00","6:00pm","6:00 pm"],a2:["1117","11 17","11:17am","11:17 am"]};
+const norm=s=>s.toLowerCase().replace(/\s+/g," ").trim();
+const nospace=s=>s.replace(/\s+/g,"");
+function check(el){
+  const v=norm(el.value);
+  if(!v){el.classList.remove("correct","wrong");return;}
+  const ok=allow[el.id].map(norm);
+  const pass=ok.includes(v)||ok.map(nospace).includes(nospace(v));
+  el.classList.toggle("correct",pass);
+  el.classList.toggle("wrong",!pass);
+}
+["a1","a2"].forEach(id=>{
+  const el=document.getElementById(id);
+  el.addEventListener("input",()=>check(el));
+});
+</script>
+</body>
+</html>

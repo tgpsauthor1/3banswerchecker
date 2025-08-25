@@ -1,0 +1,102 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Duration Check — Activity</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;line-height:1.4;margin:16px;max-width:760px}
+  .notice{background:#eef7ff;border-left:4px solid #2b7cff;padding:8px 10px;margin:8px 0}
+  .warning{background:#fff3cd;border-left:4px solid #ffb300}
+  h1{font-size:1.1rem;margin:8px 0}
+  fieldset{border:1px solid #ccc;padding:10px;margin:14px 0}
+  legend{font-weight:700}
+  label{display:inline-block;margin:6px 10px 6px 0}
+  .unit{margin-left:4px}
+  .ans{font-size:1.05rem;padding:.4rem .5rem;width:5.5rem;border:1px solid #999;border-radius:4px;background:#fff}
+  .correct{background:#c9f7c9 !important}
+  .wrong{background:#ffb9b9 !important}
+  .hint{font-size:.85rem;color:#555;margin:4px 0}
+  .qtext{margin:6px 0 10px}
+  button{padding:.45rem .7rem;border:1px solid #666;background:#f3f3f3;border-radius:4px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="notice warning">If you keep getting it wrong, raise your hand and ask your teacher for help.</div>
+<div class="notice">Reminder: Show your number line, and make sure it is correctly drawn.</div>
+<div class="notice">Do not use operators like + or - when finding duration or time. Use a timeline.</div>
+
+<fieldset>
+  <legend>Q4 — Playground duration</legend>
+
+  <label>Q4 Hours
+    <input class="ans" data-answer="0" inputmode="numeric" aria-label="Q4 hours" autocomplete="off" maxlength="3">
+    <span class="unit">h</span>
+  </label>
+  <label>Q4 Minutes
+    <input class="ans" data-answer="25" inputmode="numeric" aria-label="Q4 minutes" autocomplete="off" maxlength="3">
+    <span class="unit">min</span>
+  </label>
+  <div class="hint">Numbers only. No + or - allowed.</div>
+</fieldset>
+
+<fieldset>
+  <legend>Q5 — Hiking duration</legend>
+
+  <label>Q5 Hours
+    <input class="ans" data-answer="1" inputmode="numeric" aria-label="Q5 hours" autocomplete="off" maxlength="3">
+    <span class="unit">h</span>
+  </label>
+  <label>Q5 Minutes
+    <input class="ans" data-answer="30" inputmode="numeric" aria-label="Q5 minutes" autocomplete="off" maxlength="3">
+    <span class="unit">min</span>
+  </label>
+  <div class="hint">Type the number of hours and minutes separately.</div>
+</fieldset>
+
+<fieldset>
+  <legend>Q6 — Telematch duration</legend>
+ 
+  <label>Q6 Hours
+    <input class="ans" data-answer="2" inputmode="numeric" aria-label="Q6 hours" autocomplete="off" maxlength="3">
+    <span class="unit">h</span>
+  </label>
+  <label>Q6 Minutes
+    <input class="ans" data-answer="50" inputmode="numeric" aria-label="Q6 minutes" autocomplete="off" maxlength="3">
+    <span class="unit">min</span>
+  </label>
+</fieldset>
+
+<button type="button" id="clearAll">Clear all</button>
+
+<script>
+(function(){
+  const inputs = document.querySelectorAll('.ans');
+  const sanitize = v => v.replace(/[^\d]/g,''); // strip everything except digits
+
+  function validate(el){
+    const clean = sanitize(el.value);
+    if(el.value !== clean){ el.value = clean; }
+    if(!clean){ el.classList.remove('correct','wrong'); return; }
+    if(clean === String(el.dataset.answer)){ el.classList.add('correct'); el.classList.remove('wrong'); }
+    else{ el.classList.add('wrong'); el.classList.remove('correct'); }
+  }
+
+  inputs.forEach(el=>{
+    el.addEventListener('input',()=>validate(el));
+    el.addEventListener('blur',()=>validate(el));
+    el.addEventListener('keypress',e=>{
+      if(e.key==='+'||e.key==='-'){ e.preventDefault(); }
+    });
+    el.addEventListener('paste',e=>{
+      const txt=(e.clipboardData||window.clipboardData).getData('text');
+      if(/[^\d]/.test(txt)){ e.preventDefault(); }
+    });
+  });
+
+  document.getElementById('clearAll').addEventListener('click',()=>{
+    inputs.forEach(el=>{ el.value=''; el.classList.remove('correct','wrong'); });
+  });
+})();
+</script>
+</body>
+</html>

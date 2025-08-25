@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fraction Checker – Question 4</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+    h1 { font-size: 1.5em; margin-bottom: 0.5em; }
+    h2 { margin-top: 1em; font-size: 1.2em; margin-bottom: 0.5em; }
+    #hints-container { display: none; align-items: center; border: 2px solid #f0ad4e; background: #fcf8e3; color: #8a6d3b; padding: 10px; margin-bottom: 20px; border-radius: 4px; }
+    #hints { flex: 1; font-size: 1em; }
+    #speakBtn { margin-left: 10px; padding: 6px 12px; font-size: 0.95em; cursor: pointer; background: #5bc0de; color: white; border: none; border-radius: 4px; }
+    .fraction-input { margin: 8px 0; font-size: 1em; }
+    .fraction-input input { width: 2.5em; padding: 4px; margin: 0 4px; font-size: 1em; border: 1px solid #ccc; vertical-align: middle; border-radius: 4px; }
+    .fixed { display: inline-block; width: 1.5em; text-align: center; }
+    input.correct { background: #c8e6c9; }
+    input.incorrect { background: #ffcdd2; }
+  </style>
+</head>
+<body>
+
+  <h1>Question 4: Enter Your Fractions</h1>
+  <div id="hints-container">
+    <div id="hints"></div>
+    <button id="speakBtn">Speak</button>
+  </div>
+
+  <h2>4(a) Rectangle → Grid</h2>
+  <div class="fraction-input">
+    4(a): 
+    <span class="fixed">3</span> / 
+    <input type="text" id="q4a_den1" class="answer" placeholder="__">
+     = 
+    <input type="text" id="q4a_num2" class="answer" placeholder="__">
+     / 
+    <input type="text" id="q4a_den2" class="answer" placeholder="__">
+  </div>
+
+  <h2>4(b) Small circle → Big circle</h2>
+  <div class="fraction-input">
+    4(b): 
+    <input type="text" id="q4b_num1" class="answer" placeholder="__">
+     / 
+    <input type="text" id="q4b_den1" class="answer" placeholder="__">
+     = 
+    <input type="text" id="q4b_num2" class="answer" placeholder="__">
+     / 
+    <input type="text" id="q4b_den2" class="answer" placeholder="__">
+  </div>
+
+  <h2>4(c) Bar → Box grid</h2>
+  <div class="fraction-input">
+    4(c): 
+    <input type="text" id="q4c_num1" class="answer" placeholder="__">
+     / 
+    <input type="text" id="q4c_den1" class="answer" placeholder="__">
+     = 
+    <input type="text" id="q4c_num2" class="answer" placeholder="__">
+     / 
+    <input type="text" id="q4c_den2" class="answer" placeholder="__">
+  </div>
+
+  <h2>4(d) Bar → Box grid</h2>
+  <div class="fraction-input">
+    4(d): 
+    <input type="text" id="q4d_num1" class="answer" placeholder="__">
+     / 
+    <input type="text" id="q4d_den1" class="answer" placeholder="__">
+     = 
+    <input type="text" id="q4d_num2" class="answer" placeholder="__">
+     / 
+    <input type="text" id="q4d_den2" class="answer" placeholder="__">
+  </div>
+
+  <script>
+    const correct = {
+      q4a_den1: ['5'],
+      q4a_num2: ['9','3'],
+      q4a_den2: ['15','5'],
+      q4b_num1: ['4','2'],
+      q4b_den1: ['6','3'],
+      q4b_num2: ['8','2'],
+      q4b_den2: ['12','3'],
+      q4c_num1: ['3'],
+      q4c_den1: ['4'],
+      q4c_num2: ['15','3'],
+      q4c_den2: ['20','4'],
+      q4d_num1: ['5'],
+      q4d_den1: ['7'],
+      q4d_num2: ['10','5'],
+      q4d_den2: ['14','7']
+    };
+
+    const hintsMap = {
+      q4a_den1: 'Count how many parts make the rectangle (count each section).',
+      q4a_num2: 'Match each shaded column above. Shade those same columns in the grid, then count them.',
+      q4a_den2: 'Count every box in the grid now.',
+      q4b_num1: 'Count the shaded slices in the small circle.',
+      q4b_den1: 'Count all slices in the small circle.',
+      q4b_num2: 'Match each shaded slice above in the big circle, then count them.',
+      q4b_den2: 'Count every slice in the big circle.',
+      q4c_num1: 'Count how many strips are shaded in the bar.',
+      q4c_den1: 'Count every strip in the bar.',
+      q4c_num2: 'Match each shaded strip by shading full rows in the grid, then count boxes.',
+      q4c_den2: 'Count all boxes in the grid now.',
+      q4d_num1: 'Count how many parts are shaded in the bar.',
+      q4d_den1: 'Count all parts in the bar.',
+      q4d_num2: 'Match each shaded part by shading those columns in the grid, then count boxes.',
+      q4d_den2: 'Count all boxes in the grid now.'
+    };
+
+    const hintBox = document.getElementById('hints');
+    const hintContainer = document.getElementById('hints-container');
+    const active = new Set();
+
+    function showHints() {
+      if (active.size) {
+        hintBox.innerHTML = '<strong>Hint:</strong><ul>' +
+          [...active].map(h => `<li>${h}</li>`).join('') +
+          '</ul>';
+        hintContainer.style.display = 'flex';
+      } else {
+        hintContainer.style.display = 'none';
+      }
+    }
+
+    function checkField(e) {
+      const id = e.target.id;
+      const v = e.target.value.trim();
+      if (!v) {
+        e.target.classList.remove('correct','incorrect');
+        active.delete(hintsMap[id]);
+      } else if (correct[id].includes(v)) {
+        e.target.classList.add('correct');
+        e.target.classList.remove('incorrect');
+        active.delete(hintsMap[id]);
+      } else {
+        e.target.classList.add('incorrect');
+        e.target.classList.remove('correct');
+        active.add(hintsMap[id]);
+      }
+      showHints();
+    }
+
+    document.querySelectorAll('input.answer')
+            .forEach(i => i.addEventListener('input', checkField));
+
+    document.getElementById('speakBtn').addEventListener('click', () => {
+      const text = hintBox.textContent.trim();
+      if (!text) return;
+      const utterance = new SpeechSynthesisUtterance(text);
+      speechSynthesis.speak(utterance);
+    });
+  </script>
+</body>
+</html>

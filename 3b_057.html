@@ -1,0 +1,104 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Practice 3 — Recall (Mass)</title>
+<style>
+ body{font-family:Arial,Helvetica,sans-serif;margin:16px;color:#222}
+ h1{font-size:18px;margin:0 0 12px}
+ h2{font-size:16px;margin:8px 0}
+ .q{border:1px solid #ddd;border-radius:8px;padding:10px;margin:12px 0}
+ label{display:block;margin:8px 0 4px}
+ input[type=text]{font-size:18px;padding:8px 10px;border:2px solid #777;border-radius:6px;width:220px;max-width:100%}
+ .wide{width:280px}
+ .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+ .ok{background:#c8f7c5;border-color:#2e8b57}
+ .bad{background:#ffd1d1;border-color:#b22222}
+ button{padding:8px 12px;font-size:14px;margin-right:8px}
+ small{color:#555}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<section class="q" id="q1">
+  <h2>1. Compare and order the masses of the objects.</h2>
+  <label for="q1a">Q1a: The mass of the  onions is … g</label>
+  <input id="q1a" type="text" data-answer="430" data-format="number" aria-label="Question 1a: onions mass in grams">
+
+  <label for="q1b">Q1b: The mass of the  garlic is … g</label>
+  <input id="q1b" type="text" data-answer="180" data-format="number" aria-label="Question 1b: garlic mass in grams">
+
+  <p>Q1c: Arrange the objects from the heaviest to the lightest. Write onions, garlic, or beans.</p>
+  <div class="row">
+    <label for="q1c1"><small>Q1c-1 (heaviest)</small></label>
+    <input id="q1c1" class="wide" type="text" data-answer=" onions|onions| onion" aria-label="Question 1c position 1">
+    <span>,</span>
+    <input id="q1c2" class="wide" type="text" data-answer=" beans|beans| bean" aria-label="Question 1c position 2">
+    <span>,</span>
+    <input id="q1c3" class="wide" type="text" data-answer=" garlic|garlic| garlic" aria-label="Question 1c position 3">
+  </div>
+</section>
+
+<section class="q" id="q2">
+  <h2>2. Compare and order the masses of the animals.</h2>
+  <label for="q2a">Q2a: The ______ is the lightest.</label>
+  <input id="q2a" type="text" data-answer="rabbit" aria-label="Question 2a: lightest animal">
+
+  <label for="q2b">Q2b: The ______ is the heaviest.</label>
+  <input id="q2b" type="text" data-answer="tortoise|turtle" aria-label="Question 2b: heaviest animal">
+
+  <p>Q2c: Order the animals from the lightest to the heaviest.</p>
+  <div class="row">
+    <label for="q2c1"><small>Q2c-1 (lightest)</small></label>
+    <input id="q2c1" class="wide" type="text" data-answer="rabbit" aria-label="Question 2c position 1">
+    <span>,</span>
+    <input id="q2c2" class="wide" type="text" data-answer="cat" aria-label="Question 2c position 2">
+    <span>,</span>
+    <input id="q2c3" class="wide" type="text" data-answer="tortoise|turtle" aria-label="Question 2c position 3">
+  </div>
+</section>
+
+<div>
+  <button type="button" id="checkAll">Check All</button>
+  <button type="button" id="clearAll">Clear All</button>
+</div>
+
+<script>
+(function(){
+  function norm(s){return (s||'').toLowerCase().replace(/\s+/g,' ').trim();}
+  function numPart(s){var m=(s||'').match(/-?\d+(\.\d+)?/);return m?m[0]:'';}
+  function setState(el,ok){
+    el.classList.remove('ok','bad');
+    if(el.value==='') return;
+    el.classList.add(ok?'ok':'bad');
+  }
+  function check(el){
+    var val=norm(el.value), ans=(el.dataset.answer||'');
+    var correct=false;
+    if(el.dataset.format==='number'){
+      correct = numPart(val)!=='' && numPart(val)===numPart(ans);
+    }else{
+      if(ans.indexOf('|')>-1){
+        correct = ans.split('|').map(norm).includes(val);
+      }else{
+        correct = norm(ans)===val;
+      }
+    }
+    setState(el,correct);
+  }
+  document.querySelectorAll('input[type="text"]').forEach(function(el){
+    el.addEventListener('input',function(){check(el);});
+  });
+  document.getElementById('checkAll').addEventListener('click',function(){
+    document.querySelectorAll('input[type="text"]').forEach(check);
+  });
+  document.getElementById('clearAll').addEventListener('click',function(){
+    document.querySelectorAll('input[type="text"]').forEach(function(el){
+      el.value=''; el.classList.remove('ok','bad');
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Capacity Check — Activity</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.4;margin:16px;color:#222}
+  h1{font-size:1.05rem;margin:0 0 12px}
+  .note{margin:6px 0 14px;padding:8px 10px;background:#f3f7ff;border-left:4px solid #5b8def}
+  .which{margin:6px 0 16px;font-weight:600}
+  fieldset{border:1px solid #ddd;padding:12px;margin:0 0 14px;border-radius:6px}
+  legend{font-weight:700;padding:0 6px}
+  label{display:inline-block;margin:6px 8px 6px 0}
+  .unit{margin-left:6px}
+  input[type=text]{font-size:1.15rem;padding:.45rem .6rem;width:7ch;border:2px solid #aab3c0;border-radius:6px;outline:none}
+  input[type=text]:focus{border-color:#5b8def;box-shadow:0 0 0 2px rgba(91,141,239,.15)}
+  .ok{background:#c8f7c5}
+  .bad{background:#ffd2d2}
+  .inline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .small{width:5ch}
+  .help{color:#666;font-size:.9rem;margin-top:6px}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<div id="which" class="which" aria-live="polite">Currently filling: none</div>
+
+<form id="quiz" novalidate>
+  <fieldset>
+    <legend>Question 2(a)</legend>
+    <div class="inline">
+      <label for="q2a_ml">Enter the capacity for Q2(a)</label>
+      <input id="q2a_ml" type="text" inputmode="numeric" autocomplete="off" data-ans="70" data-label="Q2(a) — capacity (ml)" aria-label="Q2(a) capacity in millilitres">
+      <span class="unit">ml</span>
+    </div>
+    <div class="help">Type the number only. Unit shown: ml.</div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Question 2(b)</legend>
+    <div class="inline">
+      <label for="q2b_ml">Enter the capacity for Q2(b)</label>
+      <input id="q2b_ml" type="text" inputmode="numeric" autocomplete="off" data-ans="330" data-label="Q2(b) — capacity (ml)" aria-label="Q2(b) capacity in millilitres">
+      <span class="unit">ml</span>
+    </div>
+    <div class="help">Type the number only. Unit shown: ml.</div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Question 2(c)</legend>
+    <div class="inline">
+      <label for="q2c_l">Enter the capacity for Q2(c)</label>
+      <input id="q2c_l" class="small" type="text" inputmode="numeric" autocomplete="off" data-ans="1" data-label="Q2(c) — litres" aria-label="Q2(c) litres">
+      <span class="unit">ℓ</span>
+      <input id="q2c_ml" type="text" inputmode="numeric" autocomplete="off" data-ans="200" data-label="Q2(c) — millilitres" aria-label="Q2(c) millilitres">
+      <span class="unit">ml</span>
+    </div>
+    <div class="help">Type the numbers only. Units shown: ℓ and ml.</div>
+  </fieldset>
+</form>
+
+<script>
+(function(){
+  const which = document.getElementById('which');
+
+  function setWhich(el){
+    const label = el.dataset.label || el.getAttribute('aria-label') || el.id;
+    which.textContent = 'Currently filling: ' + label;
+  }
+
+  function validate(el){
+    const expect = el.dataset.ans;
+    if(!expect) return;
+    const raw = el.value.trim();
+    if(raw===''){ el.classList.remove('ok','bad'); return; }
+    const isDigits = /^\d+$/.test(raw);
+    if(!isDigits){ el.classList.add('bad'); el.classList.remove('ok'); return; }
+    const val = parseInt(raw,10);
+    const ans = parseInt(expect,10);
+    if(val===ans){ el.classList.add('ok'); el.classList.remove('bad'); }
+    else{ el.classList.add('bad'); el.classList.remove('ok'); }
+  }
+
+  document.querySelectorAll('input[type=text]').forEach(inp=>{
+    inp.addEventListener('focus', ()=>setWhich(inp));
+    inp.addEventListener('input', ()=>validate(inp));
+    inp.addEventListener('blur', ()=>validate(inp));
+  });
+})();
+</script>
+</body>
+</html>

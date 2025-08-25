@@ -1,0 +1,78 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Practice 1 — Area in Square Units</title>
+<style>
+body{font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;line-height:1.5;margin:24px}
+.help{background:#f3f7ff;padding:10px 12px;border-left:4px solid #3b82f6;margin-bottom:16px}
+.qa{display:flex;align-items:center;gap:.5rem;margin:10px 0;flex-wrap:wrap}
+.qa label{min-width:170px;font-weight:600}
+input.answer,.frac input{width:110px;font-size:1.1rem;padding:.5rem .6rem;border:2px solid #888;border-radius:8px;outline:none}
+input.answer.correct,.frac.correct input{background:#c9f7c5}
+input.answer.wrong,.frac.wrong input{background:#ffd4d4}
+.units{color:#333}
+.frac{display:inline-flex;align-items:center;gap:6px}
+.frac input{width:70px;text-align:center}
+</style>
+</head>
+<body>
+<p class="help">If you keep getting it wrong, raise your hand and ask your teacher for help.</p>
+<h2>Question 1 — Area in square units</h2>
+<div class="qa">
+  <label for="q1a">1(a) Area of figure (a)</label>
+  <input id="q1a" class="answer" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" aria-label="Question 1 part a, area" data-answer="12">
+  <span class="units">square units</span>
+</div>
+<div class="qa">
+  <label for="q1b">1(b) Area of figure (b)</label>
+  <input id="q1b" class="answer" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" aria-label="Question 1 part b, area" data-answer="16">
+  <span class="units">square units</span>
+</div>
+<div class="qa">
+  <label for="q1c">1(c) Area of figure (c)</label>
+  <input id="q1c" class="answer" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" aria-label="Question 1 part c, area" data-answer="11">
+  <span class="units">square units</span>
+</div>
+<div class="qa">
+  <label for="q1d">1(d) Area of figure (d)</label>
+  <input id="q1d" class="answer" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" aria-label="Question 1 part d, area" data-answer="12">
+  <span class="units">square units</span>
+</div>
+<div class="qa">
+  <label for="q1e">1(e) Area of figure (e)</label>
+  <input id="q1e" class="answer" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" aria-label="Question 1 part e, area" data-answer="8">
+  <span class="units">square units</span>
+</div>
+<div class="qa">
+  <label for="q1f">1(f) Area of figure (f)</label>
+  <input id="q1f" class="answer" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" aria-label="Question 1 part f, area" data-answer="14">
+  <span class="units">square units</span>
+</div>
+
+<script>
+(function(){
+  function mark(el,state){el.classList.remove('correct','wrong');if(state)el.classList.add(state);}
+  function checkNumber(el){
+    const exp=(el.dataset.answer||'').trim(), val=el.value.trim().replace(/\s+/g,'');
+    if(!val){mark(el,'');return;}
+    mark(el, val===exp ? 'correct' : 'wrong');
+  }
+  document.querySelectorAll('input.answer').forEach(function(el){
+    el.addEventListener('input',function(){checkNumber(el);});
+    el.addEventListener('blur',function(){checkNumber(el);});
+  });
+
+  // Optional fraction checker (for future pages):
+  function checkFraction(box){
+    const n=box.querySelector('input[data-role="num"]'), d=box.querySelector('input[data-role="den"]');
+    const empty=!n.value && !d.value, good=n.value.trim()===(box.dataset.num||'').trim() && d.value.trim()===(box.dataset.den||'').trim();
+    box.classList.remove('correct','wrong'); if(!empty) box.classList.add(good?'correct':'wrong');
+  }
+  document.querySelectorAll('.frac').forEach(function(box){
+    box.querySelectorAll('input').forEach(function(inp){inp.addEventListener('input',function(){checkFraction(box);});});
+  });
+})();
+</script>
+</body>
+</html>

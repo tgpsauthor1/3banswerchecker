@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Activity Check</title>
+<style>
+ body{font-family:Arial,Helvetica,sans-serif;line-height:1.35;margin:16px;color:#111}
+ h1{font-size:18px;margin:0 0 10px}
+ .note{font-size:13px;margin:6px 0 14px;color:#444}
+ .box{border:1px solid #ddd;border-radius:8px;padding:12px;margin:10px 0}
+ label{font-weight:bold;display:block;margin-bottom:6px}
+ .sentence{font-size:18px}
+ input.ans{width:260px;max-width:90vw;font-size:18px;padding:8px;border:2px solid #888;border-radius:8px;outline:none}
+ .ok{background:#c8f7c5;border-color:#2ecc71}
+ .bad{background:#ffd0d0;border-color:#e74c3c}
+ .hint{font-size:13px;color:#555;margin:6px 0}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<div class="note">Type a space between the number and the unit of measurement. Units are required for this answer.</div>
+
+<div class="box">
+  <label for="q10">Q10 • Final answer (give your answer in metres and centimetres)</label>
+  <div class="hint">Hints:
+    <ol class="hint">
+      <li>Find the length of one piece.</li>
+      <li>Find the length of 3 pieces.</li>
+      <li>Express the total in metres and centimetres.</li>
+    </ol>
+  </div>
+  <p class="sentence">He used
+    <input id="q10" class="ans" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Q10 final answer">
+    of string to make bracelets.
+  </p>
+</div>
+
+<script>
+(function(){
+  const field=document.getElementById('q10');
+  const correctSet=new Set([
+    '5 m 40 cm',
+    '5m40cm',
+'5 m40cm',
+'5m 40cm',
+'5m40 cm',
+'5 m 40cm',
+'5 m40 cm'
+  ]);
+  function check(){
+    let v=field.value.toLowerCase().trim().replace(/\s+/g,' ');
+    if(!v){field.classList.remove('ok','bad');return;}
+    if(correctSet.has(v)){field.classList.add('ok');field.classList.remove('bad');}
+    else{field.classList.add('bad');field.classList.remove('ok');}
+  }
+  field.addEventListener('input',check);
+})();
+</script>
+</body>
+</html>

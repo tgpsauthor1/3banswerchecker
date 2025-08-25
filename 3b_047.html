@@ -1,0 +1,139 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recall: Addition and Subtraction of Fractions</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;line-height:1.3;margin:16px;color:#111}
+  h1{font-size:18px;margin:0 0 16px 0}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+  .item{padding:8px;border:1px solid #ddd;border-radius:8px}
+  .q{font-weight:700;margin-bottom:6px}
+  .small{font-weight:600;font-size:12px;margin:6px 0 4px}
+  .frac{display:inline-flex;flex-direction:column;align-items:center}
+  .frac input,.whole input{width:80px;height:40px;font-size:22px;text-align:center;border:1px solid #666;border-radius:6px;outline:none;transition:background-color .2s}
+  .bar{width:80px;border-top:2px solid #000;margin:4px 0}
+  .or{font-size:12px;margin:6px 0;text-align:center;color:#666}
+  .ok{background:#c9f7c5}
+  .bad{background:#ffb7b7}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="grid">
+  <div class="item">
+    <div class="q">Q1(a) fraction</div>
+    <div class="frac" data-answers="5/7">
+      <input type="text" inputmode="numeric" aria-label="Q1(a) numerator">
+      <div class="bar"></div>
+      <input type="text" inputmode="numeric" aria-label="Q1(a) denominator">
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="q">Q1(b) fraction</div>
+    <div class="frac" data-answers="7/10">
+      <input type="text" inputmode="numeric" aria-label="Q1(b) numerator">
+      <div class="bar"></div>
+      <input type="text" inputmode="numeric" aria-label="Q1(b) denominator">
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="q">Q2(a) fraction</div>
+    <div class="frac" data-answers="5/6">
+      <input type="text" inputmode="numeric" aria-label="Q2(a) numerator">
+      <div class="bar"></div>
+      <input type="text" inputmode="numeric" aria-label="Q2(a) denominator">
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="q">Q2(b) fraction</div>
+    <div class="frac" data-answers="4/4">
+      <input type="text" inputmode="numeric" aria-label="Q2(b) numerator">
+      <div class="bar"></div>
+      <input type="text" inputmode="numeric" aria-label="Q2(b) denominator">
+    </div>
+    <div class="or">or</div>
+    <div class="small">Q2(b) whole number</div>
+    <div class="whole" data-answers="1">
+      <input type="text" inputmode="numeric" aria-label="Q2(b) whole number">
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="q">Q2(c) fraction</div>
+    <div class="frac" data-answers="7/9">
+      <input type="text" inputmode="numeric" aria-label="Q2(c) numerator">
+      <div class="bar"></div>
+      <input type="text" inputmode="numeric" aria-label="Q2(c) denominator">
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="q">Q2(d) fraction</div>
+    <div class="frac" data-answers="4/5">
+      <input type="text" inputmode="numeric" aria-label="Q2(d) numerator">
+      <div class="bar"></div>
+      <input type="text" inputmode="numeric" aria-label="Q2(d) denominator">
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="q">Q2(e) fraction (accept either)</div>
+    <div class="frac" data-answers="4/8|1/2">
+      <input type="text" inputmode="numeric" aria-label="Q2(e) numerator">
+      <div class="bar"></div>
+      <input type="text" inputmode="numeric" aria-label="Q2(e) denominator">
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="q">Q2(f) fraction</div>
+    <div class="frac" data-answers="7/12">
+      <input type="text" inputmode="numeric" aria-label="Q2(f) numerator">
+      <div class="bar"></div>
+      <input type="text" inputmode="numeric" aria-label="Q2(f) denominator">
+    </div>
+  </div>
+</div>
+
+<script>
+  function setState(inputs, state){
+    inputs.forEach(i=>{i.classList.remove('ok','bad'); if(state) i.classList.add(state);});
+  }
+  document.querySelectorAll('.frac').forEach(frac=>{
+    const num=frac.querySelector('input[aria-label$="numerator"]');
+    const den=frac.querySelector('input[aria-label$="denominator"]');
+    const answers=frac.dataset.answers.split('|').map(s=>s.replace(/\s+/g,'').toLowerCase());
+    function update(){
+      const n=(num.value||'').trim(), d=(den.value||'').trim();
+      if(!n && !d){ setState([num,den],null); return; }
+      if(n && d){
+        const guess=(n+'/'+d).replace(/\s+/g,'').toLowerCase();
+        const ok=answers.includes(guess);
+        setState([num,den], ok?'ok':'bad');
+      }else{
+        setState([num,den],'bad');
+      }
+    }
+    num.addEventListener('input',update);
+    den.addEventListener('input',update);
+  });
+  document.querySelectorAll('.whole').forEach(w=>{
+    const inp=w.querySelector('input');
+    const answers=w.dataset.answers.split('|').map(s=>s.replace(/\s+/g,'').toLowerCase());
+    function update(){
+      const v=(inp.value||'').trim();
+      inp.classList.remove('ok','bad');
+      if(!v) return;
+      const ok=answers.includes(v.replace(/\s+/g,'').toLowerCase());
+      inp.classList.add(ok?'ok':'bad');
+    }
+    inp.addEventListener('input',update);
+  });
+</script>
+</body>
+</html>

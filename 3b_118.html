@@ -1,0 +1,220 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Time Practice Checker</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;line-height:1.4;margin:20px}
+  h1{font-size:18px;color:#222;margin-bottom:12px}
+  h2{font-size:16px;margin:20px 0 8px}
+  .row{display:flex;align-items:center;gap:10px;margin:6px 0;flex-wrap:wrap}
+  label{min-width:240px}
+  input[type=text]{font-size:18px;padding:6px 8px;border:1px solid #888;border-radius:4px}
+  .t24{width:7.5em}
+  .hm{width:3.2em;text-align:center}
+  .colon{font-size:20px;font-weight:bold}
+  .ampm button{padding:6px 10px;font-size:16px;border:1px solid #888;background:#f2f2f2;border-radius:4px;cursor:pointer}
+  .ampm button.selected{outline:2px solid #3a7}
+  .correct{background:#c7f7c7 !important}
+  .wrong{background:#ffc9c9 !important}
+  .note{background:#fff8cc;border:1px solid #e2c044;padding:8px;border-radius:4px;display:inline-block}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<h2>2) Write the time in 24-hour clock.</h2>
+<div class="row">
+  <label>Q2(a)</label>
+  <input class="t24" type="text" autocomplete="off" data-q24 data-answer="0925">
+</div>
+<div class="row">
+  <label>Q2(b)</label>
+  <input class="t24" type="text" autocomplete="off" data-q24 data-answer="1055">
+</div>
+<div class="row">
+  <label>Q2(c)</label>
+  <input class="t24" type="text" autocomplete="off" data-q24 data-answer="0203">
+</div>
+<div class="row">
+  <label>Q2(d)</label>
+  <input class="t24" type="text" autocomplete="off" data-q24 data-answer="1610">
+</div>
+<div class="row">
+  <label>Q2(e)</label>
+  <input class="t24" type="text" autocomplete="off" data-q24 data-answer="1840">
+</div>
+<div class="row">
+  <label>Q2(f)</label>
+  <input class="t24" type="text" autocomplete="off" data-q24 data-answer="2358">
+</div>
+
+<h2>3) Write the time in 12-hour clock.</h2>
+<div class="note">Alert: The 24-hour clock for Q3(c) has been changed to 12 20 and Q3(f) has been changed to 00 05.</div>
+
+<div class="row q12" data-h="10" data-m="15" data-p="pm">
+  <label>Q3(a)</label>
+  <input class="hm h" type="text" autocomplete="off">
+  <span class="colon">:</span>
+  <input class="hm m" type="text" autocomplete="off">
+  <div class="ampm">
+    <button data-p="am">am</button>
+    <button data-p="pm">pm</button>
+  </div>
+</div>
+
+<div class="row q12" data-h="4" data-m="40" data-p="am">
+  <label>Q3(b)</label>
+  <input class="hm h" type="text" autocomplete="off">
+  <span class="colon">:</span>
+  <input class="hm m" type="text" autocomplete="off">
+  <div class="ampm">
+    <button data-p="am">am</button>
+    <button data-p="pm">pm</button>
+  </div>
+</div>
+
+<div class="row q12" data-h="12" data-m="20" data-p="pm">
+  <label>Q3(c)</label>
+  <input class="hm h" type="text" autocomplete="off">
+  <span class="colon">:</span>
+  <input class="hm m" type="text" autocomplete="off">
+  <div class="ampm">
+    <button data-p="am">am</button>
+    <button data-p="pm">pm</button>
+  </div>
+</div>
+
+<div class="row q12" data-h="3" data-m="30" data-p="pm">
+  <label>Q3(d)</label>
+  <input class="hm h" type="text" autocomplete="off">
+  <span class="colon">:</span>
+  <input class="hm m" type="text" autocomplete="off">
+  <div class="ampm">
+    <button data-p="am">am</button>
+    <button data-p="pm">pm</button>
+  </div>
+</div>
+
+<div class="row q12" data-h="11" data-m="45" data-p="pm">
+  <label>Q3(e)</label>
+  <input class="hm h" type="text" autocomplete="off">
+  <span class="colon">:</span>
+  <input class="hm m" type="text" autocomplete="off">
+  <div class="ampm">
+    <button data-p="am">am</button>
+    <button data-p="pm">pm</button>
+  </div>
+</div>
+
+<div class="row q12" data-h="12" data-m="5" data-p="am">
+  <label>Q3(f)</label>
+  <input class="hm h" type="text" autocomplete="off">
+  <span class="colon">:</span>
+  <input class="hm m" type="text" autocomplete="off">
+  <div class="ampm">
+    <button data-p="am">am</button>
+    <button data-p="pm">pm</button>
+  </div>
+</div>
+
+<script>
+  // Helpers
+  const pad2 = v => String(v).padStart(2,'0');
+
+  // Q2: 24-hour checker — require exactly 4 digits (accept space between HH and MM)
+  function setFieldState(el, state){ // 'correct','wrong','neutral'
+    el.classList.remove('correct','wrong');
+    if(state==='correct') el.classList.add('correct');
+    if(state==='wrong') el.classList.add('wrong');
+  }
+  document.querySelectorAll('[data-q24]').forEach(inp=>{
+    inp.addEventListener('input', ()=>{
+      const compact = inp.value.replace(/\s+/g,'');
+      if(compact===''){ setFieldState(inp,'neutral'); return; }
+      const ok = /^\d{4}$/.test(compact) && compact === inp.dataset.answer;
+      setFieldState(inp, ok ? 'correct' : 'wrong');
+    });
+  });
+
+  // Q3: 12-hour checker — hours may be 1–2 digits (1..12) but reject leading-zero hours like "03".
+  // Minutes must be exactly two digits (00..59). Compare to expected values.
+  document.querySelectorAll('.q12').forEach(wrapper=>{
+    const h = wrapper.querySelector('.h');
+    const m = wrapper.querySelector('.m');
+    const am = wrapper.querySelector('button[data-p="am"]');
+    const pm = wrapper.querySelector('button[data-p="pm"]');
+    let sel = null;
+
+    function select(period){
+      sel = period;
+      am.classList.toggle('selected', sel==='am');
+      pm.classList.toggle('selected', sel==='pm');
+      validate();
+    }
+    am.addEventListener('click', e=>{ e.preventDefault(); select('am'); });
+    pm.addEventListener('click', e=>{ e.preventDefault(); select('pm'); });
+
+    h.addEventListener('input', e=>{
+      e.target.value = e.target.value.replace(/\D/g,'').slice(0,2);
+      validate();
+    });
+    m.addEventListener('input', e=>{
+      e.target.value = e.target.value.replace(/\D/g,'').slice(0,2);
+      validate();
+    });
+
+    function color(el, state){
+      el.classList.remove('correct','wrong');
+      if(state==='correct') el.classList.add('correct');
+      if(state==='wrong') el.classList.add('wrong');
+    }
+
+    function validHourStr(s){
+      if(!/^\d{1,2}$/.test(s)) return false;
+      if(s.length===2 && s.startsWith('0')) return false; // no leading zero hour like "03"
+      const n = parseInt(s,10);
+      return n>=1 && n<=12;
+    }
+    function validMinuteStr(s){
+      if(!/^\d{2}$/.test(s)) return false;
+      const n = parseInt(s,10);
+      return n>=0 && n<=59;
+    }
+
+    function validate(){
+      const hv = h.value.trim();
+      const mv = m.value.trim();
+
+      if(!hv && !mv && !sel){
+        color(h,'neutral'); color(m,'neutral');
+        am.classList.remove('correct','wrong'); pm.classList.remove('correct','wrong');
+        return;
+      }
+
+      const eh = String(wrapper.dataset.h);     // expected hour as unpadded string (e.g., "4")
+      const em = pad2(wrapper.dataset.m);       // expected minutes as two digits
+      const ep = wrapper.dataset.p;
+
+      const hOk = validHourStr(hv);
+      const mOk = validMinuteStr(mv);
+
+      if(!hOk || !mOk){
+        color(h, hOk ? 'neutral' : 'wrong');
+        color(m, mOk ? 'neutral' : 'wrong');
+        if(sel){ (sel==='am'?am:pm).classList.add('wrong'); }
+        return;
+      }
+
+      const ready = !!sel;
+      const correct = ready && (hv===eh) && (mv===em) && (sel===ep);
+
+      color(h, correct?'correct':'wrong');
+      color(m, correct?'correct':'wrong');
+      am.classList.remove('correct','wrong');
+      pm.classList.remove('correct','wrong');
+      if(ready){ (sel==='am'?am:pm).classList.add(correct?'correct':'wrong'); }
+    }
+  });
+</script>
+</body>
+</html>

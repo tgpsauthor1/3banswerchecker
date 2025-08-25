@@ -1,0 +1,115 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mass — Check Your Answers</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;line-height:1.35;margin:20px;color:#111}
+  h1{font-size:20px;margin:0 0 16px}
+  .q{border:1px solid #ddd;border-radius:8px;padding:12px 12px 16px;margin:10px 0}
+  .q h2{font-size:16px;margin:0 0 8px}
+  .guide{font-family:Courier,monospace;color:#888;margin:2px 0 10px}
+  .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  label{font-size:12px;color:#555}
+  .hint{font-size:11px;color:#666}
+  input.answer{width:90px;font-size:20px;padding:8px;border:2px solid #555;border-radius:6px;outline:none;color:#d00;background:#fff}
+  input.answer::placeholder{color:#bbb}
+  .ok{background:#c6f7c6 !important;border-color:#2e8b57}
+  .bad{background:#ffdede !important;border-color:#c33}
+  .unit{margin:0 10px 0 2px}
+  .controls{margin-top:10px}
+  button{padding:8px 12px;border:1px solid #444;background:#f2f2f2;border-radius:6px;cursor:pointer}
+  button:active{transform:scale(.98)}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="q" data-q="(e) bowling ball">
+  <h2>Question (e) — bowling ball</h2>
+  <div class="guide">__________ kg __________ g</div>
+  <div class="row">
+    <label for="e-kg" class="hint">Q(e) kilograms</label>
+    <input id="e-kg" class="answer" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="kg" data-answer="4" aria-label="Question (e) bowling ball kilograms">
+    <span class="unit">kg</span>
+    <label for="e-g" class="hint">Q(e) grams</label>
+    <input id="e-g" class="answer" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="g" data-answer="500" aria-label="Question (e) bowling ball grams">
+    <span class="unit">g</span>
+  </div>
+</div>
+
+<div class="q" data-q="(f) school bag">
+  <h2>Question (f) — school bag</h2>
+  <div class="guide">__________ kg __________ g</div>
+  <div class="row">
+    <label for="f-kg" class="hint">Q(f) kilograms</label>
+    <input id="f-kg" class="answer" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="kg" data-answer="4" aria-label="Question (f) school bag kilograms">
+    <span class="unit">kg</span>
+    <label for="f-g" class="hint">Q(f) grams</label>
+    <input id="f-g" class="answer" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="g" data-answer="300" aria-label="Question (f) school bag grams">
+    <span class="unit">g</span>
+  </div>
+</div>
+
+<div class="q" data-q="(g) fish">
+  <h2>Question (g) — fish</h2>
+  <div class="guide">__________ kg __________ g</div>
+  <div class="row">
+    <label for="g-kg" class="hint">Q(g) kilograms</label>
+    <input id="g-kg" class="answer" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="kg" data-answer="7" aria-label="Question (g) fish kilograms">
+    <span class="unit">kg</span>
+    <label for="g-g" class="hint">Q(g) grams</label>
+    <input id="g-g" class="answer" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="g" data-answer="400" aria-label="Question (g) fish grams">
+    <span class="unit">g</span>
+  </div>
+</div>
+
+<div class="q" data-q="(h) watermelons">
+  <h2>Question (h) — watermelons</h2>
+  <div class="guide">__________ kg __________ g</div>
+  <div class="row">
+    <label for="h-kg" class="hint">Q(h) kilograms</label>
+    <input id="h-kg" class="answer" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="kg" data-answer="5" aria-label="Question (h) watermelons kilograms">
+    <span class="unit">kg</span>
+    <label for="h-g" class="hint">Q(h) grams</label>
+    <input id="h-g" class="answer" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="g" data-answer="700" aria-label="Question (h) watermelons grams">
+    <span class="unit">g</span>
+  </div>
+</div>
+
+<div class="controls">
+  <button type="button" id="checkAll">Check all</button>
+  <button type="button" id="clearAll">Clear all</button>
+</div>
+
+<script>
+  function onlyDigits(v){return (v||"").toString().replace(/[^\d-]/g,"").replace(/^-/,"");}
+  function setState(el, ok){
+    el.classList.remove("ok","bad");
+    if(!el.value.trim()){return;}
+    el.classList.add(ok?"ok":"bad");
+  }
+  function checkOne(el){
+    var expected = onlyDigits(el.dataset.answer);
+    var got = onlyDigits(el.value);
+    setState(el, expected!=="" && got===expected);
+  }
+  document.querySelectorAll("input.answer").forEach(function(inp){
+    inp.addEventListener("input", function(){ checkOne(inp); });
+    inp.addEventListener("blur", function(){ checkOne(inp); });
+  });
+  document.getElementById("checkAll").addEventListener("click", function(){
+    document.querySelectorAll("input.answer").forEach(checkOne);
+  });
+  document.getElementById("clearAll").addEventListener("click", function(){
+    document.querySelectorAll("input.answer").forEach(function(inp){
+      inp.value=""; inp.classList.remove("ok","bad");
+    });
+  });
+
+  /* Fraction support (numerator/denominator separate fields).
+     To use later, add data-num="a" data-den="b" to a wrapper and
+     inputs with data-role="num" and data-role="den", each with data-answer. */
+</script>
+</body>
+</html>

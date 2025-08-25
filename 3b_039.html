@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Practice 6: Comparing and Ordering Fractions</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2em auto;
+      padding: 0 1em;
+    }
+    h1 { text-align: center; }
+    #hint {
+      border: 1px solid #888;
+      padding: .5em;
+      min-height: 3em;
+      margin-bottom: 1em;
+    }
+    .question {
+      margin: 1.5em 0;
+    }
+    .fraction {
+      display: inline-block;
+      text-align: center;
+      margin: 0 .5em;
+    }
+    .fraction input {
+      width: 3em;             /* wider inputs */
+      text-align: center;
+      font-size: 1em;
+      padding: 2px;
+      margin: 0;
+    }
+    .fraction .bar {
+      display: block;
+      height: 1px;
+      background: #000;
+      margin: 2px 0;
+    }
+    /* remove spinners */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+    input.correct   { background: #ccffcc; }
+    input.incorrect { background: #ffcccc; }
+    button.speak { margin-left: 1em; }
+  </style>
+</head>
+<body>
+
+  <h1>Practice 6: Comparing and Ordering Fractions</h1>
+  <div id="hint"></div>
+
+  <!-- 1a -->
+  <div class="question" id="q1a">
+    <strong>1a.</strong>
+    <span class="fraction">
+      <input id="q1a_n1" type="number" placeholder="1a numerator" min="0" />
+      <div class="bar"></div>
+      <input id="q1a_d1" type="number" placeholder="1a denominator" min="1" />
+    </span>
+    <strong>&lt;</strong>
+    <span class="fraction">
+      <input id="q1a_n2" type="number" placeholder="1a numerator" min="0" />
+      <div class="bar"></div>
+      <input id="q1a_d2" type="number" placeholder="1a denominator" min="1" />
+    </span>
+  </div>
+
+  <!-- 1b -->
+  <div class="question" id="q1b">
+    <strong>1b.</strong>
+    <span class="fraction">
+      <input id="q1b_n1" type="number" placeholder="1b numerator" min="0" />
+      <div class="bar"></div>
+      <input id="q1b_d1" type="number" placeholder="1b denominator" min="1" />
+    </span>
+    <strong>&gt;</strong>
+    <span class="fraction">
+      <input id="q1b_n2" type="number" placeholder="1b numerator" min="0" />
+      <div class="bar"></div>
+      <input id="q1b_d2" type="number" placeholder="1b denominator" min="1" />
+    </span>
+  </div>
+
+  <!-- 1c -->
+  <div class="question" id="q1c">
+    <strong>1c.</strong>
+    <span class="fraction">
+      <input id="q1c_n1" type="number" placeholder="1c numerator" min="0" />
+      <div class="bar"></div>
+      <input id="q1c_d1" type="number" placeholder="1c denominator" min="1" />
+    </span>
+    <strong>&lt;</strong>
+    <span class="fraction">
+      <input id="q1c_n2" type="number" placeholder="1c numerator" min="0" />
+      <div class="bar"></div>
+      <input id="q1c_d2" type="number" placeholder="1c denominator" min="1" />
+    </span>
+  </div>
+
+  <!-- 1d -->
+  <div class="question" id="q1d">
+    <strong>1d.</strong>
+    <span class="fraction">
+      <input id="q1d_n1" type="number" placeholder="1d numerator" min="0" />
+      <div class="bar"></div>
+      <input id="q1d_d1" type="number" placeholder="1d denominator" min="1" />
+    </span>
+    <strong>&gt;</strong>
+    <span class="fraction">
+      <input id="q1d_n2" type="number" placeholder="1d numerator" min="0" />
+      <div class="bar"></div>
+      <input id="q1d_d2" type="number" placeholder="1d denominator" min="1" />
+    </span>
+  </div>
+
+  <script>
+    // correct answers
+    const answers = {
+      q1a: { n1: 2, d1: 3, n2: 5, d2: 6 },
+      q1b: { n1: 6, d1: 10, n2: 2, d2: 5 },
+      q1c: { n1: 3, d1: 4, n2: 7, d2: 8 },
+      q1d: { n1: 2, d1: 3, n2: 4, d2: 9 }
+    };
+
+    // unified hint
+    const hintText = 
+      "Look at the shaded part. Which fraction is greater? " +
+      "The arrow points to the smaller fraction. Make sure that your fractions are correctly written.";
+
+    let currentHint = "";
+
+    function speakHint() {
+      if (!currentHint) return;
+      const msg = new SpeechSynthesisUtterance(currentHint);
+      window.speechSynthesis.speak(msg);
+    }
+
+    function showHint() {
+      currentHint = hintText;
+      document.getElementById("hint").innerHTML =
+        hintText + ' <button class="speak" onclick="speakHint()">Speak</button>';
+    }
+
+    function clearHint() {
+      currentHint = "";
+      document.getElementById("hint").textContent = "";
+    }
+
+    function checkQuestion(qId) {
+      const ans = answers[qId];
+      let allCorrect = true;
+
+      ["n1","d1","n2","d2"].forEach(key => {
+        const inp = document.getElementById(`${qId}_${key}`);
+        const val = parseInt(inp.value, 10);
+        if (val === ans[key]) {
+          inp.classList.add("correct");
+          inp.classList.remove("incorrect");
+        } else {
+          inp.classList.add("incorrect");
+          inp.classList.remove("correct");
+          allCorrect = false;
+        }
+      });
+
+      if (allCorrect) {
+        clearHint();
+      } else {
+        showHint();
+      }
+    }
+
+    // attach listeners
+    Object.keys(answers).forEach(qId => {
+      ["n1","d1","n2","d2"].forEach(key => {
+        document
+          .getElementById(`${qId}_${key}`)
+          .addEventListener("input", () => checkQuestion(qId));
+      });
+    });
+  </script>
+
+</body>
+</html>

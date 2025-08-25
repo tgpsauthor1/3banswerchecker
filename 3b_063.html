@@ -1,0 +1,141 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Write in kilograms and grams — Check</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;line-height:1.6;margin:20px}
+  h1{font-size:18px;margin:0 0 12px}
+  h2{font-size:16px;margin:12px 0 6px}
+  .note{color:#d00;margin-bottom:12px}
+  .q{border-top:1px solid #ddd;padding-top:10px;margin-top:10px}
+  label{display:inline-flex;align-items:center;margin:6px 8px 6px 0}
+  .expr{display:block;margin:2px 0 8px}
+  input.answer{width:8ch;padding:6px 8px;font-size:18px;border:1px solid #999;border-radius:4px;color:#c00;background:#fff;outline:none}
+  .correct{background:#c9f7c9 !important;border-color:#3a9e3a}
+  .wrong{background:#ffd6d6 !important;border-color:#c33}
+  .units{margin-left:4px;margin-right:12px}
+  .small{font-size:12px;color:#555;margin-left:4px}
+  .row{margin:2px 0}
+  button{margin-top:12px;padding:6px 10px}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<div class="note">3. Write in kilograms and grams.</div>
+
+<div class="q" id="qa">
+  <h2>(a) 7309 g</h2>
+  <div class="expr">
+    <span class="small">Q3(a) “kg + g” line</span><br>
+    = <label><input class="answer" inputmode="numeric" aria-label="Q3(a) kg on kg + g line" data-answer="7"><span class="units">kg</span></label>
+      + <label><input class="answer" inputmode="numeric" aria-label="Q3(a) g on kg + g line" data-answer="309"><span class="units">g</span></label>
+  </div>
+  <div class="expr">
+    <span class="small">Q3(a) “kg g” line</span><br>
+    = <label><input class="answer" inputmode="numeric" aria-label="Q3(a) kg on final line" data-answer="7"><span class="units">kg</span></label>
+      <label><input class="answer" inputmode="numeric" aria-label="Q3(a) g on final line" data-answer="309"><span class="units">g</span></label>
+  </div>
+</div>
+
+<div class="q" id="qb">
+  <h2>(b) 6048 g</h2>
+  <div class="expr">
+    <span class="small">Q3(b) “g + g” breakdown</span><br>
+    = <label><input class="answer" inputmode="numeric" aria-label="Q3(b) first grams in breakdown" data-answer="6000"><span class="units">g</span></label>
+      + <label><input class="answer" inputmode="numeric" aria-label="Q3(b) second grams in breakdown" data-answer="48"><span class="units">g</span></label>
+  </div>
+  <div class="expr">
+    <span class="small">Q3(b) “kg + g” line</span><br>
+    = <label><input class="answer" inputmode="numeric" aria-label="Q3(b) kg on kg + g line" data-answer="6"><span class="units">kg</span></label>
+      + <label><input class="answer" inputmode="numeric" aria-label="Q3(b) g on kg + g line" data-answer="48"><span class="units">g</span></label>
+  </div>
+  <div class="expr">
+    <span class="small">Q3(b) “kg g” line</span><br>
+    = <label><input class="answer" inputmode="numeric" aria-label="Q3(b) kg on final line" data-answer="6"><span class="units">kg</span></label>
+      <label><input class="answer" inputmode="numeric" aria-label="Q3(b) g on final line" data-answer="48"><span class="units">g</span></label>
+  </div>
+</div>
+
+<div class="q" id="qc">
+  <h2>(c) 9154 g</h2>
+  <div class="expr">
+    <span class="small">Q3(c) “g + g” breakdown</span><br>
+    = <label><input class="answer" inputmode="numeric" aria-label="Q3(c) first grams in breakdown" data-answer="9000"><span class="units">g</span></label>
+      + <label><input class="answer" inputmode="numeric" aria-label="Q3(c) second grams in breakdown" data-answer="154"><span class="units">g</span></label>
+  </div>
+  <div class="expr">
+    <span class="small">Q3(c) “kg g” line</span><br>
+    = <label><input class="answer" inputmode="numeric" aria-label="Q3(c) kg on final line" data-answer="9"><span class="units">kg</span></label>
+      <label><input class="answer" inputmode="numeric" aria-label="Q3(c) g on final line" data-answer="154"><span class="units">g</span></label>
+  </div>
+</div>
+
+<div class="q" id="qd">
+  <h2>(d) 8630 g</h2>
+  <div class="expr">
+    <span class="small">Q3(d) “g + g” breakdown</span><br>
+    = <label><input class="answer" inputmode="numeric" aria-label="Q3(d) first grams in breakdown" data-answer="8000"><span class="units">g</span></label>
+      + <label><input class="answer" inputmode="numeric" aria-label="Q3(d) second grams in breakdown" data-answer="630"><span class="units">g</span></label>
+  </div>
+  <div class="expr">
+    <span class="small">Q3(d) “kg g” line</span><br>
+    = <label><input class="answer" inputmode="numeric" aria-label="Q3(d) kg on final line" data-answer="8"><span class="units">kg</span></label>
+      <label><input class="answer" inputmode="numeric" aria-label="Q3(d) g on final line" data-answer="630"><span class="units">g</span></label>
+  </div>
+</div>
+
+<div class="q" id="qe">
+  <h2>(e) 1067 g</h2>
+  <div class="expr">
+    <span class="small">Q3(e) “g + g” breakdown</span><br>
+    = <label><input class="answer" inputmode="numeric" aria-label="Q3(e) first grams in breakdown" data-answer="1000"><span class="units">g</span></label>
+      + <label><input class="answer" inputmode="numeric" aria-label="Q3(e) second grams in breakdown" data-answer="67"><span class="units">g</span></label>
+  </div>
+  <div class="expr">
+    <span class="small">Q3(e) “kg g” line</span><br>
+    = <label><input class="answer" inputmode="numeric" aria-label="Q3(e) kg on final line" data-answer="1"><span class="units">kg</span></label>
+      <label><input class="answer" inputmode="numeric" aria-label="Q3(e) g on final line" data-answer="67"><span class="units">g</span></label>
+  </div>
+</div>
+
+<div class="q" id="qf">
+  <h2>(f) 3005 g</h2>
+  <div class="expr">
+    <span class="small">Q3(f) “g + g” breakdown</span><br>
+    = <label><input class="answer" inputmode="numeric" aria-label="Q3(f) first grams in breakdown" data-answer="3000"><span class="units">g</span></label>
+      + <label><input class="answer" inputmode="numeric" aria-label="Q3(f) second grams in breakdown" data-answer="5"><span class="units">g</span></label>
+  </div>
+  <div class="expr">
+    <span class="small">Q3(f) “kg g” line</span><br>
+    = <label><input class="answer" inputmode="numeric" aria-label="Q3(f) kg on final line" data-answer="3"><span class="units">kg</span></label>
+      <label><input class="answer" inputmode="numeric" aria-label="Q3(f) g on final line" data-answer="5"><span class="units">g</span></label>
+  </div>
+</div>
+
+<button type="button" id="reset">Reset all answers</button>
+
+<script>
+(function(){
+  const inputs=[...document.querySelectorAll('input.answer')];
+  function norm(s){return s.replace(/[^0-9]/g,'');}
+  function check(el){
+    const exp=norm(el.dataset.answer||'');
+    const got=norm(el.value);
+    el.classList.remove('correct','wrong');
+    if(!got){return;}
+    if(got===exp){el.classList.add('correct');}
+    else{el.classList.add('wrong');}
+  }
+  inputs.forEach(i=>{
+    i.setAttribute('autocomplete','off');
+    i.addEventListener('input',()=>check(i));
+    i.addEventListener('blur',()=>check(i));
+  });
+  document.getElementById('reset').addEventListener('click',()=>{
+    inputs.forEach(i=>{i.value='';i.classList.remove('correct','wrong');});
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Compare and order masses - Checker</title>
+<style>
+ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:16px;line-height:1.4}
+ h1{font-size:18px;margin:0 0 12px}
+ .note{font-weight:600;margin:6px 0 18px}
+ label{display:block;margin:10px 0 4px;font-weight:600}
+ .row{margin:6px 0}
+ input.answer{font-size:18px;padding:8px 10px;width:140px;border:2px solid #999;border-radius:6px;outline:0}
+ .wide{width:220px}
+ .unit{margin-left:6px}
+ .correct{background:#c8f7c5;border-color:#2c9b2c}
+ .wrong{background:#ffc8c8;border-color:#c62828}
+ .status{margin:8px 0 16px;color:#444;font-size:14px;min-height:18px}
+ .qwrap{padding:8px 10px;border:1px solid #ddd;border-radius:8px;margin-bottom:10px}
+ .flex{display:flex;gap:10px;align-items:center}
+ button{padding:8px 12px;border-radius:6px;border:1px solid #777;background:#f3f3f3;cursor:pointer}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<div id="editing" class="status" aria-live="polite"></div>
+
+<div class="qwrap">
+  <label for="q1">Q1 — The mass of the bag of tomatoes is</label>
+  <div class="flex">
+    <input id="q1" class="answer" type="text" inputmode="numeric" autocomplete="off" data-q="Q1 — tomatoes mass (g)" aria-label="Q1 tomatoes mass">
+    <span class="unit">g</span>
+  </div>
+</div>
+
+<div class="qwrap">
+  <label for="q2">Q2 — The mass of the lychees is</label>
+  <div class="flex">
+    <input id="q2" class="answer" type="text" inputmode="numeric" autocomplete="off" data-q="Q2 — lychees mass (g)" aria-label="Q2 lychees mass">
+    <span class="unit">g</span>
+  </div>
+</div>
+
+<div class="qwrap">
+  <label for="q3">Q3 — The mass of the chives is</label>
+  <div class="flex">
+    <input id="q3" class="answer" type="text" inputmode="numeric" autocomplete="off" data-q="Q3 — chives mass (g)" aria-label="Q3 chives mass">
+    <span class="unit">g</span>
+  </div>
+</div>
+
+<div class="qwrap">
+  <label for="q4">Q4 — The bag of tomatoes is how many grams lighter than the bag of lychees?</label>
+  <div class="flex">
+    <input id="q4" class="answer" type="text" inputmode="numeric" autocomplete="off" data-q="Q4 — lighter by (g)" aria-label="Q4 lighter by grams">
+    <span class="unit">g</span>
+  </div>
+</div>
+
+<div class="qwrap">
+  <label for="q5">Q5 — The lychees are how many grams heavier than the chives?</label>
+  <div class="flex">
+    <input id="q5" class="answer" type="text" inputmode="numeric" autocomplete="off" data-q="Q5 — heavier by (g)" aria-label="Q5 heavier by grams">
+    <span class="unit">g</span>
+  </div>
+</div>
+
+<div class="qwrap">
+  <label>Q6 — Arrange the objects from the lightest to the heaviest. Type tomatoes, lychees, or chives.</label>
+  <div class="row flex">
+    <input id="ord1" class="answer wide" type="text" autocomplete="off" data-q="Q6 — 1st (lightest)" placeholder="1st (lightest)">
+    <span>,</span>
+    <input id="ord2" class="answer wide" type="text" autocomplete="off" data-q="Q6 — 2nd" placeholder="2nd">
+    <span>,</span>
+    <input id="ord3" class="answer wide" type="text" autocomplete="off" data-q="Q6 — 3rd (heaviest)" placeholder="3rd (heaviest)">
+  </div>
+</div>
+
+<div class="row">
+  <button type="button" id="resetBtn">Reset all</button>
+</div>
+
+<script>
+(function(){
+  const editing = document.getElementById('editing');
+  const nums = {
+    q1:460,
+    q2:840,
+    q3:150,
+    q4:380,
+    q5:690
+  };
+  const orderTargets = [
+    ['chives','chive'],
+    ['bag of tomatoes','tomatoes','tomato','bag of tomato','bag tomatoes'],
+    ['lychees','lychee']
+  ];
+
+  function normalizeText(s){
+    return s.toLowerCase().trim().replace(/\s+/g,' ');
+  }
+  function normalizeNum(s){
+    const m = (s||'').toString().match(/-?\d+/g);
+    return m ? parseInt(m.join(''),10) : NaN;
+  }
+  function setState(el,state){
+    el.classList.remove('correct','wrong');
+    if(state==='correct') el.classList.add('correct');
+    else if(state==='wrong') el.classList.add('wrong');
+  }
+  function checkNumber(el,ans){
+    const val = el.value.trim();
+    if(!val){ setState(el,null); return; }
+    const n = normalizeNum(val);
+    setState(el, n===ans ? 'correct' : 'wrong');
+  }
+  function checkOrder(el,allowed){
+    const val = normalizeText(el.value);
+    if(!val){ setState(el,null); return; }
+    const ok = allowed.some(a=>val===a);
+    setState(el, ok ? 'correct' : 'wrong');
+  }
+  function onFocusLabel(e){
+    const el = e.target;
+    const msg = el.dataset.q || el.getAttribute('aria-label') || '';
+    editing.textContent = 'Now editing: ' + msg;
+  }
+  function attach(el,fn){
+    el.addEventListener('input', fn);
+    el.addEventListener('focus', onFocusLabel);
+  }
+
+  // Numeric questions
+  ['q1','q2','q3','q4','q5'].forEach(id=>{
+    const el = document.getElementById(id);
+    attach(el, ()=>checkNumber(el, nums[id]));
+  });
+
+  // Order question
+  const ord1 = document.getElementById('ord1');
+  const ord2 = document.getElementById('ord2');
+  const ord3 = document.getElementById('ord3');
+  attach(ord1, ()=>checkOrder(ord1, orderTargets[0].map(normalizeText)));
+  attach(ord2, ()=>checkOrder(ord2, orderTargets[1].map(normalizeText)));
+  attach(ord3, ()=>checkOrder(ord3, orderTargets[2].map(normalizeText)));
+
+  // Reset
+  document.getElementById('resetBtn').addEventListener('click', ()=>{
+    document.querySelectorAll('input.answer').forEach(i=>{
+      i.value=''; setState(i,null);
+    });
+    editing.textContent='';
+  });
+
+  // Optional: fraction checker (not used on this page)
+  window.attachFractionChecker = function(numInput, denInput, expectedNum, expectedDen){
+    function gcd(a,b){return b?gcd(b,a%b):Math.abs(a);}
+    function reduce(n,d){const g=gcd(n,d)||1;return [n/g,d/g];}
+    function check(){
+      const n = normalizeNum(numInput.value);
+      const d = normalizeNum(denInput.value);
+      if(!numInput.value && !denInput.value){ setState(numInput,null); setState(denInput,null); return; }
+      if(!d){ setState(numInput,'wrong'); setState(denInput,'wrong'); return; }
+      const r1 = reduce(n,d).join('/');
+      const r2 = reduce(expectedNum,expectedDen).join('/');
+      const ok = r1===r2;
+      setState(numInput, ok?'correct':'wrong');
+      setState(denInput, ok?'correct':'wrong');
+    }
+    numInput.addEventListener('input',check);
+    denInput.addEventListener('input',check);
+    numInput.addEventListener('focus',onFocusLabel);
+    denInput.addEventListener('focus',onFocusLabel);
+  };
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Compare and Order the Volumes — Self Check</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;line-height:1.4;margin:16px;color:#222}
+  h1{font-size:18px;margin:0 0 12px}
+  .qblock{border:1px solid #ddd;border-radius:8px;padding:12px;margin:10px 0}
+  .qtitle{font-weight:700;margin-bottom:6px}
+  label{display:block;margin:8px 0 4px}
+  input.ans{font-size:18px;padding:8px 10px;border:2px solid #888;border-radius:6px;min-width:90px}
+  .small{min-width:64px}
+  .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .sep{margin:0 4px}
+  .status{font-size:12px;color:#666;margin-left:8px}
+  .legend{font-size:12px;color:#444;margin-top:8px}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="qblock">
+  <div class="qtitle">Q2: Read the volumes (ℓ) for each bucket</div>
+  <label>Q2-A: Bucket A volume (ℓ)
+    <input class="ans small" data-mode="num" data-answers="4" aria-label="Q2-A Bucket A volume">
+    <span class="status"></span>
+  </label>
+  <label>Q2-B: Bucket B volume (ℓ)
+    <input class="ans small" data-mode="num" data-answers="9" aria-label="Q2-B Bucket B volume">
+    <span class="status"></span>
+  </label>
+  <label>Q2-C: Bucket C volume (ℓ)
+    <input class="ans small" data-mode="num" data-answers="3" aria-label="Q2-C Bucket C volume">
+    <span class="status"></span>
+  </label>
+  <label>Q2-D: Bucket D volume (ℓ)
+    <input class="ans small" data-mode="num" data-answers="5" aria-label="Q2-D Bucket D volume">
+    <span class="status"></span>
+  </label>
+  <div class="legend">Type the number of liters shown for each bucket.</div>
+</div>
+
+<div class="qblock">
+  <div class="qtitle">Q2 (a): Smallest amount of water</div>
+  <label>Q2 (a): Which bucket contains the smallest amount of water? (letter)
+    <input class="ans small" data-mode="text" data-answers="c" aria-label="Q2 a smallest bucket">
+    <span class="status"></span>
+  </label>
+</div>
+
+<div class="qblock">
+  <div class="qtitle">Q2 (b): Greatest amount of water</div>
+  <label>Q2 (b): Which bucket contains the greatest amount of water? (letter)
+    <input class="ans small" data-mode="text" data-answers="b" aria-label="Q2 b greatest bucket">
+    <span class="status"></span>
+  </label>
+</div>
+
+<div class="qblock">
+  <div class="qtitle">Q2 (c): Compare volumes</div>
+  <label>Q2 (c): How many liters greater is Bucket D than Bucket C?
+    <input class="ans small" data-mode="num" data-answers="2" aria-label="Q2 c difference D minus C in liters">
+    <span class="status"></span>
+  </label>
+</div>
+
+<div class="qblock">
+  <div class="qtitle">Q2 (d): Compare volumes</div>
+  <label>Q2 (d): How many liters less is Bucket A than Bucket B?
+    <input class="ans small" data-mode="num" data-answers="5" aria-label="Q2 d difference B minus A in liters">
+    <span class="status"></span>
+  </label>
+</div>
+
+<div class="qblock">
+  <div class="qtitle">Q2 (e): Order from smallest to greatest</div>
+  <div class="row" aria-label="Q2 e order buckets smallest to greatest">
+    <span>Q2 (e):</span>
+    <input class="ans small" data-mode="text" data-answers="c" aria-label="Q2 e position 1">
+    <span class="sep">,</span>
+    <input class="ans small" data-mode="text" data-answers="a" aria-label="Q2 e position 2">
+    <span class="sep">,</span>
+    <input class="ans small" data-mode="text" data-answers="d" aria-label="Q2 e position 3">
+    <span class="sep">,</span>
+    <input class="ans small" data-mode="text" data-answers="b" aria-label="Q2 e position 4">
+  </div>
+  <div class="legend">Enter the bucket letters in order from the smallest volume to the greatest volume.</div>
+</div>
+
+<script>
+(function(){
+  function setColor(el, ok){
+    if(el.value.trim()===""){el.style.background="";el.style.borderColor="#888";el.nextElementSibling&& (el.nextElementSibling.textContent="");return;}
+    el.style.background = ok ? "#c9f5c9" : "#ffc9c9";
+    el.style.borderColor = ok ? "#2e8b57" : "#c62828";
+    if(el.nextElementSibling){
+      el.nextElementSibling.textContent = ok ? "Correct" : "Try again";
+    }
+  }
+  function isCorrect(el){
+    const mode = el.dataset.mode || "text";
+    const raw = el.value.trim();
+    if(mode==="num"){
+      const a = parseFloat(raw.replace(/[^\d.\-]/g,""));
+      const b = parseFloat((el.dataset.answers||"").split("|")[0]);
+      return !Number.isNaN(a) && a===b;
+    }else{
+      const val = raw.toLowerCase().replace(/\s+/g,"");
+      const answers = (el.dataset.answers||"").toLowerCase().split("|").map(s=>s.trim());
+      return answers.includes(val);
+    }
+  }
+  function attachCheck(i){
+    i.setAttribute("autocomplete","off");
+    i.setAttribute("inputmode","text");
+    i.addEventListener("input",()=>setColor(i,isCorrect(i)));
+  }
+  document.querySelectorAll("input.ans").forEach(attachCheck);
+
+  // Optional fraction checker: mark any element with data-ans-num and data-ans-den, containing two inputs.num / inputs.den
+  document.querySelectorAll("[data-ans-num][data-ans-den]").forEach(box=>{
+    const num = box.querySelector("input[data-role='num']");
+    const den = box.querySelector("input[data-role='den']");
+    function check(){
+      const ok = parseInt(num.value,10)==parseInt(box.dataset.ansNum,10) &&
+                 parseInt(den.value,10)==parseInt(box.dataset.ansDen,10);
+      [num,den].forEach(el=>setColor(el,ok));
+    }
+    [num,den].forEach(el=>{
+      el.setAttribute("autocomplete","off");
+      el.setAttribute("inputmode","text");
+      el.addEventListener("input",check);
+    });
+  });
+})();
+</script>
+</body>
+</html>

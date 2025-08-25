@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Practice 2 &amp; 3 Checker</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      line-height: 1.4;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    #hints-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    #hint {
+      flex: 1;
+      min-height: 2em;
+      color: #0055a5;
+      font-weight: bold;
+    }
+    #speakBtn {
+      margin-left: 10px;
+      padding: 6px 12px;
+      font-size: 0.95em;
+      cursor: pointer;
+      background: #5bc0de;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    .question {
+      margin-bottom: 25px;
+    }
+    .question p {
+      margin: 5px 0;
+    }
+    .fraction {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 1.3em;
+    }
+    .fraction span {
+      margin: 0 4px;
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+      width: 70px;
+      padding: 4px;
+      font-size: 1.3em;
+      text-align: center;
+      margin: 0 4px;
+    }
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input.correct {
+      background-color: lightgreen;
+    }
+    input.wrong {
+      background-color: lightcoral;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Practice 2 &amp; 3 Checker</h1>
+  <div id="hints-container">
+    <div id="hint"></div>
+    <button id="speakBtn">Speak</button>
+  </div>
+
+  <!-- Question 2(a) -->
+  <div class="question">
+    <strong>2(a)</strong>
+    <p>6 ÷ <input id="2a-div-top" type="number" placeholder="?" /> = <input id="2a-num" type="number" placeholder="?" /></p>
+    <p>8 ÷ <input id="2a-div-bottom" type="number" placeholder="?" /> = <input id="2a-den" type="number" placeholder="?" /></p>
+  </div>
+
+  <!-- Question 2(b) -->
+  <div class="question">
+    <strong>2(b)</strong>
+    <p>12 ÷ <input id="2b-div-top" type="number" placeholder="?" /> = <input id="2b-num" type="number" placeholder="?" /></p>
+    <p>18 ÷ <input id="2b-div-bottom" type="number" placeholder="?" /> = 3</p>
+  </div>
+
+  <!-- Question 3(a–j) -->
+  <div class="question">
+    <strong>3(a)</strong>
+    <div class="fraction">
+      <span>4</span><span>/</span><span>6</span><span>=</span>
+      <input id="3a-num" type="number" placeholder="?" />
+      <span>/</span>
+      <input id="3a-den" type="number" placeholder="?" />
+    </div>
+  </div>
+
+  <div class="question">
+    <strong>3(b)</strong>
+    <div class="fraction">
+      <span>3</span><span>/</span><span>9</span><span>=</span>
+      <input id="3b-num" type="number" placeholder="?" />
+      <span>/</span>
+      <input id="3b-den" type="number" placeholder="?" />
+    </div>
+  </div>
+
+  <div class="question">
+    <strong>3(c)</strong>
+    <div class="fraction">
+      <span>6</span><span>/</span><span>10</span><span>=</span>
+      <input id="3c-num" type="number" placeholder="?" />
+      <span>/</span>
+      <input id="3c-den" type="number" placeholder="?" />
+    </div>
+  </div>
+
+  <div class="question">
+    <strong>3(d)</strong>
+    <div class="fraction">
+      <span>8</span><span>/</span><span>12</span><span>=</span>
+      <input id="3d-num" type="number" placeholder="?" />
+      <span>/</span>
+      <input id="3d-den" type="number" placeholder="?" />
+    </div>
+  </div>
+
+  <div class="question">
+    <strong>3(e)</strong>
+    <div class="fraction">
+      <span>12</span><span>/</span><span>20</span><span>=</span>
+      <input id="3e-num" type="number" placeholder="?" />
+      <span>/</span>
+      <input id="3e-den" type="number" placeholder="?" />
+    </div>
+  </div>
+
+  <div class="question">
+    <strong>3(f)</strong>
+    <div class="fraction">
+      <span>7</span><span>/</span><span>14</span><span>=</span>
+      <input id="3f-num" type="number" placeholder="?" />
+      <span>/</span>
+      <input id="3f-den" type="number" placeholder="?" />
+    </div>
+  </div>
+
+  <div class="question">
+    <strong>3(g)</strong>
+    <div class="fraction">
+      <span>10</span><span>/</span><span>25</span><span>=</span>
+      <input id="3g-num" type="number" placeholder="?" />
+      <span>/</span>
+      <input id="3g-den" type="number" placeholder="?" />
+    </div>
+  </div>
+
+  <div class="question">
+    <strong>3(h)</strong>
+    <div class="fraction">
+      <span>10</span><span>/</span><span>30</span><span>=</span>
+      <input id="3h-num" type="number" placeholder="?" />
+      <span>/</span>
+      <input id="3h-den" type="number" placeholder="?" />
+    </div>
+  </div>
+
+  <div class="question">
+    <strong>3(i)</strong>
+    <div class="fraction">
+      <span>6</span><span>/</span><span>8</span><span>=</span>
+      <input id="3i-num" type="number" placeholder="?" />
+      <span>/</span>
+      <input id="3i-den" type="number" placeholder="?" />
+    </div>
+  </div>
+
+  <div class="question">
+    <strong>3(j)</strong>
+    <div class="fraction">
+      <span>6</span><span>/</span><span>15</span><span>=</span>
+      <input id="3j-num" type="number" placeholder="?" />
+      <span>/</span>
+      <input id="3j-den" type="number" placeholder="?" />
+    </div>
+  </div>
+
+  <script>
+    // all the correct answers
+    const answers = {
+      // Q2
+      '2a-div-top':   2,  '2a-num':   3,  '2a-div-bottom': 2,  '2a-den': 4,
+      '2b-div-top':   6,  '2b-num':   2,  '2b-div-bottom': 6,
+      // Q3
+      '3a-num': 2, '3a-den': 3,
+      '3b-num': 1, '3b-den': 3,
+      '3c-num': 3, '3c-den': 5,
+      '3d-num': 2, '3d-den': 3,
+      '3e-num': 3, '3e-den': 5,
+      '3f-num': 1, '3f-den': 2,
+      '3g-num': 2, '3g-den': 5,
+      '3h-num': 1, '3h-den': 3,
+      '3i-num': 3, '3i-den': 4,
+      '3j-num': 2, '3j-den': 5
+    };
+
+    // hints keyed by question prefix
+    const hints = {
+      // Q2(a)
+      '2a': 'First find: what number do you divide the numerator (6) by to get 3? Write that in the top ÷ box. Then use the same number to divide the denominator (8). Write that answer in the bottom box.',
+      // Q2(b)
+      '2b': 'First find: what number do you divide the numerator (12) by to get 2? Write that in the top ÷ box. Then use the same number to divide the denominator (18). Write that answer in the bottom box.',
+      // Q3
+      '3a': 'List out the numbers from 2 to 6. What is the greatest number that both 4 and 6 can be divided by? Circle that number. Then, divide the numerator and denominator by that number',
+      '3b': 'List out the numbers from 3 to 9. What is the greatest number that both 3 and 9 can be divided by? Circle that number. Then, divide the numerator and denominator by that number',
+      '3c': 'List out the numbers from 2 to 10. What is the greatest number that both 6 and 10 can be divided by? Circle that number. Then, divide the numerator and denominator by that number',
+      '3d': 'List out the numbers from 2 to 12. What is the greatest number that both 8 and 12 can be divided by? Circle that number. Then, divide the numerator and denominator by that number',
+      '3e': 'List out the numbers from 2 to 20. What is the greatest number that both 12 and 20 can be divided by? Circle that number. Then, divide the numerator and denominator by that number',
+      '3f': 'List out the numbers from 2 to 14. What is the greatest number that both 7 and 14 can be divided by? Circle that number. Then, divide the numerator and denominator by that number',
+      '3g': 'List out the numbers from 2 to 25. What is the greatest number that both 10 and 25 can be divided by? Circle that number. Then, divide the numerator and denominator by that number',
+      '3h': 'List out the numbers from 2 to 30. What is the greatest number that both 10 and 30 can be divided by? Circle that number. Then, divide the numerator and denominator by that number',
+      '3i': 'List out the numbers from 2 to 8. What is the greatest number that both 6 and 8 can be divided by? Circle that number. Then, divide the numerator and denominator by that number',
+      '3j': 'List out the numbers from 2 to 15. What is the greatest number that both 6 and 15 can be divided by? Circle that number. Then, divide the numerator and denominator by that number'
+    };
+
+    const hintBox = document.getElementById('hint');
+
+    document.querySelectorAll('input[type=number]').forEach(input => {
+      input.addEventListener('input', () => {
+        const id = input.id;
+        const prefix = id.slice(0, id.indexOf('-'));
+        const val = parseInt(input.value, 10);
+
+        // clear if empty
+        if (!input.value) {
+          input.classList.remove('wrong','correct');
+          if (hintBox.dataset.current === id) {
+            hintBox.textContent = '';
+            delete hintBox.dataset.current;
+          }
+          return;
+        }
+
+        if (val === answers[id]) {
+          input.classList.add('correct');
+          input.classList.remove('wrong');
+          if (hintBox.dataset.current === id) {
+            hintBox.textContent = '';
+            delete hintBox.dataset.current;
+          }
+        } else {
+          input.classList.add('wrong');
+          input.classList.remove('correct');
+          hintBox.textContent = hints[prefix];
+          hintBox.dataset.current = id;
+        }
+      });
+    });
+
+    // Speak button functionality
+    const speakBtn = document.getElementById('speakBtn');
+    speakBtn.addEventListener('click', () => {
+      const text = hintBox.textContent.trim();
+      if (!text) return;
+      const utter = new SpeechSynthesisUtterance(text);
+      speechSynthesis.speak(utter);
+    });
+  </script>
+
+</body>
+</html>

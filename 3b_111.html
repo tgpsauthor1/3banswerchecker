@@ -1,0 +1,288 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Area and Perimeter Checker</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;margin:20px;line-height:1.3}
+  h1{font-size:22px;color:#0b5aa3;margin-bottom:16px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+  .card{border:1px solid #cfd8dc;border-radius:8px;padding:12px}
+  .title{font-weight:700;color:#0b5aa3;margin-bottom:8px}
+  .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .lbl{min-width:56px;color:#37474f}
+  input[type=text]{font-size:20px;padding:10px 12px;border:1px solid #9e9e9e;border-radius:6px;width:140px}
+  .frac input[type=text]{width:88px;text-align:center}
+  .slash{font-size:22px}
+  .units{display:inline-flex;border:1px solid #9e9e9e;border-radius:6px;overflow:hidden;margin-left:6px}
+  .unit{border:0;background:#f5f5f5;padding:10px 16px;font-size:18px;cursor:pointer}
+  .unit+.unit{border-left:1px solid #9e9e9e}
+  .unit.active{background:#e3f2fd;color:#0b5aa3;font-weight:700}
+  .q.good input[type=text]{background:#c8f7c5}
+  .q.bad input[type=text]{background:#ffd0d0}
+  .hint{font-size:12px;color:#607d8b;margin-top:6px}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="grid">
+  <div class="card">
+    <div class="title">1(a) Area</div>
+    <div class="q" data-answer="25" data-unit="m2">
+      <div class="row">
+        <span class="lbl">Value</span>
+        <input class="val" type="text" autocomplete="off" inputmode="decimal">
+      </div>
+      <div class="row" style="margin-top:8px">
+        <span class="lbl">Units</span>
+        <div class="units">
+          <button class="unit" data-unit="m">m</button>
+          <button class="unit" data-unit="m2">m<sup>2</sup></button>
+        </div>
+      </div>
+      <div class="hint">Question 1a — Area</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="title">1(a) Perimeter</div>
+    <div class="q" data-answer="20" data-unit="m">
+      <div class="row">
+        <span class="lbl">Value</span>
+        <input class="val" type="text" autocomplete="off" inputmode="decimal">
+      </div>
+      <div class="row" style="margin-top:8px">
+        <span class="lbl">Units</span>
+        <div class="units">
+          <button class="unit" data-unit="m">m</button>
+          <button class="unit" data-unit="m2">m<sup>2</sup></button>
+        </div>
+      </div>
+      <div class="hint">Question 1a — Perimeter</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="title">1(b) Area</div>
+    <div class="q" data-answer="9" data-unit="cm2">
+      <div class="row">
+        <span class="lbl">Value</span>
+        <input class="val" type="text" autocomplete="off" inputmode="decimal">
+      </div>
+      <div class="row" style="margin-top:8px">
+        <span class="lbl">Units</span>
+        <div class="units">
+          <button class="unit" data-unit="cm">cm</button>
+          <button class="unit" data-unit="cm2">cm<sup>2</sup></button>
+        </div>
+      </div>
+      <div class="hint">Question 1b — Area</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="title">1(b) Perimeter</div>
+    <div class="q" data-answer="12" data-unit="cm">
+      <div class="row">
+        <span class="lbl">Value</span>
+        <input class="val" type="text" autocomplete="off" inputmode="decimal">
+      </div>
+      <div class="row" style="margin-top:8px">
+        <span class="lbl">Units</span>
+        <div class="units">
+          <button class="unit" data-unit="cm">cm</button>
+          <button class="unit" data-unit="cm2">cm<sup>2</sup></button>
+        </div>
+      </div>
+      <div class="hint">Question 1b — Perimeter</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="title">1(c) Area</div>
+    <div class="q" data-answer="40" data-unit="cm2">
+      <div class="row">
+        <span class="lbl">Value</span>
+        <input class="val" type="text" autocomplete="off" inputmode="decimal">
+      </div>
+      <div class="row" style="margin-top:8px">
+        <span class="lbl">Units</span>
+        <div class="units">
+          <button class="unit" data-unit="cm">cm</button>
+          <button class="unit" data-unit="cm2">cm<sup>2</sup></button>
+        </div>
+      </div>
+      <div class="hint">Question 1c — Area</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="title">1(c) Perimeter</div>
+    <div class="q" data-answer="28" data-unit="cm">
+      <div class="row">
+        <span class="lbl">Value</span>
+        <input class="val" type="text" autocomplete="off" inputmode="decimal">
+      </div>
+      <div class="row" style="margin-top:8px">
+        <span class="lbl">Units</span>
+        <div class="units">
+          <button class="unit" data-unit="cm">cm</button>
+          <button class="unit" data-unit="cm2">cm<sup>2</sup></button>
+        </div>
+      </div>
+      <div class="hint">Question 1c — Perimeter</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="title">1(d) Area</div>
+    <div class="q" data-answer="56" data-unit="m2">
+      <div class="row">
+        <span class="lbl">Value</span>
+        <input class="val" type="text" autocomplete="off" inputmode="decimal">
+      </div>
+      <div class="row" style="margin-top:8px">
+        <span class="lbl">Units</span>
+        <div class="units">
+          <button class="unit" data-unit="m">m</button>
+          <button class="unit" data-unit="m2">m<sup>2</sup></button>
+        </div>
+      </div>
+      <div class="hint">Question 1d — Area</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="title">1(d) Perimeter</div>
+    <div class="q" data-answer="30" data-unit="m">
+      <div class="row">
+        <span class="lbl">Value</span>
+        <input class="val" type="text" autocomplete="off" inputmode="decimal">
+      </div>
+      <div class="row" style="margin-top:8px">
+        <span class="lbl">Units</span>
+        <div class="units">
+          <button class="unit" data-unit="m">m</button>
+          <button class="unit" data-unit="m2">m<sup>2</sup></button>
+        </div>
+      </div>
+      <div class="hint">Question 1d — Perimeter</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="title">1(e) Area</div>
+    <div class="q" data-answer="49" data-unit="cm2">
+      <div class="row">
+        <span class="lbl">Value</span>
+        <input class="val" type="text" autocomplete="off" inputmode="decimal">
+      </div>
+      <div class="row" style="margin-top:8px">
+        <span class="lbl">Units</span>
+        <div class="units">
+          <button class="unit" data-unit="cm">cm</button>
+          <button class="unit" data-unit="cm2">cm<sup>2</sup></button>
+        </div>
+      </div>
+      <div class="hint">Question 1e — Area</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="title">1(e) Perimeter</div>
+    <div class="q" data-answer="28" data-unit="cm">
+      <div class="row">
+        <span class="lbl">Value</span>
+        <input class="val" type="text" autocomplete="off" inputmode="decimal">
+      </div>
+      <div class="row" style="margin-top:8px">
+        <span class="lbl">Units</span>
+        <div class="units">
+          <button class="unit" data-unit="cm">cm</button>
+          <button class="unit" data-unit="cm2">cm<sup>2</sup></button>
+        </div>
+      </div>
+      <div class="hint">Question 1e — Perimeter</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="title">1(f) Area</div>
+    <div class="q" data-answer="21" data-unit="m2">
+      <div class="row">
+        <span class="lbl">Value</span>
+        <input class="val" type="text" autocomplete="off" inputmode="decimal">
+      </div>
+      <div class="row" style="margin-top:8px">
+        <span class="lbl">Units</span>
+        <div class="units">
+          <button class="unit" data-unit="m">m</button>
+          <button class="unit" data-unit="m2">m<sup>2</sup></button>
+        </div>
+      </div>
+      <div class="hint">Question 1f — Area</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="title">1(f) Perimeter</div>
+    <div class="q" data-answer="20" data-unit="m">
+      <div class="row">
+        <span class="lbl">Value</span>
+        <input class="val" type="text" autocomplete="off" inputmode="decimal">
+      </div>
+      <div class="row" style="margin-top:8px">
+        <span class="lbl">Units</span>
+        <div class="units">
+          <button class="unit" data-unit="m">m</button>
+          <button class="unit" data-unit="m2">m<sup>2</sup></button>
+        </div>
+      </div>
+      <div class="hint">Question 1f — Perimeter</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  function parseNum(s){
+    if(!s) return NaN;
+    s = s.replace(/[^0-9.+\-]/g,'');
+    return parseFloat(s);
+  }
+  function valueFrom(q){
+    const v = q.querySelector('.val').value.trim();
+    if(v==='') return null;
+    const n = parseNum(v);
+    return isFinite(n) ? n : NaN;
+  }
+  function selectedUnit(q){
+    const b=q.querySelector('.unit.active');
+    return b?b.dataset.unit:null;
+  }
+  function update(q){
+    const expect=parseFloat(q.dataset.answer);
+    const val=valueFrom(q);
+    const unit=selectedUnit(q);
+    const unitOK = unit===q.dataset.unit;
+    const numOK = (val!==null) && !Number.isNaN(val) && Math.abs(val-expect)<1e-9;
+    q.classList.remove('good','bad');
+    if(val===null && unit===null) return; // untouched
+    if(numOK && unitOK){ q.classList.add('good'); }
+    else{ q.classList.add('bad'); }
+  }
+  document.querySelectorAll('.q').forEach(q=>{
+    q.querySelectorAll('input[type=text]').forEach(i=>i.addEventListener('input',()=>update(q)));
+    q.querySelectorAll('.unit').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        btn.parentElement.querySelectorAll('.unit').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        update(q);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

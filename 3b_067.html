@@ -1,0 +1,72 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Measuring Volume in Millilitres — Checker</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;margin:16px;line-height:1.4}
+  h1{font-size:18px;margin:0 0 12px}
+  .row{display:flex;align-items:center;gap:8px;margin:10px 0}
+  .qn{font-weight:bold;min-width:70px}
+  label{white-space:nowrap}
+  input[type=text]{width:130px;padding:8px;font-size:16px;border:1px solid #bbb;border-radius:4px;color:#c00;outline:none}
+  .units{margin-left:6px}
+  .ok{background:#d6f7d6}
+  .bad{background:#ffd6d6}
+  small{color:#555}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="row">
+  <span class="qn">Q1 • kettle</span>
+  <input id="q1" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Question 1 kettle in millilitres" data-answer="2000" placeholder="type amount">
+  <span class="units">ml</span>
+</div>
+
+<div class="row">
+  <span class="qn">Q2 • carton</span>
+  <input id="q2" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Question 2 carton in millilitres" data-answer="250" placeholder="type amount">
+  <span class="units">ml</span>
+</div>
+
+<div class="row">
+  <span class="qn">Q3 • tablespoon</span>
+  <input id="q3" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Question 3 tablespoon in millilitres" data-answer="10" placeholder="type amount">
+  <span class="units">ml</span>
+</div>
+
+<div class="row">
+  <span class="qn">Q4 • small sauce bottle</span>
+  <input id="q4" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Question 4 small sauce bottle in millilitres" data-answer="75" placeholder="type amount">
+  <span class="units">ml</span>
+</div>
+
+<div class="row">
+  <span class="qn">Q5 • soda bottle</span>
+  <input id="q5" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Question 5 soda bottle in millilitres" data-answer="1000" placeholder="type amount">
+  <span class="units">ml</span>
+</div>
+
+<script>
+(function(){
+  function digitsOnly(s){return (s||'').toString().replace(/[^0-9]/g,'');}
+  function paint(el,ok){
+    el.classList.remove('ok','bad');
+    if(!el.value.trim()){return;}
+    el.classList.add(ok?'ok':'bad');
+  }
+  document.querySelectorAll('.ans').forEach(function(inp){
+    function check(){
+      var val = digitsOnly(inp.value);
+      var ans = (inp.dataset.answer||'').trim();
+      paint(inp, val === ans && ans!=='');
+    }
+    inp.addEventListener('input', check);
+    inp.addEventListener('blur', check);
+  });
+})();
+</script>
+</body>
+</html>

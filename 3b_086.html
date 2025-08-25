@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q7 Barley Water Checker</title>
+<style>
+body{font-family:system-ui,Arial,sans-serif;margin:16px;line-height:1.35}
+h2{font-size:18px;margin:0 0 8px}
+small{color:#555}
+label{display:block;margin:10px 0 4px;font-weight:600}
+.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0}
+input[type=text]{font-size:18px;padding:8px 10px;border:2px solid #777;border-radius:6px;min-width:7ch}
+input.big{min-width:14ch}
+.ok{background:#c8f7c2}
+.bad{background:#ffd7d7}
+.hint{background:#f4f7ff;border-left:4px solid #4a74ff;padding:8px;margin:12px 0}
+</style>
+</head>
+<body>
+<h2>If you keep getting it wrong, raise your hand and ask your teacher for help.</h2>
+<div class="hint">
+<strong>Hints:</strong>
+<ul>
+<li>Think in “units”: May is 1 unit. How many units for Susan?</li>
+<li>Find the total in millilitres first.</li>
+<li>Convert that total to litres and the remaining millilitres.</li>
+</ul>
+</div>
+
+<form autocomplete="off" onsubmit="return false">
+<label for="L">Q7 – Litres (number only)</label>
+<div class="row">
+<span>They drank</span>
+<input id="L" type="text" inputmode="numeric" aria-label="Q7 - Litres">
+<span>ℓ</span>
+<input id="ML" class="big" type="text" aria-label="Q7 - Millilitres with unit">
+<span>ml of barley water together.</span>
+</div>
+</form>
+
+<script>
+const L=document.getElementById('L');
+const ML=document.getElementById('ML');
+function norm(s){return s.trim().toLowerCase().replace(/\s+/g,' ');}
+function paint(el,ok){
+  el.classList.remove('ok','bad');
+  if(!el.value.trim()) return;
+  el.classList.add(ok?'ok':'bad');
+}
+function check(){
+  const lOk = norm(L.value)==='1';
+  const mlOk = norm(ML.value)==='200';
+  paint(L,lOk);
+  paint(ML,mlOk);
+}
+L.addEventListener('input',check);
+ML.addEventListener('input',check);
+</script>
+</body>
+</html>

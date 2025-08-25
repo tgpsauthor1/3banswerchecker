@@ -1,0 +1,130 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Practice 9 Checker</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;margin:16px;color:#10385a}
+  h1{font-size:18px;margin:0 0 12px}
+  h2{font-size:16px;margin:16px 0 8px}
+  .line{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:8px 0}
+  .symbol{font-weight:bold;font-size:22px;margin:0 4px}
+  .frac{display:inline-flex;flex-direction:column;align-items:center;margin:0 6px}
+  .bar{width:60px;border-top:2px solid #000;height:0;margin:2px 0}
+  .ans{width:60px;height:38px;font-size:22px;text-align:center;border:2px solid #5aa3e6;border-radius:8px;outline:none}
+  .ans.correct{background:#bdf6bd}
+  .ans.wrong{background:#ffc9c9}
+  .tag{font-size:12px;color:#555;margin:2px 0 0 2px}
+  button{padding:8px 12px;border:none;background:#1e88e5;color:#fff;border-radius:6px;cursor:pointer}
+  .meta{font-size:13px;color:#555;margin-top:8px}
+  .status{margin-top:10px;font-weight:bold}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<h2>Q1. Add the fractions.</h2>
+<div class="tag">Q1a: Write both addends with denominator 9.</div>
+<div class="line" aria-label="Q1a conversion to ninths">
+  <div class="frac" aria-label="Q1a first addend 2/9">
+    <input class="ans" inputmode="numeric" autocomplete="off" aria-label="Question 1a, first converted fraction numerator" data-answer="2">
+    <div class="bar"></div>
+    <input class="ans" inputmode="numeric" autocomplete="off" aria-label="Question 1a, first converted fraction denominator" data-answer="9">
+  </div>
+  <span class="symbol">+</span>
+  <div class="frac" aria-label="Q1a second addend 1/3 converted to ninths">
+    <input class="ans" inputmode="numeric" autocomplete="off" aria-label="Question 1a, second converted fraction numerator" data-answer="3">
+    <div class="bar"></div>
+    <input class="ans" inputmode="numeric" autocomplete="off" aria-label="Question 1a, second converted fraction denominator" data-answer="9">
+  </div>
+</div>
+
+<div class="tag">Q1b: Final answer.</div>
+<div class="line" aria-label="Q1b final answer">
+  <span>=</span>
+  <div class="frac">
+    <input class="ans" inputmode="numeric" autocomplete="off" aria-label="Question 1b, answer numerator" data-answer="5">
+    <div class="bar"></div>
+    <input class="ans" inputmode="numeric" autocomplete="off" aria-label="Question 1b, answer denominator" data-answer="9">
+  </div>
+</div>
+
+<h2>Q2. Subtract the fractions.</h2>
+<div class="tag">Q2a: Write both fractions with denominator 8.</div>
+<div class="line" aria-label="Q2a common denominator">
+  <div class="frac" aria-label="Q2a first minuend 5/8">
+    <input class="ans" inputmode="numeric" autocomplete="off" aria-label="Question 2a, first fraction numerator" data-answer="5">
+    <div class="bar"></div>
+    <input class="ans" inputmode="numeric" autocomplete="off" aria-label="Question 2a, first fraction denominator" data-answer="8">
+  </div>
+  <span class="symbol">−</span>
+  <div class="frac" aria-label="Q2a second subtrahend 1/4 converted to eighths">
+    <input class="ans" inputmode="numeric" autocomplete="off" aria-label="Question 2a, second converted fraction numerator" data-answer="2">
+    <div class="bar"></div>
+    <input class="ans" inputmode="numeric" autocomplete="off" aria-label="Question 2a, second converted fraction denominator" data-answer="8">
+  </div>
+</div>
+
+<div class="tag">Q2b: Final answer.</div>
+<div class="line" aria-label="Q2b final answer">
+  <span>=</span>
+  <div class="frac">
+    <input class="ans" inputmode="numeric" autocomplete="off" aria-label="Question 2b, answer numerator" data-answer="3">
+    <div class="bar"></div>
+    <input class="ans" inputmode="numeric" autocomplete="off" aria-label="Question 2b, answer denominator" data-answer="8">
+  </div>
+</div>
+
+<div class="line">
+  <button id="checkBtn">Check All</button>
+  <div id="score" class="meta"></div>
+</div>
+<div id="status" class="status" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  const inputs=[...document.querySelectorAll('.ans')];
+  const status=document.getElementById('status');
+  const scoreBox=document.getElementById('score');
+
+  function sanitize(v){return v.replace(/[^0-9\-]/g,'').trim();}
+  function isCorrect(el){
+    const val=sanitize(el.value);
+    const ans=(el.dataset.answer||'').trim();
+    return val!=='' && val===ans;
+  }
+  function mark(el){
+    el.classList.remove('correct','wrong');
+    const v=sanitize(el.value);
+    if(v===''){return;}
+    el.value=v;
+    if(isCorrect(el)){el.classList.add('correct');}
+    else{el.classList.add('wrong');}
+    updateScore();
+  }
+  function updateScore(){
+    const filled=inputs.filter(i=>i.value.trim()!=='').length;
+    const correct=inputs.filter(i=>isCorrect(i)).length;
+    scoreBox.textContent=`Boxes filled: ${filled}/${inputs.length} • Correct: ${correct}/${inputs.length}`;
+  }
+  inputs.forEach(i=>{
+    i.addEventListener('input',()=>mark(i));
+    i.setAttribute('maxlength','3');
+  });
+
+  document.getElementById('checkBtn').addEventListener('click',()=>{
+    let firstIssue=null, allFilled=true, allCorrect=true;
+    inputs.forEach(i=>{
+      if(i.value.trim()===''){allFilled=false; i.classList.add('wrong'); if(!firstIssue) firstIssue=i;}
+      else if(!isCorrect(i)){allCorrect=false; if(!firstIssue) firstIssue=i;}
+    });
+    updateScore();
+    if(!allFilled){status.textContent='Please complete all boxes before trying again.';}
+    else if(!allCorrect){status.textContent='Some answers are incorrect. Check the red boxes and try again.';}
+    else{status.textContent='Great job! All answers are correct.';}
+    if(firstIssue){firstIssue.focus({preventScroll:false});}
+  });
+})();
+</script>
+</body>
+</html>

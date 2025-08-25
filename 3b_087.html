@@ -1,0 +1,80 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Check Your Answers - Activity Page</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.4;margin:16px;color:#111}
+  h1{font-size:18px;margin:0 0 12px}
+  .card{border:1px solid #ddd;border-radius:8px;padding:14px;max-width:760px}
+  .note{font-size:13px;color:#444;margin:8px 0}
+  label{display:block;margin:10px 0 6px;font-weight:600}
+  input[type=text]{width:320px;font-size:18px;padding:10px;border:2px solid #888;border-radius:6px;outline:none}
+  input[type=text].correct{background:#c8f7c5;border-color:#2e7d32}
+  input[type=text].wrong{background:#ffd2d2;border-color:#c62828}
+  .hint{margin:10px 0 0 16px;font-size:14px}
+  .hint li{margin:4px 0}
+  .status{font-size:13px;color:#555;margin-top:6px}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="card" role="group" aria-labelledby="q8-title">
+  <div id="q8-title" style="font-weight:700">Q8 – Final Answer Check</div>
+  <div class="note">Type your final answer with the correct number and unit of measurement. A space between the number and unit is optional.</div>
+
+  <ul class="hint">
+    <li>What is the length of rope P?</li>
+    <li>How many equal units is rope P?</li>
+    <li>Find the length of rope S.</li>
+    <li>Find the total length of rope S and P.</li>
+    <li>Remember to write the correct unit in metres (m).</li>
+  </ul>
+
+  <label for="q8-final">Q8 final answer: The total length of Rope S and Rope T is</label>
+  <input id="q8-final" type="text" inputmode="text" autocomplete="off" spellcheck="false" aria-describedby="q8-status">
+  <div id="q8-status" class="status" aria-live="polite"></div>
+</div>
+
+<script>
+(function(){
+  const field = document.getElementById('q8-final');
+  const status = document.getElementById('q8-status');
+
+  function normalize(s){
+    return s.toLowerCase().replace(/\s+/g,' ').trim();
+  }
+
+  function check(){
+    const v = normalize(field.value);
+    // Accept optional space(s) between number and unit
+    // Accept m/metre(s)/meter(s)
+    const m = v.match(/^([0-9]+(?:\.[0-9]+)?)\s*(m|metre|metres|meter|meters)$/);
+    let ok = false, msg = 'Include a number and the correct unit (metres).';
+
+    if (m){
+      const num = parseFloat(m[1]);
+      const unit = m[2];
+      if (num === 33){
+        ok = true;
+        msg = 'Correct! Well done.';
+      } else {
+        msg = 'Not correct yet. Re-check your calculation.';
+      }
+      if (!/^(m|metre|metres|meter|meters)$/.test(unit)) {
+        ok = false;
+        msg = 'Use metres (m).';
+      }
+    }
+
+    field.classList.toggle('correct', ok);
+    field.classList.toggle('wrong', field.value.length>0 && !ok);
+    status.textContent = msg;
+  }
+
+  field.addEventListener('input', check);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Capacity Check</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;margin:16px;line-height:1.45}
+  h2{margin:12px 0}
+  .q{margin:12px 0}
+  .row{margin:6px 0}
+  .units{white-space:nowrap}
+
+  /* Inputs + feedback colors */
+  input.ans{font-size:18px;padding:6px 10px;width:110px;border:2px solid #888;border-radius:6px;background:#fff}
+  input.ans.ok, input.ans.correct{background:#c8f7c5;border-color:#2a8a2a}   /* green when correct */
+  input.ans.bad, input.ans.wrong{background:#ffd8d8;border-color:#c44}      /* red when wrong */
+
+  button{margin-top:12px;padding:6px 10px;font-size:14px;border:1px solid #999;border-radius:6px;background:#f3f3f3;cursor:pointer}
+</style>
+</head>
+<body>
+<p><strong>If you keep getting it wrong, raise your hand and ask your teacher for help.</strong></p>
+
+<h2>10. Find the capacity of each container.</h2>
+
+<div class="q">
+  <div class="row">10(a)
+    <span class="units"><input class="ans" data-answer="1" inputmode="numeric" autocomplete="off" spellcheck="false"> ℓ</span>
+    <span class="units" style="margin-left:10px"><input class="ans" data-answer="500" inputmode="numeric" autocomplete="off" spellcheck="false"> ml</span>
+  </div>
+</div>
+
+<div class="q">
+  <div class="row">10(b)
+    <span class="units"><input class="ans" data-answer="3" inputmode="numeric" autocomplete="off" spellcheck="false"> ℓ</span>
+    <span class="units" style="margin-left:10px"><input class="ans" data-answer="850" inputmode="numeric" autocomplete="off" spellcheck="false"> ml</span>
+  </div>
+</div>
+
+<h2>11. Write in millilitres.</h2>
+
+<div class="q">
+  <div class="row">11(a)
+    <span class="units"><input class="ans" data-answer="3000" inputmode="numeric" autocomplete="off" spellcheck="false"> ml</span>
+    +
+    <span class="units"><input class="ans" data-answer="340" inputmode="numeric" autocomplete="off" spellcheck="false"> ml</span>
+    =
+    <span class="units"><input class="ans" data-answer="3340" inputmode="numeric" autocomplete="off" spellcheck="false"> ml</span>
+  </div>
+</div>
+
+<div class="q">
+  <div class="row">11(b)
+    <span class="units"><input class="ans" data-answer="6010" inputmode="numeric" autocomplete="off" spellcheck="false"> ml</span>
+  </div>
+</div>
+
+<div class="q">
+  <div class="row">11(c)
+    <span class="units"><input class="ans" data-answer="2005" inputmode="numeric" autocomplete="off" spellcheck="false"> ml</span>
+  </div>
+</div>
+
+<button type="button" id="reset">Reset all</button>
+
+<script>
+(function(){
+  'use strict';
+
+  // Grab answer from any of the common attributes
+  function getAnswer(el){
+    // Prefer explicit attributes to avoid dataset quirks
+    const a1 = el.getAttribute('data-answer');
+    const a2 = el.getAttribute('data-ans');
+    const a3 = el.getAttribute('data-a');
+    return (a1 ?? a2 ?? a3 ?? '').trim();
+  }
+
+  function cleanNum(v){
+    // remove commas/spaces and non-digits (keep minus), then trim
+    return (v||'').replace(/[, ]+/g,'').replace(/[^0-9-]/g,'').trim();
+  }
+
+  function clearState(el){
+    el.classList.remove('ok','bad','correct','wrong');
+  }
+
+  function setState(el, ok){
+    el.classList.toggle('ok', ok);
+    el.classList.toggle('bad', !ok);
+    // also set alternate names for compatibility
+    el.classList.toggle('correct', ok);
+    el.classList.toggle('wrong', !ok);
+  }
+
+  function isFiniteNumber(n){ return typeof n === 'number' && Number.isFinite(n); }
+
+  function checkField(el){
+    const rawInput = (el.value || '').trim();
+
+    // Empty -> neutral
+    if(rawInput === ''){ clearState(el); return; }
+
+    const expected = getAnswer(el);
+    if(expected === ''){ clearState(el); return; }
+
+    // Normalize both sides numerically first
+    const valNumStr = cleanNum(rawInput);
+    const expNumStr = cleanNum(expected);
+
+    // If both parse to valid numbers, compare numerically (handles 2,000 vs 2000 vs 02000)
+    const valNum = valNumStr === '' ? NaN : Number(valNumStr);
+    const expNum = expNumStr === '' ? NaN : Number(expNumStr);
+
+    if(isFiniteNumber(valNum) && isFiniteNumber(expNum)){
+      setState(el, valNum === expNum);
+      return;
+    }
+
+    // Fallback: case-insensitive raw text compare (rare)
+    setState(el, rawInput.toLowerCase() === expected.toLowerCase());
+  }
+
+  function bind(){
+    const inputs = Array.from(document.querySelectorAll('input.ans, input.answer'));
+    inputs.forEach(el=>{
+      el.setAttribute('inputmode','numeric');
+      el.addEventListener('input', ()=>checkField(el));
+      el.addEventListener('blur',  ()=>checkField(el));
+    });
+
+    const resetBtn = document.getElementById('reset');
+    if(resetBtn){
+      resetBtn.addEventListener('click', ()=>{
+        inputs.forEach(i=>{ i.value=''; clearState(i); });
+        inputs[0]?.focus();
+      });
+    }
+  }
+
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', bind); }
+  else { bind(); }
+})();
+</script>
+</body>
+</html>

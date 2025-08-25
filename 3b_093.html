@@ -1,0 +1,86 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mass Practice Checker</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;line-height:1.5;margin:16px;color:#111}
+h1{font-size:18px;margin:0 0 12px}
+h2{font-size:16px;margin:16px 0 8px}
+.q{margin:10px 0}
+.ans{width:8ch;max-width:12ch;padding:.4em .5em;font-size:1.05rem;border:1px solid #999;border-radius:6px;color:#c00;outline:none}
+.ans.ok{background:#c9f7c9}
+.ans.bad{background:#ffc9c9}
+.units{margin:0 4px}
+small.hint{color:#666;margin-left:6px;font-size:.8rem}
+.row{margin:6px 0}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+
+<h2>6. Find the mass of each item.</h2>
+
+
+<div class="q">
+<div class="row">a)
+<input class="ans" inputmode="numeric" autocomplete="off" spellcheck="false" data-a="2" aria-label="Q6(a) kilograms"> <span class="units">kg</span>
+<input class="ans" inputmode="numeric" autocomplete="off" spellcheck="false" data-a="700" aria-label="Q6(a) grams"> <span class="units">g</span>
+</div>
+</div>
+
+
+<div class="q">
+<div class="row">b)
+<input class="ans" inputmode="numeric" autocomplete="off" spellcheck="false" data-a="4" aria-label="Q6(b) kilograms"> <span class="units">kg</span>
+<input class="ans" inputmode="numeric" autocomplete="off" spellcheck="false" data-a="400" aria-label="Q6(b) grams"> <span class="units">g</span>
+</div>
+</div>
+
+
+<h2>7. Write in grams.</h2>
+
+
+<div class="q">
+<div class="row">a)
+<input class="ans" inputmode="numeric" autocomplete="off" spellcheck="false" data-a="1000" aria-label="Q7(a) first addend in grams"> <span class="units">g</span> +
+<input class="ans" inputmode="numeric" autocomplete="off" spellcheck="false" data-a="655" aria-label="Q7(a) second addend in grams"> <span class="units">g</span>
+</div>
+<div class="row">=
+<input class="ans" inputmode="numeric" autocomplete="off" spellcheck="false" data-a="1655" aria-label="Q7(a) total in grams"> <span class="units">g</span>
+</div>
+</div>
+
+
+<div class="q">
+<div class="row">b)
+<input class="ans" inputmode="numeric" autocomplete="off" spellcheck="false" data-a="2080" aria-label="Q7(b) total in grams"> <span class="units">g</span>
+</div>
+</div>
+
+
+<div class="q">
+<div class="row">c)
+<input class="ans" inputmode="numeric" autocomplete="off" spellcheck="false" data-a="5001" aria-label="Q7(c) total in grams"> <span class="units">g</span>
+</div>
+</div>
+
+
+<script>
+(function(){
+function norm(s){return (s||"").toString().trim().replace(/[, ]/g,"");}
+function paint(el){
+var val=norm(el.value), ans=norm(el.dataset.a);
+el.classList.remove("ok","bad");
+if(!val){return;}
+if(val===ans){el.classList.add("ok");}else{el.classList.add("bad");}
+}
+document.querySelectorAll(".ans").forEach(function(el){
+el.addEventListener("input",function(){paint(el);});
+el.addEventListener("blur",function(){paint(el);});
+});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Practice 3 Checker</title>
+<style>
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:16px;color:#222}
+h1{font-size:18px;margin:0 0 8px}
+p{margin:0 0 14px}
+label{display:block;margin:.6rem 0 .2rem}
+.input{width:200px;padding:10px;font-size:18px;border:2px solid #888;border-radius:6px;outline:none;transition:.2s}
+.input.correct{background:#c9f7c9;border-color:#148a14}
+.input.wrong{background:#ffd1d1;border-color:#c62828}
+.small{font-size:13px;color:#555;margin-bottom:8px}
+.row{margin-bottom:6px}
+.letter{width:90px}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<p class="small">You must type the unit of measurement. For (e), (f), and (g), letters may be typed in uppercase or lowercase.</p>
+
+<div class="row">
+  <label for="q1a">1(a) Perimeter of Figure Q</label>
+  <input id="q1a" class="input" type="text" inputmode="text" autocomplete="off" spellcheck="false" data-type="unit" data-answer="10 cm" aria-label="Question 1(a) Perimeter of Figure Q">
+</div>
+
+<div class="row">
+  <label for="q1b">1(b) Perimeter of Figure R</label>
+  <input id="q1b" class="input" type="text" inputmode="text" autocomplete="off" spellcheck="false" data-type="unit" data-answer="18 cm" aria-label="Question 1(b) Perimeter of Figure R">
+</div>
+
+<div class="row">
+  <label for="q1c">1(c) Perimeter of Figure S</label>
+  <input id="q1c" class="input" type="text" inputmode="text" autocomplete="off" spellcheck="false" data-type="unit" data-answer="12 cm" aria-label="Question 1(c) Perimeter of Figure S">
+</div>
+
+<div class="row">
+  <label for="q1d">1(d) Perimeter of Figure T</label>
+  <input id="q1d" class="input" type="text" inputmode="text" autocomplete="off" spellcheck="false" data-type="unit" data-answer="14 cm" aria-label="Question 1(d) Perimeter of Figure T">
+</div>
+
+<div class="row">
+  <label for="q1e">1(e) Figure T has a smaller perimeter than Figure ____</label>
+  <input id="q1e" class="input letter" type="text" inputmode="text" autocomplete="off" spellcheck="false" data-type="letter" data-answer="R" aria-label="Question 1(e) Fill the figure letter">
+</div>
+
+<div class="row">
+  <label for="q1f">1(f) Figure S has a greater perimeter than Figure ____</label>
+  <input id="q1f" class="input letter" type="text" inputmode="text" autocomplete="off" spellcheck="false" data-type="letter" data-answer="Q" aria-label="Question 1(f) Fill the figure letter">
+</div>
+
+<div class="row">
+  <label for="q1g">1(g) Figure ____ has the greatest perimeter</label>
+  <input id="q1g" class="input letter" type="text" inputmode="text" autocomplete="off" spellcheck="false" data-type="letter" data-answer="R" aria-label="Question 1(g) Fill the figure letter">
+</div>
+
+<script>
+(function(){
+  function normLoose(s){ return (s||'').toLowerCase().replace(/\s+/g,''); }
+  function validate(el){
+    const t=el.dataset.type, a=el.dataset.answer||'', v=el.value;
+    if(!v){ el.classList.remove('correct','wrong'); return; }
+    let ok=false;
+    if(t==='unit' || t==='letter'){ ok = normLoose(v)===normLoose(a); }
+    el.classList.toggle('correct',ok);
+    el.classList.toggle('wrong',!ok);
+  }
+  document.querySelectorAll('input[data-answer]').forEach(el=>{
+    el.addEventListener('input',()=>validate(el));
+  });
+})();
+</script>
+</body>
+</html>
+
+
+
+
+
+

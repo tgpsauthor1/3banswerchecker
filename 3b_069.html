@@ -1,0 +1,112 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Practice 8 — Measuring Volume</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;line-height:1.4;margin:0;padding:16px;color:#222}
+  h1{font-size:1.1rem;margin:0 0 12px}
+  h2{font-size:1rem;margin:18px 0 8px}
+  fieldset{border:1px solid #ddd;border-radius:8px;padding:10px 12px;margin:10px 0}
+  legend{padding:0 6px;font-weight:600}
+  .row{display:flex;align-items:center;gap:8px;margin:6px 0}
+  .lbl{min-width:150px;font-size:.95rem}
+  .ans{font-size:1.1rem;padding:.45rem .55rem;width:8ch;border:2px solid #0a74da;border-radius:8px}
+  .unit{min-width:1.5rem}
+  .correct{background:#c7f6c7}
+  .incorrect{background:#ffc8c8}
+  .note{font-size:.9rem;color:#444;margin-bottom:10px}
+  .toolbar{margin-top:12px;display:flex;gap:8px}
+  button{padding:.45rem .7rem;border:1px solid #999;border-radius:6px;background:#f5f5f5;cursor:pointer}
+  button:active{transform:scale(.98)}
+  .muted{color:#666;font-size:.9rem}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="note">Enter only the numbers. Units are shown next to each field (ℓ and ml).</div>
+
+<fieldset>
+  <legend>Question 1(a) — Find the total volume</legend>
+  <div class="row">
+    <div class="lbl">Q1(a) — litres:</div>
+    <input id="q1aL" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Question 1 a litres">
+    <span class="unit">ℓ</span>
+  </div>
+  <div class="row">
+    <div class="lbl">Q1(a) — millilitres:</div>
+    <input id="q1aMl" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Question 1 a millilitres">
+    <span class="unit">ml</span>
+  </div>
+  <div class="muted">Hint: Add the beakers’ volumes and regroup into ℓ and ml.</div>
+</fieldset>
+
+<fieldset>
+  <legend>Question 1(b) — Find the total volume</legend>
+  <div class="row">
+    <div class="lbl">Q1(b) — litres:</div>
+    <input id="q1bL" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Question 1 b litres">
+    <span class="unit">ℓ</span>
+  </div>
+  <div class="row">
+    <div class="lbl">Q1(b) — millilitres:</div>
+    <input id="q1bMl" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Question 1 b millilitres">
+    <span class="unit">ml</span>
+  </div>
+</fieldset>
+
+<div class="toolbar">
+  <button type="button" id="checkAll">Check all</button>
+  <button type="button" id="resetAll">Reset</button>
+</div>
+
+<script>
+(function(){
+  const answers = {
+    q1aL:"1", q1aMl:"350",
+    q1bL:"3", q1bMl:"500"
+  };
+
+  const inputs = Array.from(document.querySelectorAll('.ans'));
+
+  function cleanDigits(s){
+    return (s||"").toString().replace(/[^\d]/g,"");
+  }
+
+  function setState(el, ok){
+    el.classList.remove('correct','incorrect');
+    if(el.value===""){ return; }
+    el.classList.add(ok?'correct':'incorrect');
+  }
+
+  function validate(el){
+    const id = el.id;
+    const filtered = cleanDigits(el.value);
+    if(el.value!==filtered){ el.value = filtered; }
+    const expected = answers[id];
+    if(typeof expected === "string"){
+      setState(el, filtered === expected);
+    }
+  }
+
+  inputs.forEach(el=>{
+    el.addEventListener('input', ()=>validate(el));
+    el.addEventListener('blur', ()=>validate(el));
+  });
+
+  document.getElementById('checkAll').addEventListener('click', ()=>{
+    inputs.forEach(validate);
+  });
+
+  document.getElementById('resetAll').addEventListener('click', ()=>{
+    inputs.forEach(el=>{
+      el.value="";
+      el.classList.remove('correct','incorrect');
+    });
+  });
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Perimeter Check (d)-(f)</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;line-height:1.35;margin:16px;color:#222}
+  h1{font-size:18px;margin:0 0 8px}
+  .note{font-size:14px;margin:0 0 16px;color:#444}
+  .q{margin:10px 0;padding:10px;border:1px solid #cbd5e1;border-radius:8px}
+  .q h2{font-size:16px;margin:0 0 6px}
+  label{display:block;font-size:14px;margin:6px 0}
+  input[type=text]{width:220px;padding:10px 12px;font-size:18px;border:1px solid #94a3b8;border-radius:6px;outline:0;transition:background-color .2s}
+  .idle{background:#fffceb}
+  .ok{background:#c8f7c2}
+  .bad{background:#ffc0c0}
+  .hint{font-size:12px;color:#64748b;margin-top:6px}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<p class="note">Just enter the final answer. Remember to write the unit of measurement. Remember to write the equation in your workbook.</p>
+
+<section class="q" aria-labelledby="qd">
+  <h2 id="qd">Question (d) — Final perimeter</h2>
+  <label for="ans-d">Enter your final answer for (d):</label>
+  <input class="idle" id="ans-d" type="text" inputmode="text" autocomplete="off" aria-describedby="hint-d" data-expected="44">
+
+</section>
+
+<section class="q" aria-labelledby="qe">
+  <h2 id="qe">Question (e) — Final perimeter</h2>
+  <label for="ans-e">Enter your final answer for (e):</label>
+  <input class="idle" id="ans-e" type="text" inputmode="text" autocomplete="off" aria-describedby="hint-e" data-expected="32">
+
+</section>
+
+<section class="q" aria-labelledby="qf">
+  <h2 id="qf">Question (f) — Final perimeter</h2>
+  <label for="ans-f">Enter your final answer for (f):</label>
+  <input class="idle" id="ans-f" type="text" inputmode="text" autocomplete="off" aria-describedby="hint-f" data-expected="38">
+
+</section>
+
+<script>
+(function(){
+  // Accept numbers with or without space before common units (m/metre/meter, cm/centimetre/centimeter)
+  const unitPattern = /^\s*(\d+)\s*(?:(m|meter|metre|meters|metres|cm|centimeter|centimetre|centimeters|centimetres))?\s*$/i;
+  function check(el){
+    const v = el.value;
+    const expected = parseInt(el.dataset.expected,10);
+    if(!v){el.className='idle';return;}
+    const m = v.match(unitPattern);
+    if(!m){el.className='bad';return;}
+    const num = parseInt(m[1],10);
+    el.className = (num===expected) ? 'ok' : 'bad';
+  }
+  document.querySelectorAll('input[type="text"][data-expected]').forEach(el=>{
+    el.addEventListener('input',()=>check(el));
+    el.addEventListener('blur',()=>check(el));
+  });
+})();
+</script>
+</body>
+</html>

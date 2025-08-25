@@ -1,0 +1,153 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chapter 13 Time — Practice 1 Recall</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;line-height:1.5;margin:16px;color:#123}
+  h1{font-size:18px;margin:0 0 12px}
+  .note{font-weight:bold;margin-bottom:14px}
+  .section{margin:14px 0}
+  .q{margin:10px 0;padding:8px 10px;border:1px solid #cfd8dc;border-radius:8px}
+  .q h2{font-size:16px;margin:0 0 6px}
+  .row{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:6px 0}
+  input.ans{width:4.6em;padding:8px 10px;font-size:16px;border:1px solid #90a4ae;border-radius:6px;outline:none}
+  input.ans.short{width:3.2em}
+  input.ans.ok{background:#c8f7c5}
+  input.ans.bad{background:#ffc9c9}
+  .unit{margin:0 2px}
+</style>
+</head>
+<body>
+<p class="note">If you keep getting it wrong, raise your hand and ask your teacher for help.</p>
+
+<div class="section">
+  <div class="q">
+    <h2>1. Write the time shown on each clock.</h2>
+
+    <div class="row">
+      <input class="ans short" data-answer="3" inputmode="numeric">
+      <span>:</span>
+      <input class="ans short" data-answer="26" inputmode="numeric">
+    </div>
+
+    <div class="row">
+      <input class="ans short" data-answer="10" inputmode="numeric">
+      <span>:</span>
+      <input class="ans short" data-answer="10" inputmode="numeric">
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="q">
+    <h2>2. Write in minutes.</h2>
+
+    <div class="row">
+      <span>Q2(a) =</span>
+      <input class="ans" data-answer="60" inputmode="numeric">
+      <span class="unit">min +</span>
+      <input class="ans" data-answer="30" inputmode="numeric">
+      <span class="unit">min =</span>
+      <input class="ans" data-answer="90" inputmode="numeric">
+      <span class="unit">min</span>
+    </div>
+
+    <div class="row">
+      <span>Q2(b) =</span>
+      <input class="ans" data-answer="60" inputmode="numeric">
+      <span class="unit">min +</span>
+      <input class="ans" data-answer="60" inputmode="numeric">
+      <span class="unit">min +</span>
+      <input class="ans" data-answer="10" inputmode="numeric">
+      <span class="unit">min =</span>
+      <input class="ans" data-answer="130" inputmode="numeric">
+      <span class="unit">min</span>
+    </div>
+
+    <div class="row">
+      <span>Q2(c) =</span>
+      <input class="ans" data-answer="60" inputmode="numeric">
+      <span class="unit">min +</span>
+      <input class="ans" data-answer="60" inputmode="numeric">
+      <span class="unit">min +</span>
+      <input class="ans" data-answer="60" inputmode="numeric">
+      <span class="unit">min +</span>
+      <input class="ans" data-answer="60" inputmode="numeric">
+      <span class="unit">min +</span>
+      <input class="ans" data-answer="35" inputmode="numeric">
+      <span class="unit">min =</span>
+      <input class="ans" data-answer="275" inputmode="numeric">
+      <span class="unit">min</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="q">
+    <h2>3. Write in hours and minutes.</h2>
+
+    <div class="row">
+      <span>Q3(a) =</span>
+      <input class="ans" data-answer="60" inputmode="numeric">
+      <span class="unit">min +</span>
+      <input class="ans" data-answer="25" inputmode="numeric">
+      <span class="unit">min =</span>
+      <input class="ans short" data-answer="1" inputmode="numeric">
+      <span class="unit">h</span>
+      <input class="ans short" data-answer="25" inputmode="numeric">
+      <span class="unit">min</span>
+    </div>
+
+    <div class="row">
+      <span>Q3(b) =</span>
+      <input class="ans" data-answer="60" inputmode="numeric">
+      <span class="unit">min +</span>
+      <input class="ans" data-answer="60" inputmode="numeric">
+      <span class="unit">min +</span>
+      <input class="ans" data-answer="59" inputmode="numeric">
+      <span class="unit">min =</span>
+      <input class="ans short" data-answer="2" inputmode="numeric">
+      <span class="unit">h</span>
+      <input class="ans short" data-answer="59" inputmode="numeric">
+      <span class="unit">min</span>
+    </div>
+
+    <div class="row">
+      <span>Q3(c) =</span>
+      <input class="ans" data-answer="60" inputmode="numeric">
+      <span class="unit">min +</span>
+      <input class="ans" data-answer="60" inputmode="numeric">
+      <span class="unit">min +</span>
+      <input class="ans" data-answer="60" inputmode="numeric">
+      <span class="unit">min +</span>
+      <input class="ans" data-answer="20" inputmode="numeric">
+      <span class="unit">min =</span>
+      <input class="ans short" data-answer="3" inputmode="numeric">
+      <span class="unit">h</span>
+      <input class="ans short" data-answer="20" inputmode="numeric">
+      <span class="unit">min</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  function norm(v){
+    v=(v||"").trim();
+    if(/^\d+$/.test(v)){ v=v.replace(/^0+(?=\d)/,''); }
+    return v;
+  }
+  function check(el){
+    var correct = norm(el.dataset.answer||"");
+    var val = norm(el.value);
+    if(!val){ el.classList.remove('ok','bad'); return; }
+    if(val===correct){ el.classList.add('ok'); el.classList.remove('bad'); }
+    else{ el.classList.add('bad'); el.classList.remove('ok'); }
+  }
+  document.querySelectorAll('input.ans').forEach(function(inp){
+    inp.setAttribute('autocomplete','off');
+    inp.addEventListener('input',function(){ check(inp); });
+  });
+</script>
+</body>
+</html>

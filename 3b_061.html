@@ -1,0 +1,128 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Measuring Mass in Kilograms and Grams — Checker</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;line-height:1.45;margin:16px;color:#222}
+  h1{font-size:18px;color:#034; margin:0 0 10px}
+  h2{font-size:16px;margin:16px 0 8px}
+  .note{font-size:14px;margin:6px 0 14px;color:#444}
+  .q{margin:12px 0;padding:8px 10px;border:1px solid #ddd;border-radius:6px}
+  .line{margin:6px 0}
+  .given{font-weight:bold}
+  input.ans{font-size:18px;padding:6px 8px;border:1px solid #888;border-radius:4px;min-width:90px}
+  .tiny{font-size:11px;color:#666;margin-left:4px}
+  .actions{margin-top:12px}
+  button{font-size:14px;padding:8px 10px;margin-right:8px;cursor:pointer}
+  #status{margin-top:8px;font-weight:bold}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<div class="note">Show your thinking. Convert kilograms to grams before adding. Type numbers only; units are shown for you.</div>
+
+<h2>1. Write in grams.</h2>
+
+<div class="q" id="q1a">
+  <div class="given">(a) 2 kg 780 g</div>
+  <div class="line">= <input class="ans" type="text" inputmode="numeric" aria-label="Q1a kilograms" data-answer="2"> kg + <input class="ans" type="text" inputmode="numeric" aria-label="Q1a grams" data-answer="780"> g <span class="tiny">(fill the kg and g you see)</span></div>
+  <div class="line">= <input class="ans" type="text" inputmode="numeric" aria-label="Q1a grams from kilograms" data-answer="2000"> g + <input class="ans" type="text" inputmode="numeric" aria-label="Q1a remaining grams" data-answer="780"> g</div>
+  <div class="line">= <input class="ans" type="text" inputmode="numeric" aria-label="Q1a total grams" data-answer="2780"> g</div>
+</div>
+
+<div class="q" id="q1b">
+  <div class="given">(b) 8 kg 12 g</div>
+  <div class="line">= <input class="ans" type="text" inputmode="numeric" aria-label="Q1b kilograms" data-answer="8"> kg + <input class="ans" type="text" inputmode="numeric" aria-label="Q1b grams" data-answer="12"> g</div>
+  <div class="line">= <input class="ans" type="text" inputmode="numeric" aria-label="Q1b grams from kilograms" data-answer="8000"> g + <input class="ans" type="text" inputmode="numeric" aria-label="Q1b remaining grams" data-answer="12"> g</div>
+  <div class="line">= <input class="ans" type="text" inputmode="numeric" aria-label="Q1b total grams" data-answer="8012"> g</div>
+</div>
+
+<div class="q" id="q1c">
+  <div class="given">(c) 7 kg 109 g</div>
+  <div class="line">= <input class="ans" type="text" inputmode="numeric" aria-label="Q1c kilograms" data-answer="7"> kg + <input class="ans" type="text" inputmode="numeric" aria-label="Q1c grams" data-answer="109"> g</div>
+  <div class="line">= <input class="ans" type="text" inputmode="numeric" aria-label="Q1c grams from kilograms" data-answer="7000"> g + <input class="ans" type="text" inputmode="numeric" aria-label="Q1c remaining grams" data-answer="109"> g</div>
+  <div class="line">= <input class="ans" type="text" inputmode="numeric" aria-label="Q1c total grams" data-answer="7109"> g</div>
+</div>
+
+<div class="q" id="q1d">
+  <div class="given">(d) 5 kg 145 g</div>
+  <div class="line">= <input class="ans" type="text" inputmode="numeric" aria-label="Q1d kilograms" data-answer="5"> kg + <input class="ans" type="text" inputmode="numeric" aria-label="Q1d grams" data-answer="145"> g</div>
+  <div class="line">= <input class="ans" type="text" inputmode="numeric" aria-label="Q1d grams from kilograms" data-answer="5000"> g + <input class="ans" type="text" inputmode="numeric" aria-label="Q1d remaining grams" data-answer="145"> g</div>
+  <div class="line">= <input class="ans" type="text" inputmode="numeric" aria-label="Q1d total grams" data-answer="5145"> g</div>
+</div>
+
+<div class="q" id="q1e">
+  <div class="given">(e) 3 kg 80 g</div>
+  <div class="line">= <input class="ans" type="text" inputmode="numeric" aria-label="Q1e kilograms" data-answer="3"> kg + <input class="ans" type="text" inputmode="numeric" aria-label="Q1e grams" data-answer="80"> g</div>
+  <div class="line">= <input class="ans" type="text" inputmode="numeric" aria-label="Q1e grams from kilograms" data-answer="3000"> g + <input class="ans" type="text" inputmode="numeric" aria-label="Q1e remaining grams" data-answer="80"> g</div>
+  <div class="line">= <input class="ans" type="text" inputmode="numeric" aria-label="Q1e total grams" data-answer="3080"> g</div>
+</div>
+
+<div class="q" id="q1f">
+  <div class="given">(f) 4 kg 2 g</div>
+  <div class="line">= <input class="ans" type="text" inputmode="numeric" aria-label="Q1f kilograms" data-answer="4"> kg + <input class="ans" type="text" inputmode="numeric" aria-label="Q1f grams" data-answer="2"> g</div>
+  <div class="line">= <input class="ans" type="text" inputmode="numeric" aria-label="Q1f grams from kilograms" data-answer="4000"> g + <input class="ans" type="text" inputmode="numeric" aria-label="Q1f remaining grams" data-answer="2"> g</div>
+  <div class="line">= <input class="ans" type="text" inputmode="numeric" aria-label="Q1f total grams" data-answer="4002"> g</div>
+</div>
+
+<div class="actions">
+  <button id="checkAll" type="button">Check All</button>
+  <button id="reset" type="button">Reset</button>
+  <span id="status"></span>
+</div>
+
+<script>
+(function(){
+  const inputs=[...document.querySelectorAll('input.ans')];
+
+  function digitsOnly(s){return (s||'').toString().replace(/[^\d]/g,'');}
+  function normalize(s){const d=digitsOnly(s); return d.length? String(parseInt(d,10)) : ''; }
+
+  function validate(el){
+    const val = normalize(el.value);
+    if(!el.value.trim()){ el.style.background=''; return false; }
+    const ans = normalize(el.dataset.answer);
+    const ok = val === ans && ans !== '';
+    el.style.background = ok ? '#c7f7c1' : '#ffc7c7';
+    return ok;
+  }
+
+  inputs.forEach(el=>{
+    el.addEventListener('input',()=>{ validate(el); updateStatus(false); });
+  });
+
+  function allFilled(){
+    return inputs.every(i=>i.value.trim().length>0);
+  }
+  function allCorrect(){
+    return inputs.every(i=>validate(i));
+  }
+
+  function updateStatus(fromButton){
+    const filled=allFilled();
+    const correct=allCorrect();
+    const status=document.getElementById('status');
+    if(!filled){
+      status.textContent='Fill every blank to show your thinking for each step.';
+      status.style.color='#a00';
+      return;
+    }
+    if(correct){
+      status.textContent='Great work — all answers are correct!';
+      status.style.color='#0a7a19';
+    }else{
+      status.textContent = fromButton ? 'Some answers are incorrect. Re-check your conversions and sums.' : '';
+      status.style.color='#a00';
+    }
+  }
+
+  document.getElementById('checkAll').addEventListener('click',()=>updateStatus(true));
+  document.getElementById('reset').addEventListener('click',()=>{
+    inputs.forEach(i=>{ i.value=''; i.style.background=''; });
+    const status=document.getElementById('status'); status.textContent=''; 
+  });
+})();
+</script>
+</body>
+</html>

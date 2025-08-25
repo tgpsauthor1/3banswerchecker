@@ -1,0 +1,128 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Length, Mass and Volume – Practice 1 Checker</title>
+<style>
+  body{font-family:system-ui,Arial,sans-serif;line-height:1.5;margin:0;padding:16px;color:#123}
+  h1{font-size:18px;margin:0 0 10px}
+  .status{background:#eef6ff;padding:8px;border-radius:6px;margin:8px 0 14px;font-size:14px}
+  .section{margin:8px 0}
+  .q{margin:12px 0}
+  .q .meta{color:#555;font-size:13px;margin-bottom:4px}
+  .sentence{font-size:16px}
+  input.answer{font-size:20px;width:140px;max-width:70vw;padding:8px 10px;border:2px solid #bbb;border-radius:8px;color:#c00;outline:none}
+  input.answer.correct{background:#d6f5d6;border-color:#2b9f5a}
+  input.answer.wrong{background:#ffd6d6;border-color:#cc5757}
+  .fraction{display:inline-flex;gap:6px;align-items:center}
+  .fraction input{width:70px;text-align:center}
+  .btns{margin-top:10px}
+  button{padding:8px 12px;border:1px solid #0a58ca;background:#0d6efd;color:#fff;border-radius:6px;cursor:pointer}
+  button.secondary{background:#fff;color:#0a58ca}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div id="status" class="status">Click a field to begin. This bar will show which question you are filling in.</div>
+
+<div class="section">
+  <div class="q">
+    <div class="meta">Question 1(a) – Unit</div>
+    <div class="sentence">A cupboard is about 2 <input aria-label="Question 1(a) unit" class="answer" data-q="1(a)" data-prompt="Unit" data-answers="m,metre,meter" placeholder="type m or cm" autocomplete="off" autocapitalize="none" spellcheck="false"> tall.</div>
+  </div>
+
+  <div class="q">
+    <div class="meta">Question 1(b) – Unit</div>
+    <div class="sentence">A book is about 30 <input aria-label="Question 1(b) unit" class="answer" data-q="1(b)" data-prompt="Unit" data-answers="cm,centimetre,centimeter" placeholder="type m or cm" autocomplete="off" autocapitalize="none" spellcheck="false"> long.</div>
+  </div>
+
+  <div class="q">
+    <div class="meta">Question 1(c) – Unit</div>
+    <div class="sentence">A bus is about 12 <input aria-label="Question 1(c) unit" class="answer" data-q="1(c)" data-prompt="Unit" data-answers="m,metre,meter" placeholder="type m or cm" autocomplete="off" autocapitalize="none" spellcheck="false"> long.</div>
+  </div>
+
+  <div class="q">
+    <div class="meta">Question 1(d) – Unit</div>
+    <div class="sentence">A pen is about 15 <input aria-label="Question 1(d) unit" class="answer" data-q="1(d)" data-prompt="Unit" data-answers="cm,centimetre,centimeter" placeholder="type m or cm" autocomplete="off" autocapitalize="none" spellcheck="false"> long.</div>
+  </div>
+</div>
+
+<div class="btns">
+  <button type="button" id="checkAll">Check all</button>
+  <button type="button" id="clearAll" class="secondary">Clear all</button>
+</div>
+
+<script>
+(function(){
+  const status = document.getElementById('status');
+
+  function normalize(v){
+    return (v||'').toString().trim().toLowerCase().replace(/\s+/g,'');
+  }
+
+  function setState(el, ok){
+    el.classList.remove('correct','wrong');
+    if(!el.value){ return; }
+    el.classList.add(ok ? 'correct' : 'wrong');
+  }
+
+  function isCorrectText(el){
+    const val = normalize(el.value);
+    const answers = (el.dataset.answers||'').split(',').map(a=>normalize(a));
+    return answers.includes(val);
+  }
+
+  function checkText(el){
+    setState(el, isCorrectText(el));
+  }
+
+  function updateStatus(el){
+    const q = el.dataset.q || '?';
+    const prompt = el.dataset.prompt || 'Answer';
+    status.textContent = `You are filling: Question ${q} – ${prompt}`;
+  }
+
+  // Fraction support (two separate inputs). Use data-num and data-den on the wrapper.
+  function checkFraction(wrapper){
+    const n = wrapper.querySelector('input[data-role="num"]');
+    const d = wrapper.querySelector('input[data-role="den"]');
+    const ok = normalize(n.value) === normalize(wrapper.dataset.num) &&
+               normalize(d.value) === normalize(wrapper.dataset.den);
+    [n,d].forEach(el=>{
+      el.classList.remove('correct','wrong');
+      if(n.value || d.value){ el.classList.add(ok ? 'correct' : 'wrong'); }
+    });
+  }
+
+  document.querySelectorAll('input.answer').forEach(el=>{
+    el.addEventListener('input', ()=>checkText(el));
+    el.addEventListener('focus', ()=>updateStatus(el));
+    el.addEventListener('blur', ()=>{ if(!el.value) el.classList.remove('correct','wrong'); });
+  });
+
+  document.querySelectorAll('.fraction').forEach(wrapper=>{
+    wrapper.querySelectorAll('input').forEach(el=>{
+      el.addEventListener('input', ()=>checkFraction(wrapper));
+      el.addEventListener('focus', ()=>updateStatus(el));
+    });
+  });
+
+  document.getElementById('checkAll').addEventListener('click', ()=>{
+    document.querySelectorAll('input.answer').forEach(checkText);
+    document.querySelectorAll('.fraction').forEach(checkFraction);
+  });
+
+  document.getElementById('clearAll').addEventListener('click', ()=>{
+    document.querySelectorAll('input.answer').forEach(el=>{
+      el.value=''; el.classList.remove('correct','wrong');
+    });
+    document.querySelectorAll('.fraction input').forEach(el=>{
+      el.value=''; el.classList.remove('correct','wrong');
+    });
+    status.textContent='All fields cleared. Click a field to begin.';
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Perimeter Check – Activity 3</title>
+<style>
+ body{font-family:Arial,Helvetica,sans-serif;line-height:1.35;margin:16px;color:#222}
+ h1{font-size:1.1rem;margin:0 0 6px}
+ .note{font-size:.95rem;margin:0 0 14px}
+ .row{margin:10px 0}
+ .tag{font-size:.78rem;color:#555;margin-right:6px}
+ .expr{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0}
+ input[type=text]{font-size:1.05rem;padding:6px 8px;min-width:90px;border:1px solid #bbb;border-radius:6px;outline:none}
+ input.wrong{background:#ffd9d9}
+ input.correct{background:#c9f5cc}
+ .ops{font-weight:bold}
+ .section{border:1px solid #c9e1ff;border-radius:10px;padding:10px 12px;margin:14px 0}
+ .subtitle{font-weight:bold;margin-bottom:4px}
+ .legend{font-size:.85rem;color:#444}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<p class="note">Green = correct, red = try again.</p>
+
+<div class="section">
+  <div class="subtitle">3(a) Find the perimeter.</div>
+  <div class="expr">
+    <span class="ops">Perimeter</span><span class="ops">=</span>
+    <span class="tag">Q3(a) side 1</span><input type="text" id="a1" data-answers="9|9 cm" autocomplete="off" inputmode="text">
+    <span class="ops">+</span>
+    <span class="tag">Q3(a) side 2</span><input type="text" id="a2" data-answers="9|9 cm" autocomplete="off" inputmode="text">
+    <span class="ops">+</span>
+    <span class="tag">Q3(a) side 3</span><input type="text" id="a3" data-answers="9|9 cm" autocomplete="off" inputmode="text">
+  </div>
+  <div class="expr">
+    <span class="ops">=</span>
+    <span class="tag">Q3(a) total</span><input type="text" id="aT" data-answers="27|27 cm" autocomplete="off" inputmode="text">
+  </div>
+</div>
+
+<div class="section">
+  <div class="subtitle">3(b) Find the perimeter.</div>
+  <div class="expr">
+    <span class="ops">Perimeter</span><span class="ops">=</span>
+    <span class="tag">Q3(b) side 1</span><input type="text" id="b1" data-answers="5|5 cm" autocomplete="off" inputmode="text">
+    <span class="ops">+</span>
+    <span class="tag">Q3(b) side 2</span><input type="text" id="b2" data-answers="11|11 cm" autocomplete="off" inputmode="text">
+    <span class="ops">+</span>
+    <span class="tag">Q3(b) side 3</span><input type="text" id="b3" data-answers="4|4 cm" autocomplete="off" inputmode="text">
+  </div>
+  <div class="expr">
+    <span class="ops">+</span>
+    <span class="tag">Q3(b) side 4</span><input type="text" id="b4" data-answers="8|8 cm" autocomplete="off" inputmode="text">
+  </div>
+  <div class="expr">
+    <span class="ops">=</span>
+    <span class="tag">Q3(b) total</span><input type="text" id="bT" data-answers="28|28 cm" autocomplete="off" inputmode="text">
+  </div>
+</div>
+
+<div class="section">
+  <div class="subtitle">3(c) Find the perimeter. Type only the final answer here, but remember to show your equations in your notebook.</div>
+  <div class="expr">
+    <span class="ops">Perimeter</span><span class="ops">=</span>
+    <span class="tag">Q3(c) total</span><input type="text" id="cT" data-answers="28|28 cm" autocomplete="off" inputmode="text">
+  </div>
+</div>
+
+<script>
+function norm(s){return (s||'').toLowerCase().replace(/\s+/g,'');}
+
+function checkField(el){
+  // Route Q3(b) side inputs to group checker (order-agnostic)
+  if(el && (el.id==='b1' || el.id==='b2' || el.id==='b3' || el.id==='b4')){
+    checkGroupB();
+    return;
+  }
+  const answers=(el.dataset.answers||'').split('|').map(norm);
+  const v=norm(el.value);
+  const ok=answers.includes(v);
+  el.classList.toggle('correct',ok);
+  el.classList.toggle('wrong',v.length>0 && !ok);
+}
+
+function checkGroupB(){
+  const ids=['b1','b2','b3','b4'];
+  const expectedCounts={ '5':1, '11':1, '4':1, '8':1 }; // required once each, any order
+  const usedCounts={ '5':0, '11':0, '4':0, '8':0 };
+
+  ids.forEach(id=>{
+    const el=document.getElementById(id);
+    const v=norm(el.value);
+    // reset state if empty
+    if(!v){ el.classList.remove('correct','wrong'); return; }
+
+    // accept "10cm" or "10 cm" alike; parse number with optional 'cm'
+    const m=v.match(/^(\d+(?:\.\d+)?)(cm)?$/);
+    let ok=false;
+    if(m){
+      const num=m[1]; // canonical numeric string
+      if(Object.prototype.hasOwnProperty.call(expectedCounts,num) && usedCounts[num] < expectedCounts[num]){
+        usedCounts[num]++; ok=true;
+      }
+    }
+    el.classList.toggle('correct',ok);
+    el.classList.toggle('wrong',!ok);
+  });
+}
+
+document.querySelectorAll('input[type=text][data-answers]').forEach(i=>{
+  i.addEventListener('input',()=>checkField(i));
+  i.addEventListener('blur',()=>checkField(i));
+});
+
+/* Fraction checker (for pages that need it)
+   Provide two inputs for numerator and denominator and call checkFraction(nEl,dEl,nAns,dAns). */
+function checkFraction(nEl,dEl,nAns,dAns){
+  const nOk=norm(nEl.value)===norm(String(nAns));
+  const dOk=norm(dEl.value)===norm(String(dAns));
+  nEl.classList.toggle('correct',nOk); nEl.classList.toggle('wrong',nEl.value.trim()!=='' && !nOk);
+  dEl.classList.toggle('correct',dOk); dEl.classList.toggle('wrong',dEl.value.trim()!=='' && !dOk);
+}
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+Ask ChatGPT

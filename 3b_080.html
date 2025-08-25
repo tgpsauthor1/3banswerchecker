@@ -1,0 +1,215 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Activity Check</title>
+<style>
+ body{font-family:Arial,Helvetica,sans-serif;line-height:1.35;margin:16px}
+ h1{font-size:18px;margin:0 0 8px}
+ .note{font-size:13px;color:#444;margin:0 0 14px}
+ .q{border:1px solid #ddd;padding:10px;margin:10px 0}
+ .q h2{font-size:16px;margin:0 0 6px}
+ label{display:block;margin:6px 0 4px;font-size:14px}
+ .row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+ input[type=text]{font-size:18px;padding:4px 6px}
+ select{font-size:18px;padding:2px 4px}
+ .w4{width:4.5ch}.w6{width:6.5ch}.w8{width:8.5ch}.w10{width:10.5ch}
+ .ok{background:#c7f7c7}.bad{background:#ffc7c7}
+ .hint{font-size:12px;color:#666}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<p class="note">Type a space between the number and the unit (e.g. 30 kg, 50 cm). For litres, the ℓ symbol is already provided for you.</p>
+
+<div class="q" id="q5">
+  <!-- Question heading removed -->
+  <label for="q5a">Q5 equation</label>
+  <div class="row">
+    <input id="q5n1" class="w6" type="text" aria-label="Q5 first number">
+    <select id="q5op" aria-label="Q5 operation">
+      <option value="">--</option>
+      <option value="+">+</option>
+      <option value="-">-</option>
+      <option value="x">x</option>
+      <option value="÷">÷</option>
+    </select>
+    <input id="q5n2" class="w6" type="text" aria-label="Q5 second number">
+    <span>=</span>
+    <input id="q5res" class="w6" type="text" aria-label="Q5 result number">
+  </div>
+
+  <label for="q5final">Q5 final answer</label>
+  <div class="row">
+    <span>The total mass of 6 such vases is</span>
+    <input id="q5final" class="w10" type="text" aria-label="Q5 final answer">
+    <span>.</span>
+  </div>
+</div>
+
+<div class="q" id="q6">
+  <!-- Question heading removed -->
+  <label>Q6 equation</label>
+  <div class="row">
+    <input id="q6n1" class="w6" type="text" aria-label="Q6 first number">
+    <select id="q6op" aria-label="Q6 operation">
+      <option value="">--</option>
+      <option value="+">+</option>
+      <option value="-">-</option>
+      <option value="x">x</option>
+      <option value="÷">÷</option>
+    </select>
+    <input id="q6n2" class="w6" type="text" aria-label="Q6 second number">
+    <span>=</span>
+    <input id="q6res" class="w6" type="text" aria-label="Q6 result number">
+    <!-- ℓ removed from equation line (equations have no units) -->
+  </div>
+
+
+  <label>Q6 final answer</label>
+  <div class="row">
+    <span>There was</span>
+    <input id="q6final" class="w6" type="text" aria-label="Q6 final number only">
+    <span>ℓ of orange juice in each jug.</span>
+  </div>
+</div>
+
+<div class="q" id="q7">
+  <!-- Question heading removed -->
+  <label>Q7 equation</label>
+  <div class="row">
+    <input id="q7n1" class="w6" type="text" aria-label="Q7 first number">
+    <select id="q7op" aria-label="Q7 operation">
+      <option value="">--</option>
+      <option value="+">+</option>
+      <option value="-">-</option>
+      <option value="x">x</option>
+      <option value="÷">÷</option>
+    </select>
+    <input id="q7n2" class="w6" type="text" aria-label="Q7 second number">
+    <span>=</span>
+    <input id="q7res" class="w6" type="text" aria-label="Q7 result number">
+  </div>
+
+  <label>Q7 final answer</label>
+  <div class="row">
+    <span>The total length of 5 such strings is</span>
+    <input id="q7final" class="w10" type="text" aria-label="Q7 final answer">
+    <span>.</span>
+  </div>
+</div>
+
+<script>
+function setState(el, ok){
+  el.classList.remove('ok','bad');
+  const v = (el.value||'').trim();
+  if(!v) return;
+  el.classList.add(ok?'ok':'bad');
+}
+function normSpaces(s){return s.trim().replace(/\s+/g,' ');}
+
+// Generic equation checker (kept for Q6)
+function checkEq(n1El,opEl,n2El,resEl,rule){
+  const a = n1El.value.trim(); const b = n2El.value.trim(); const c = resEl.value.trim(); const op = opEl.value;
+  const ai = Number(a), bi = Number(b), ci = Number(c);
+  const aOk = rule.a(ai); const bOk = rule.b(bi); const opOk = rule.op(op); 
+  let resOk=false;
+  if(aOk && bOk && opOk && Number.isFinite(ai) && Number.isFinite(bi)){
+    let calc;
+    if(op==='+' ) calc=ai+bi;
+    else if(op==='-') calc=ai-bi;
+    else if(op==='x') calc=ai*bi;
+    else if(op==='÷') calc=bi!==0?ai/bi:NaN;
+    resOk = (calc===ci) && rule.res(ci);
+  }
+  setState(n1El,aOk);
+  setState(n2El,bOk);
+  setState(opEl,opOk);
+  setState(resEl,resOk);
+}
+
+// Final answer check with optional space before unit (e.g., "30kg" or "30 kg")
+function checkUnitAnswer(inputEl, num, unit){
+  const v = normSpaces(inputEl.value||'');
+  const re = new RegExp('^\\s*'+num+'\\s*'+unit+'\\s*$', 'i');
+  const ok = re.test(v);
+  setState(inputEl,ok);
+}
+function checkNumber(inputEl, num){
+  const ok = (inputEl.value.trim() === String(num));
+  setState(inputEl,ok);
+}
+
+/* Q5 — accept 5×6 or 6×5; no units in equation; final 30kg or 30 kg */
+const q5 = {
+ n1:document.getElementById('q5n1'),
+ op:document.getElementById('q5op'),
+ n2:document.getElementById('q5n2'),
+ res:document.getElementById('q5res'),
+ fin:document.getElementById('q5final')
+};
+function checkQ5(){
+  const ai = Number(q5.n1.value.trim());
+  const bi = Number(q5.n2.value.trim());
+  const op = q5.op.value;
+  const ci = Number(q5.res.value.trim());
+  const pairOK = (ai===5 && bi===6) || (ai===6 && bi===5);
+  setState(q5.n1, pairOK);
+  setState(q5.n2, pairOK);
+  setState(q5.op, op==='x');
+  const resOk = pairOK && op==='x' && ci===30;
+  setState(q5.res, resOk);
+}
+['input','change'].forEach(ev=>{
+  q5.n1.addEventListener(ev,checkQ5);
+  q5.n2.addEventListener(ev,checkQ5);
+  q5.res.addEventListener(ev,checkQ5);
+  q5.op.addEventListener(ev,checkQ5);
+  q5.fin.addEventListener(ev,()=>checkUnitAnswer(q5.fin,30,'kg'));
+});
+
+/* Q6 — unchanged logic; equation w/o units; final number only, ℓ outside input */
+const q6 = {
+ n1:document.getElementById('q6n1'),
+ op:document.getElementById('q6op'),
+ n2:document.getElementById('q6n2'),
+ res:document.getElementById('q6res'),
+ fin:document.getElementById('q6final')
+};
+['input','change'].forEach(ev=>{
+  q6.n1.addEventListener(ev,()=>checkEq(q6.n1,q6.op,q6.n2,q6.res,{a:x=>x===15,b:x=>x===3,op:o=>o==='÷',res:r=>r===5}));
+  q6.n2.addEventListener(ev,()=>checkEq(q6.n1,q6.op,q6.n2,q6.res,{a:x=>x===15,b:x=>x===3,op:o=>o==='÷',res:r=>r===5}));
+  q6.res.addEventListener(ev,()=>checkEq(q6.n1,q6.op,q6.n2,q6.res,{a:x=>x===15,b:x=>x===3,op:o=>o==='÷',res:r=>r===5}));
+  q6.op.addEventListener(ev,()=>checkEq(q6.n1,q6.op,q6.n2,q6.res,{a:x=>x===15,b:x=>x===3,op:o=>o==='÷',res:r=>r===5}));
+  q6.fin.addEventListener(ev,()=>checkNumber(q6.fin,5));
+});
+
+/* Q7 — accept 10×5 or 5×10; final 50cm or 50 cm */
+const q7 = {
+ n1:document.getElementById('q7n1'),
+ op:document.getElementById('q7op'),
+ n2:document.getElementById('q7n2'),
+ res:document.getElementById('q7res'),
+ fin:document.getElementById('q7final')
+};
+function checkQ7(){
+  const ai = Number(q7.n1.value.trim());
+  const bi = Number(q7.n2.value.trim());
+  const op = q7.op.value;
+  const ci = Number(q7.res.value.trim());
+  const pairOK = (ai===10 && bi===5) || (ai===5 && bi===10);
+  setState(q7.n1, pairOK);
+  setState(q7.n2, pairOK);
+  setState(q7.op, op==='x');
+  const resOk = pairOK && op==='x' && ci===50;
+  setState(q7.res, resOk);
+}
+['input','change'].forEach(ev=>{
+  q7.n1.addEventListener(ev,checkQ7);
+  q7.n2.addEventListener(ev,checkQ7);
+  q7.res.addEventListener(ev,checkQ7);
+  q7.op.addEventListener(ev,checkQ7);
+  q7.fin.addEventListener(ev,()=>checkUnitAnswer(q7.fin,50,'cm'));
+});
+</script>
+</body>
+</html>

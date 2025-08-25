@@ -1,0 +1,121 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Activity Check</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;margin:16px;line-height:1.4}
+  h1{font-size:18px;color:#222;margin:0 0 12px}
+  .q{margin:14px 0;padding:10px;border:1px solid #ccc;border-radius:8px}
+  .q h2{font-size:16px;margin:0 0 8px}
+  .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .answer-input{width:160px;font-size:20px;padding:8px 10px;border:2px solid #333;border-radius:6px}
+  .units{display:inline-flex;gap:8px;padding:6px;border-radius:6px}
+  .unit-btn{padding:8px 12px;font-size:18px;border:2px solid #333;border-radius:6px;background:#f7f7f7;cursor:pointer}
+  .unit-btn.selected{outline:3px solid #4a90e2}
+  .ok{background:#bdf5c0!important}
+  .bad{background:#ffc4c4!important}
+  .note{font-size:13px;color:#666}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="q" data-q="q3">
+  <h2>Q3 — Final answer (Perimeter of the table mat)</h2>
+  <div class="row">
+    <label for="q3v" class="note">Value</label>
+    <input id="q3v" class="answer-input" type="text" inputmode="numeric" autocomplete="off">
+    <span class="note">Unit</span>
+    <div class="units" id="q3u">
+      <button class="unit-btn" type="button" data-unit="cm">cm</button>
+      <button class="unit-btn" type="button" data-unit="cm2">cm<sup>2</sup></button>
+    </div>
+  </div>
+</div>
+
+<div class="q" data-q="q4">
+  <h2>Q4 — Final answer (Total area of two coasters)</h2>
+  <div class="row">
+    <label for="q4v" class="note">Value</label>
+    <input id="q4v" class="answer-input" type="text" inputmode="numeric" autocomplete="off">
+    <span class="note">Unit</span>
+    <div class="units" id="q4u">
+      <button class="unit-btn" type="button" data-unit="cm">cm</button>
+      <button class="unit-btn" type="button" data-unit="cm2">cm<sup>2</sup></button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const answers = {
+    q3:{value:140, unit:'cm'},
+    q4:{value:162, unit:'cm2'}
+  };
+
+  function normalizeNumber(txt){
+    if(!txt) return null;
+    txt = String(txt).replace(/[, ]/g,'').trim();
+    // allow trailing unit typed by mistake (strip non-digits)
+    const m = txt.match(/-?\d+(\.\d+)?/);
+    return m ? Number(m[0]) : null;
+  }
+
+  function setFieldState(el, correct){
+    el.classList.remove('ok','bad');
+    if(correct===true) el.classList.add('ok');
+    else if(correct===false) el.classList.add('bad');
+  }
+
+  function validate(group){
+    const qid = group.dataset.q;
+    const spec = answers[qid];
+
+    const input = group.querySelector('.answer-input');
+    const unitsBox = group.querySelector('.units');
+    const selectedBtn = unitsBox.querySelector('.unit-btn.selected');
+
+    const num = normalizeNumber(input.value);
+    const unit = selectedBtn ? selectedBtn.dataset.unit : null;
+
+    const hasAny = (input.value.trim().length>0) || unit;
+    const isCorrect = (num===spec.value && unit===spec.unit);
+
+    setFieldState(input, hasAny ? isCorrect : null);
+    setFieldState(unitsBox, hasAny ? isCorrect : null);
+    // color buttons too for clarity
+    unitsBox.querySelectorAll('.unit-btn').forEach(b=>{
+      b.classList.remove('ok','bad');
+      if(selectedBtn && b===selectedBtn){
+        if(hasAny) b.classList.add(isCorrect?'ok':'bad');
+      }
+    });
+  }
+
+  document.querySelectorAll('.units').forEach(box=>{
+    box.addEventListener('click',e=>{
+      const btn = e.target.closest('.unit-btn');
+      if(!btn) return;
+      box.querySelectorAll('.unit-btn').forEach(b=>b.classList.remove('selected'));
+      btn.classList.add('selected');
+      validate(box.closest('.q'));
+    });
+  });
+
+  document.querySelectorAll('.answer-input').forEach(inp=>{
+    inp.addEventListener('input',()=>validate(inp.closest('.q')));
+    inp.addEventListener('blur',()=>validate(inp.closest('.q')));
+  });
+
+  // Optional helper for future fraction answers (numerator/denominator separate)
+  window.checkFraction = function(nTop, nBottom, expectedValue){
+    const a = normalizeNumber(nTop.value);
+    const b = normalizeNumber(nBottom.value);
+    if(!a || !b || b===0) return null;
+    return (a/b) === expectedValue;
+  };
+})();
+</script>
+</body>
+</html>

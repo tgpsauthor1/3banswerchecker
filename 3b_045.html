@@ -1,0 +1,198 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Comparing and Ordering Fractions - Checker</title>
+<style>
+  body{font-family:system-ui,Arial,sans-serif;margin:16px;color:#111}
+  h1{font-size:18px;margin:0 0 12px}
+  h2{font-size:16px;margin:14px 0 8px}
+  .row{display:flex;align-items:flex-start;flex-wrap:wrap;margin:6px 0}
+  .part{font-weight:700;margin-right:8px}
+  .wrap{display:flex;align-items:flex-end}
+  .label{font-size:12px;color:#333;text-align:center;margin:0 6px 2px}
+  .frac{display:inline-flex;flex-direction:column;align-items:center;padding:6px;border-radius:6px;margin:0 4px}
+  .bar{width:66px;height:0;border-top:3px solid #000;margin:3px 0}
+  .num,.den{width:66px;height:42px;font-size:24px;text-align:center;border:1px solid #888;border-radius:4px}
+  .comma{font-size:26px;line-height:1;padding:0 6px}
+  .smallest{font-size:11px;color:#555;text-align:center;margin-top:4px}
+  .correct{background:#c9f7c9}
+  .incorrect{background:#f7c9c9}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<p><strong>1.</strong> Arrange the fractions in order. Begin with the smallest.</p>
+
+<div class="row" data-part="1a">
+  <div class="part">(a)</div>
+  <div class="wrap">
+    <div>
+      <div class="label">Q1(a) fraction 1 (smallest)</div>
+      <div class="frac" data-n="3" data-d="8">
+        <input class="num" inputmode="numeric" autocomplete="off" aria-label="Question 1(a) fraction 1 numerator">
+        <div class="bar"></div>
+        <input class="den" inputmode="numeric" autocomplete="off" aria-label="Question 1(a) fraction 1 denominator">
+      </div>
+      <div class="smallest">smallest</div>
+    </div>
+  
+    <div class="comma">,</div>
+    <div>
+      <div class="label">Q1(a) fraction 3</div>
+      <div class="frac" data-n="3" data-d="5">
+        <input class="num" inputmode="numeric" autocomplete="off" aria-label="Question 1(a) fraction 3 numerator">
+        <div class="bar"></div>
+        <input class="den" inputmode="numeric" autocomplete="off" aria-label="Question 1(a) fraction 3 denominator">
+      </div>
+    </div>
+    <div class="comma">,</div>
+    <div>
+      <div class="label">Q1(a) fraction 4</div>
+      <div class="frac" data-n="3" data-d="4">
+        <input class="num" inputmode="numeric" autocomplete="off" aria-label="Question 1(a) fraction 4 numerator">
+        <div class="bar"></div>
+        <input class="den" inputmode="numeric" autocomplete="off" aria-label="Question 1(a) fraction 4 denominator">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" data-part="1b">
+  <div class="part">(b)</div>
+  <div class="wrap">
+    <div>
+      <div class="label">Q1(b) fraction 1 (smallest)</div>
+      <div class="frac" data-n="1" data-d="10">
+        <input class="num" inputmode="numeric" autocomplete="off" aria-label="Question 1(b) fraction 1 numerator">
+        <div class="bar"></div>
+        <input class="den" inputmode="numeric" autocomplete="off" aria-label="Question 1(b) fraction 1 denominator">
+      </div>
+      <div class="smallest">smallest</div>
+    </div>
+    <div class="comma">,</div>
+    <div>
+      <div class="label">Q1(b) fraction 2</div>
+      <div class="frac" data-n="1" data-d="5">
+        <input class="num" inputmode="numeric" autocomplete="off" aria-label="Question 1(b) fraction 2 numerator">
+        <div class="bar"></div>
+        <input class="den" inputmode="numeric" autocomplete="off" aria-label="Question 1(b) fraction 2 denominator">
+      </div>
+    </div>
+    <div class="comma">,</div>
+    <div>
+      <div class="label">Q1(b) fraction 3</div>
+      <div class="frac" data-n="4" data-d="7">
+        <input class="num" inputmode="numeric" autocomplete="off" aria-label="Question 1(b) fraction 3 numerator">
+        <div class="bar"></div>
+        <input class="den" inputmode="numeric" autocomplete="off" aria-label="Question 1(b) fraction 3 denominator">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" data-part="1c">
+  <div class="part">(c)</div>
+  <div class="wrap">
+    <div>
+      <div class="label">Q1(c) fraction 1 (smallest)</div>
+      <div class="frac" data-n="1" data-d="6">
+        <input class="num" inputmode="numeric" autocomplete="off" aria-label="Question 1(c) fraction 1 numerator">
+        <div class="bar"></div>
+        <input class="den" inputmode="numeric" autocomplete="off" aria-label="Question 1(c) fraction 1 denominator">
+      </div>
+      <div class="smallest">smallest</div>
+    </div>
+    <div class="comma">,</div>
+    <div>
+      <div class="label">Q1(c) fraction 2</div>
+      <div class="frac" data-n="1" data-d="3">
+        <input class="num" inputmode="numeric" autocomplete="off" aria-label="Question 1(c) fraction 2 numerator">
+        <div class="bar"></div>
+        <input class="den" inputmode="numeric" autocomplete="off" aria-label="Question 1(c) fraction 2 denominator">
+      </div>
+    </div>
+    <div class="comma">,</div>
+    <div>
+      <div class="label">Q1(c) fraction 3</div>
+      <div class="frac" data-n="7" data-d="9">
+        <input class="num" inputmode="numeric" autocomplete="off" aria-label="Question 1(c) fraction 3 numerator">
+        <div class="bar"></div>
+        <input class="den" inputmode="numeric" autocomplete="off" aria-label="Question 1(c) fraction 3 denominator">
+      </div>
+    </div>
+    <div class="comma">,</div>
+    <div>
+      <div class="label">Q1(c) fraction 4</div>
+      <div class="frac" data-n="7" data-d="8">
+        <input class="num" inputmode="numeric" autocomplete="off" aria-label="Question 1(c) fraction 4 numerator">
+        <div class="bar"></div>
+        <input class="den" inputmode="numeric" autocomplete="off" aria-label="Question 1(c) fraction 4 denominator">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" data-part="1d">
+  <div class="part">(d)</div>
+  <div class="wrap">
+    <div>
+      <div class="label">Q1(d) fraction 1 (smallest)</div>
+      <div class="frac" data-n="2" data-d="11">
+        <input class="num" inputmode="numeric" autocomplete="off" aria-label="Question 1(d) fraction 1 numerator">
+        <div class="bar"></div>
+        <input class="den" inputmode="numeric" autocomplete="off" aria-label="Question 1(d) fraction 1 denominator">
+      </div>
+      <div class="smallest">smallest</div>
+    </div>
+    <div class="comma">,</div>
+    <div>
+      <div class="label">Q1(d) fraction 2</div>
+      <div class="frac" data-n="2" data-d="5">
+        <input class="num" inputmode="numeric" autocomplete="off" aria-label="Question 1(d) fraction 2 numerator">
+        <div class="bar"></div>
+        <input class="den" inputmode="numeric" autocomplete="off" aria-label="Question 1(d) fraction 2 denominator">
+      </div>
+    </div>
+    <div class="comma">,</div>
+    <div>
+      <div class="label">Q1(d) fraction 3</div>
+      <div class="frac" data-n="3" data-d="4">
+        <input class="num" inputmode="numeric" autocomplete="off" aria-label="Question 1(d) fraction 3 numerator">
+        <div class="bar"></div>
+        <input class="den" inputmode="numeric" autocomplete="off" aria-label="Question 1(d) fraction 3 denominator">
+      </div>
+    </div>
+    <div class="comma">,</div>
+    <div>
+      <div class="label">Q1(d) fraction 4</div>
+      <div class="frac" data-n="11" data-d="12">
+        <input class="num" inputmode="numeric" autocomplete="off" aria-label="Question 1(d) fraction 4 numerator">
+        <div class="bar"></div>
+        <input class="den" inputmode="numeric" autocomplete="off" aria-label="Question 1(d) fraction 4 denominator">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function update(frac){
+    const nExp=+frac.dataset.n, dExp=+frac.dataset.d;
+    const num=frac.querySelector('.num'), den=frac.querySelector('.den');
+    const nVal=parseInt(num.value,10), dVal=parseInt(den.value,10);
+    const hasAny=(num.value.trim()!==''||den.value.trim()!=='');
+    frac.classList.remove('correct','incorrect');
+    if(num.value.trim()===''&&den.value.trim()===''){return;}
+    if(Number.isInteger(nVal)&&Number.isInteger(dVal)&&nVal===nExp&&dVal===dExp){
+      frac.classList.add('correct');
+    }else if(hasAny){
+      frac.classList.add('incorrect');
+    }
+  }
+  document.querySelectorAll('.frac').forEach(f=>{
+    f.addEventListener('input',()=>update(f));
+  });
+</script>
+</body>
+</html>

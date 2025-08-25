@@ -1,0 +1,360 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Missing Numerators & Denominators</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      line-height: 1.5;
+      max-width: 600px;
+      margin: auto;
+    }
+    #hint-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    #hint {
+      flex: 1;
+      min-height: 2em;
+      color: #0055a5;
+      font-weight: bold;
+    }
+    #speakBtn {
+      margin-left: 10px;
+      padding: 6px 12px;
+      font-size: 0.9em;
+      cursor: pointer;
+      background: #5bc0de;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    .question {
+      margin-bottom: 15px;
+    }
+
+    /* NEW fraction styling */
+    .fraction {
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+      margin: 0 4px;
+    }
+    .fraction > * {
+      display: block;
+    }
+    .fraction .bar {
+      border-top: 1px solid #000;
+      width: 100%;
+      margin: 2px 0;
+      height: 0;
+    }
+
+    /* Remove spinner arrows */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    .fraction input {
+      width: 80px;      /* wider box */
+      text-align: center;
+      font-size: 1.2em;
+      margin: 0;
+      padding: 4px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    input.correct {
+      background-color: lightgreen;
+    }
+    input.wrong {
+      background-color: lightcoral;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="hint-container">
+    <div id="hint"></div>
+    <button id="speakBtn">Speak</button>
+  </div>
+
+  <div class="question">
+    <label>(a)</label>
+    <div class="fraction">
+      <span>1</span>
+      <span class="bar"></span>
+      <span>2</span>
+    </div>
+    <span>=</span>
+    <div class="fraction">
+      <input id="a-num" type="number" placeholder="?" />
+      <span class="bar"></span>
+      <span>16</span>
+    </div>
+  </div>
+
+  <div class="question">
+    <label>(b)</label>
+    <div class="fraction">
+      <span>5</span>
+      <span class="bar"></span>
+      <span>10</span>
+    </div>
+    <span>=</span>
+    <div class="fraction">
+      <span>15</span>
+      <span class="bar"></span>
+      <input id="b-den" type="number" placeholder="?" />
+    </div>
+  </div>
+
+  <div class="question">
+    <label>(c)</label>
+    <div class="fraction">
+      <span>1</span>
+      <span class="bar"></span>
+      <span>4</span>
+    </div>
+    <span>=</span>
+    <div class="fraction">
+      <input id="c-num" type="number" placeholder="?" />
+      <span class="bar"></span>
+      <span>24</span>
+    </div>
+  </div>
+
+  <div class="question">
+    <label>(d)</label>
+    <div class="fraction">
+      <span>3</span>
+      <span class="bar"></span>
+      <span>12</span>
+    </div>
+    <span>=</span>
+    <div class="fraction">
+      <span>6</span>
+      <span class="bar"></span>
+      <input id="d-den" type="number" placeholder="?" />
+    </div>
+  </div>
+
+  <div class="question">
+    <label>(e)</label>
+    <div class="fraction">
+      <span>2</span>
+      <span class="bar"></span>
+      <span>3</span>
+    </div>
+    <span>=</span>
+    <div class="fraction">
+      <span>10</span>
+      <span class="bar"></span>
+      <input id="e-den" type="number" placeholder="?" />
+    </div>
+  </div>
+
+  <div class="question">
+    <label>(f)</label>
+    <div class="fraction">
+      <span>8</span>
+      <span class="bar"></span>
+      <span>10</span>
+    </div>
+    <span>=</span>
+    <div class="fraction">
+      <input id="f-num" type="number" placeholder="?" />
+      <span class="bar"></span>
+      <span>40</span>
+    </div>
+  </div>
+
+  <div class="question">
+    <label>(g)</label>
+    <div class="fraction">
+      <span>4</span>
+      <span class="bar"></span>
+      <span>5</span>
+    </div>
+    <span>=</span>
+    <div class="fraction">
+      <input id="g-num" type="number" placeholder="?" />
+      <span class="bar"></span>
+      <span>35</span>
+    </div>
+  </div>
+
+  <div class="question">
+    <label>(h)</label>
+    <div class="fraction">
+      <span>3</span>
+      <span class="bar"></span>
+      <span>8</span>
+    </div>
+    <span>=</span>
+    <div class="fraction">
+      <input id="h-num" type="number" placeholder="?" />
+      <span class="bar"></span>
+      <span>24</span>
+    </div>
+  </div>
+
+  <div class="question">
+    <label>(i)</label>
+    <div class="fraction">
+      <span>6</span>
+      <span class="bar"></span>
+      <span>9</span>
+    </div>
+    <span>=</span>
+    <div class="fraction">
+      <input id="i-num" type="number" placeholder="?" />
+      <span class="bar"></span>
+      <span>27</span>
+    </div>
+  </div>
+
+  <div class="question">
+    <label>(j)</label>
+    <div class="fraction">
+      <span>5</span>
+      <span class="bar"></span>
+      <span>11</span>
+    </div>
+    <span>=</span>
+    <div class="fraction">
+      <span>25</span>
+      <span class="bar"></span>
+      <input id="j-den" type="number" placeholder="?" />
+    </div>
+  </div>
+
+  <div class="question">
+    <label>(k)</label>
+    <div class="fraction">
+      <span>5</span>
+      <span class="bar"></span>
+      <span>6</span>
+    </div>
+    <span>=</span>
+    <div class="fraction">
+      <span>30</span>
+      <span class="bar"></span>
+      <input id="k-den" type="number" placeholder="?" />
+    </div>
+  </div>
+
+  <div class="question">
+    <label>(l)</label>
+    <div class="fraction">
+      <span>4</span>
+      <span class="bar"></span>
+      <span>7</span>
+    </div>
+    <span>=</span>
+    <div class="fraction">
+      <input id="l-num" type="number" placeholder="?" />
+      <span class="bar"></span>
+      <span>28</span>
+    </div>
+  </div>
+
+  <div class="question">
+    <label>(m)</label>
+    <div class="fraction">
+      <span>2</span>
+      <span class="bar"></span>
+      <span>5</span>
+    </div>
+    <span>=</span>
+    <div class="fraction">
+      <input id="m-num" type="number" placeholder="?" />
+      <span class="bar"></span>
+      <span>50</span>
+    </div>
+  </div>
+
+  <div class="question">
+    <label>(n)</label>
+    <div class="fraction">
+      <span>1</span>
+      <span class="bar"></span>
+      <span>3</span>
+    </div>
+    <span>=</span>
+    <div class="fraction">
+      <input id="n-num" type="number" placeholder="?" />
+      <span class="bar"></span>
+      <span>27</span>
+    </div>
+  </div>
+
+  <script>
+    const answers = { a: 8, b: 30, c: 6, d: 24, e: 15, f: 32, g: 28, h: 9, i: 18, j: 55, k: 36, l: 16, m: 20, n: 9 };
+    const hints = {
+      a: 'Divide 16 by 2. What do you get? Then multiply the numerator with the answer.',
+      b: 'Divide 15 by 5. What is the result? Now multiply the denominator 10 by that result.',
+      c: 'Divide 24 by 4. What do you get? Multiply the numerator with answer.',
+      d: 'Divide 6 by 3. What is the result? Multiply denominator 12 by that answer.',
+      e: 'Divide 10 by 2. What do you get? Multiply the denominator 3 the answer.',
+      f: 'Divide 40 by 10. What is the result? Multiply the numerator by the answer.',
+      g: 'Divide 35 by 5. What do you get? Multiply the numerator 4 with the answer.',
+      h: 'Divide 24 by 8. What is the result? Multiply the numerator 3 with the answer.',
+      i: 'Divide 27 by 9. What do you get? Multiply the numerator 6 with the answer.',
+      j: 'Divide 25 by 5. What is the result? Multiply denominator 11 with the answer..',
+      k: 'Divide 30 by 5. What do you get? Multiply the denominator 6 with the answer.',
+      l: 'Divide 28 by 7. What is the result? Multiply the numerator 4 with the answer.',
+      m: 'Divide 50 by 5. What do you get? Multiply the numerator 2 with the answer.',
+      n: 'Divide 27 by 3. What is the result? Multiply the numerator 1 with the answer.'
+    };
+
+    const hintBox = document.getElementById('hint');
+    const speakBtn = document.getElementById('speakBtn');
+
+    document.querySelectorAll('input[type=number]').forEach(input => {
+      input.addEventListener('input', () => {
+        const q = input.id.split('-')[0];
+        const val = parseInt(input.value, 10);
+
+        if (!input.value) {
+          input.classList.remove('wrong', 'correct');
+          if (hintBox.dataset.current === q) {
+            hintBox.textContent = '';
+            delete hintBox.dataset.current;
+          }
+          return;
+        }
+
+        if (val === answers[q]) {
+          input.classList.add('correct');
+          input.classList.remove('wrong');
+          if (hintBox.dataset.current === q) {
+            hintBox.textContent = '';
+            delete hintBox.dataset.current;
+          }
+        } else {
+          input.classList.add('wrong');
+          input.classList.remove('correct');
+          hintBox.textContent = hints[q];
+          hintBox.dataset.current = q;
+        }
+      });
+    });
+
+    speakBtn.addEventListener('click', () => {
+      const text = hintBox.textContent.trim();
+      if (!text) return;
+      const msg = new SpeechSynthesisUtterance(text);
+      speechSynthesis.speak(msg);
+    });
+  </script>
+
+</body>
+</html>

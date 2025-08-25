@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Activity Check – Q11</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;line-height:1.4;margin:16px;color:#222}
+  .note{font-weight:700;margin-bottom:10px}
+  .card{border:1px solid #ddd;border-radius:8px;padding:12px;margin:12px 0}
+  label{display:block;font-size:14px;margin-bottom:6px;color:#444}
+  .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  input[type=text]{font-size:18px;padding:10px 12px;width:220px;border:2px solid #999;border-radius:6px;outline:none}
+  input[type=text].correct{background:#c8f7c5;border-color:#2e7d32}
+  input[type=text].incorrect{background:#ffd1d1;border-color:#c62828}
+  .msg{font-size:13px;color:#555;margin-top:6px;min-height:18px}
+  .hint{font-size:14px;margin:6px 0 0 0;color:#333}
+  .small{font-size:12px;color:#666}
+</style>
+</head>
+<body>
+<div class="note">If you keep getting it wrong, raise your hand and ask your teacher for help.</div>
+
+<div class="card">
+
+  <div class="hint">
+    Hints:
+    <ul>
+      <li>Draw a model. Find the value of one unit. Find the difference</li>
+      <li>Type your final answer with the unit</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <label for="q11">Q11 – Final answer field</label>
+  <div class="row">
+    <span>She drank</span>
+    <input id="q11" type="text" inputmode="text" autocomplete="off" aria-label="Q11 final answer input" data-answers='["420 ml","420 mL","420 ML","420ml","420ML"]'>
+    <span>more water on Monday than on Tuesday.</span>
+  </div>
+
+  <div id="q11msg" class="msg"></div>
+</div>
+
+<script>
+(function(){
+  function normalize(s){return s.replace(/\s+/g,' ').trim();}
+  function attachChecker(inp,msgEl){
+    const valid = JSON.parse(inp.dataset.answers||"[]").map(a=>a.toLowerCase());
+    function check(){
+      const v = normalize(inp.value).toLowerCase();
+      // Enforce a space between number and unit for ml variants
+      const hasSpaceRule = /\d+\s+(ml|mL|ML|millilitres|milliliters)$/i.test(inp.value.trim());
+      const ok = valid.includes(v) && hasSpaceRule;
+      inp.classList.remove('correct','incorrect');
+      if(!v){msgEl.textContent=''; return;}
+      if(ok){inp.classList.add('correct'); msgEl.textContent='Great job!';}
+      else{inp.classList.add('incorrect'); msgEl.textContent='Try again. Remember number, space, then unit (ml).';}
+    }
+    inp.addEventListener('input',check);
+  }
+  attachChecker(document.getElementById('q11'), document.getElementById('q11msg'));
+})();
+</script>
+</body>
+</html>

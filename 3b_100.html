@@ -1,0 +1,114 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Activity Book Checker – Q22</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.4;margin:0;padding:16px;color:#222}
+  h1{font-size:18px;margin:0 0 12px}
+  .note{font-size:14px;margin:0 0 16px;color:#444}
+  .card{border:1px solid #ddd;border-radius:8px;padding:12px;margin:10px 0}
+  .qhead{font-weight:700;margin-bottom:6px;color:#0b5}
+  label{display:block;font-size:14px;margin:6px 0}
+  .hint{font-size:13px;color:#555;margin:6px 0}
+  .final{font-size:16px;margin:8px 0}
+  input.answer{width:320px;max-width:100%;padding:10px 12px;font-size:18px;border:2px solid #999;border-radius:6px;outline:none}
+  input.answer.correct{background:#e7f8ea;border-color:#2e7d32}
+  input.answer.wrong{background:#ffe6e6;border-color:#c62828}
+  .status{font-size:13px;height:16px;margin-top:4px;color:#c62828}
+  .status.ok{color:#2e7d32}
+  .units-tip{font-size:12px;color:#666;margin-top:2px}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="card">
+  <div class="qhead">Question 22</div>
+ 
+
+  <label>Q22(a) Final answer field</label>
+  <div class="final">a) <input id="q22a" class="answer" type="text" inputmode="text" autocomplete="off" aria-label="Q22(a) final answer"> of milk is being poured out.</div>
+  <div id="s22a" class="status" aria-live="polite"></div>
+  <label>Q22(b) Final answer field</label>
+  <div class="final">b) <input id="q22b" class="answer" type="text" inputmode="text" autocomplete="off" aria-label="Q22(b) final answer"> of milk is left in the container.</div>
+  <div id="s22b" class="status" aria-live="polite"></div>
+</div>
+
+<script>
+  (function(){
+    // Expected totals in millilitres
+    const EXPECT_ML = {
+      q22a: 2100, // 7 × 300 ml
+      q22b: 2900  // 5000 ml - 2100 ml
+    };
+
+    // Parse inputs that may be in ml, L, or L+ml with any spacing:
+    // e.g. "2100ml", "2100 ml", "2L100ml", "2 L 100 ml", "2l 100mL", "2.1 L", "2.1L"
+    function parseVolumeToMl(raw){
+      if(!raw) return null;
+      let s = raw.trim()
+                 .replace(/,/g,'')
+                 .replace(/\s+/g,' ')
+                 .replace(/ℓ/gi,'L')
+                 .toLowerCase();
+
+      let total = 0;
+      let matched = false;
+
+      // Match all occurrences of "<number><optional space><unit>"
+      // Units handled: l/litre/liter/litres/liters and ml/millilitre/milliliter
+      const rx = /([\d]*\.?[\d]+)\s*(l|liters?|litres?|ml|milliliters?|millilitres?)/gi;
+      let m;
+      while((m = rx.exec(s)) !== null){
+        matched = true;
+        const num = parseFloat(m[1]);
+        const unit = m[2].toLowerCase();
+        if(!isFinite(num)) return null;
+        if(unit.startsWith('l')) total += num * 1000;
+        else total += num;
+      }
+
+      if(matched) return total;
+
+      // Fallback: if user typed a bare number, reject (units required)
+      return null;
+    }
+
+    function check(id){
+      const el = document.getElementById(id);
+      const status = document.getElementById('s'+id.slice(1)); // s22a / s22b
+      const raw = el.value;
+
+      if(!raw.trim()){
+        el.classList.remove('correct','wrong');
+        status.textContent='';
+        status.classList.remove('ok');
+        return;
+      }
+
+      const ml = parseVolumeToMl(raw);
+      const ok = (ml !== null) && Math.abs(ml - EXPECT_ML[id]) < 0.5;
+
+      if(ok){
+        el.classList.add('correct');
+        el.classList.remove('wrong');
+        status.textContent='Correct!';
+        status.classList.add('ok');
+      }else{
+        el.classList.add('wrong');
+        el.classList.remove('correct');
+        status.textContent='Try again.';
+        status.classList.remove('ok');
+      }
+    }
+
+    ['q22a','q22b'].forEach(id=>{
+      const el=document.getElementById(id);
+      el.addEventListener('input',()=>check(id));
+      el.addEventListener('blur',()=>check(id));
+    });
+  })();
+</script>
+</body>
+</html>

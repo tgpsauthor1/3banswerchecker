@@ -1,0 +1,147 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Activity Check - Q3(a)(b)</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;margin:16px;line-height:1.35}
+  h1{font-size:18px;margin:0 0 14px}
+  h2{font-size:16px;margin:16px 0 8px}
+  .step{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0}
+  .tag{font-size:12px;color:#333;background:#eef;border-radius:4px;padding:2px 6px}
+  .x{font-weight:bold}
+  .cmp{font-weight:bold;font-size:22px;margin:0 6px}
+  .box{width:3.2em;height:2.1em;font-size:20px;text-align:center;border:2px solid #79a;border-radius:6px;color:#c00;outline:none}
+  .box.correct{background:#c8f7c5}
+  .box.wrong{background:#ffc9c9}
+  .frac{display:inline-flex;flex-direction:column;align-items:center;margin:0 2px}
+  .frac .num,.frac .den{width:3.2em;height:2.1em;font-size:20px;text-align:center;border:2px solid #79a;border-radius:6px;color:#c00;outline:none}
+  .frac .num.correct,.frac .den.correct{background:#c8f7c5}
+  .frac .num.wrong,.frac .den.wrong{background:#ffc9c9}
+  .bar{width:100%;border-top:3px solid #222;margin:2px 0}
+  .given{display:inline-flex;align-items:center;gap:4px}
+  .given .small{font-size:15px}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<h1>There is no checker for question 4 as it might reveal the answer too easily. </h1>
+<section id="q3a">
+  <h2>3(a) Which is the smaller fraction, 2/5 or 8/10?</h2>
+
+  <div class="step">
+    <span class="tag">Q3(a) factor used to make tenths</span>
+    <span class="x">×</span>
+    <input class="box ans" aria-label="Q3(a) factor" data-answer="2">
+  </div>
+
+  <div class="step">
+    <span class="tag">Q3(a) make an equivalent fraction</span>
+    <span class="given small">2/5 =</span>
+    <div class="frac" data-ans-num="4" data-ans-den="10" aria-label="Q3(a) equivalent fraction of 2/5">
+      <input class="num" autocomplete="off" inputmode="numeric">
+      <span class="bar"></span>
+      <input class="den" autocomplete="off" inputmode="numeric">
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="tag">Q3(a) compare using tenths</span>
+    <div class="frac" data-ans-num="4" data-ans-den="10" aria-label="Q3(a) left fraction for comparison">
+      <input class="num" autocomplete="off" inputmode="numeric">
+      <span class="bar"></span>
+      <input class="den" autocomplete="off" inputmode="numeric">
+    </div>
+    <span class="cmp"><</span>
+    <div class="frac" data-ans-num="8" data-ans-den="10" aria-label="Q3(a) right fraction for comparison">
+      <input class="num" autocomplete="off" inputmode="numeric">
+      <span class="bar"></span>
+      <input class="den" autocomplete="off" inputmode="numeric">
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="tag">Q3(a) smaller fraction is</span>
+    <div class="frac" data-ans-num="2" data-ans-den="5" aria-label="Q3(a) final answer">
+      <input class="num" autocomplete="off" inputmode="numeric">
+      <span class="bar"></span>
+      <input class="den" autocomplete="off" inputmode="numeric">
+    </div>
+  </div>
+</section>
+
+<section id="q3b">
+  <h2>3(b) Which is the greater fraction, 7/12 or 2/3?</h2>
+
+  <div class="step">
+    <span class="tag">Q3(b) factor used to make twelfths</span>
+    <span class="x">×</span>
+    <input class="box ans" aria-label="Q3(b) factor" data-answer="4">
+  </div>
+
+  <div class="step">
+    <span class="tag">Q3(b) make an equivalent fraction</span>
+    <span class="given small">2/3 =</span>
+    <div class="frac" data-ans-num="8" data-ans-den="12" aria-label="Q3(b) equivalent fraction of 2/3">
+      <input class="num" autocomplete="off" inputmode="numeric">
+      <span class="bar"></span>
+      <input class="den" autocomplete="off" inputmode="numeric">
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="tag">Q3(b) compare using twelfths</span>
+    <div class="frac" data-ans-num="8" data-ans-den="12" aria-label="Q3(b) left fraction for comparison">
+      <input class="num" autocomplete="off" inputmode="numeric">
+      <span class="bar"></span>
+      <input class="den" autocomplete="off" inputmode="numeric">
+    </div>
+    <span class="cmp">></span>
+    <div class="frac" data-ans-num="7" data-ans-den="12" aria-label="Q3(b) right fraction for comparison">
+      <input class="num" autocomplete="off" inputmode="numeric">
+      <span class="bar"></span>
+      <input class="den" autocomplete="off" inputmode="numeric">
+    </div>
+  </div>
+
+  <div class="step">
+    <span class="tag">Q3(b) greater fraction is</span>
+    <div class="frac" data-ans-num="2" data-ans-den="3" aria-label="Q3(b) final answer">
+      <input class="num" autocomplete="off" inputmode="numeric">
+      <span class="bar"></span>
+      <input class="den" autocomplete="off" inputmode="numeric">
+    </div>
+  </div>
+</section>
+
+<script>
+  function setState(el, ok){
+    el.classList.remove('correct','wrong');
+    if(!el.value.trim()){ return; }
+    el.classList.add(ok ? 'correct' : 'wrong');
+  }
+  function checkSingleInput(input){
+    const expected = input.dataset.answer;
+    if(expected==null) return;
+    const val = input.value.trim();
+    setState(input, val === expected);
+  }
+  function checkFraction(frac){
+    const expNum = frac.dataset.ansNum;
+    const expDen = frac.dataset.ansDen;
+    const num = frac.querySelector('.num');
+    const den = frac.querySelector('.den');
+    if(num){ setState(num, num.value.trim() === String(expNum)); }
+    if(den){ setState(den, den.value.trim() === String(expDen)); }
+  }
+
+  document.querySelectorAll('.ans').forEach(i=>{
+    i.addEventListener('input', ()=>checkSingleInput(i));
+  });
+
+  document.querySelectorAll('.frac').forEach(fr=>{
+    fr.addEventListener('input', ()=>checkFraction(fr));
+  });
+</script>
+</body>
+</html>

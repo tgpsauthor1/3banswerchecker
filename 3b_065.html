@@ -1,0 +1,157 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Practice 6 Recall (Volume) – Self Check</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;line-height:1.35;margin:16px;color:#222}
+  h1{font-size:18px;margin:0 0 12px}
+  .q{margin:10px 0;padding:8px;border:1px solid #ddd;border-radius:6px}
+  .q b{display:block;margin-bottom:6px;font-size:14px}
+  .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  label{white-space:nowrap;font-size:14px}
+  input[type=text]{font-size:18px;padding:8px 10px;width:90px;border:2px solid #888;border-radius:6px;outline:none}
+  .small{width:64px}
+  .wrong{background:#ffdddd;border-color:#cc0000}
+  .right{background:#dbffd9;border-color:#0a9300}
+  button{padding:8px 12px;margin-top:8px;border:1px solid #666;border-radius:6px;background:#f5f5f5;cursor:pointer}
+  button:active{transform:scale(.98)}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="q">
+  <b>Q1. Compare the volumes — container totals (write the volume in liters).</b>
+  <div class="row">
+    <label for="q1e">1. Container E (ℓ):</label>
+    <input id="q1e" class="checker" data-type="num" data-answer="6" inputmode="numeric" autocomplete="off" autocapitalize="none" spellcheck="false">
+  </div>
+  <div class="row">
+    <label for="q1f">2. Container F (ℓ):</label>
+    <input id="q1f" class="checker" data-type="num" data-answer="4" inputmode="numeric" autocomplete="off" autocapitalize="none" spellcheck="false">
+  </div>
+  <div class="row">
+    <label for="q1g">3. Container G (ℓ):</label>
+    <input id="q1g" class="checker" data-type="num" data-answer="9" inputmode="numeric" autocomplete="off" autocapitalize="none" spellcheck="false">
+  </div>
+  <div class="row">
+    <label for="q1h">4. Container H (ℓ):</label>
+    <input id="q1h" class="checker" data-type="num" data-answer="6" inputmode="numeric" autocomplete="off" autocapitalize="none" spellcheck="false">
+  </div>
+</div>
+
+<div class="q">
+  <b>Q1(a). Container [ ] contains the least amount of water.</b>
+  <div class="row">
+    <label for="q1a">Enter container letter:</label>
+    <input id="q1a" class="checker small" data-type="letter" data-answer="F" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false">
+  </div>
+</div>
+
+<div class="q">
+  <b>Q1(b). Container [ ] contains the most amount of water.</b>
+  <div class="row">
+    <label for="q1b">Enter container letter:</label>
+    <input id="q1b" class="checker small" data-type="letter" data-answer="G" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false">
+  </div>
+</div>
+
+<div class="q">
+  <b>Q1(c). The volume of water in Container [ ] is the same as the volume of water in Container [ ].</b>
+  <div class="row">
+    <label for="q1c1">First blank:</label>
+    <input id="q1c1" class="small" data-type="letter" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false">
+    <label for="q1c2">Second blank:</label>
+    <input id="q1c2" class="small" data-type="letter" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false">
+  </div>
+</div>
+
+<div class="q">
+  <b>Q1(d). Container [ ] has less water than Container [ ].</b>
+  <div class="row">
+    <label for="q1dOnly">Enter container letter (less water):</label>
+    <input id="q1dOnly" class="checker small" data-type="letter" data-answer="F" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false">
+  </div>
+</div>
+
+<div class="q">
+  <b>Q1(e). Container [ ] has more water than Container [ ].</b>
+  <div class="row">
+    <label for="q1eOnly">Enter container letter (more water):</label>
+    <input id="q1eOnly" class="checker small" data-type="letter" data-answer="G" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false">
+  </div>
+</div>
+
+<div class="row">
+  <button type="button" id="checkAll">Check all</button>
+  <button type="button" id="clearAll">Clear all</button>
+</div>
+
+<script>
+(function(){
+  function normalize(val, type){
+    val = (val||"").trim();
+    if(type === "num"){
+      const m = val.replace(/[^0-9.\-]/g,'');
+      return m === "" ? "" : String(Number(m));
+    }
+    // letters: keep A-Z only, uppercase
+    return val.toUpperCase().replace(/[^A-Z]/g,'');
+  }
+
+  function mark(el, ok){
+    el.classList.remove('right','wrong');
+    if(el.value === '') return; // don't mark empty
+    el.classList.add(ok ? 'right' : 'wrong');
+  }
+
+  function check(el){
+    // special handling for Q1(c) pair
+    if(el.id === 'q1c1' || el.id === 'q1c2'){
+      return validateC();
+    }
+    const type = el.dataset.type || 'text';
+    const ans = (el.dataset.answer||"").toUpperCase();
+    const val = normalize(el.value, type);
+    const ok = val !== "" && (type === "num" ? val === normalize(ans,'num') : val === ans);
+    mark(el, ok);
+    return ok;
+  }
+
+  function validateC(){
+    const c1 = document.getElementById('q1c1');
+    const c2 = document.getElementById('q1c2');
+    const v1 = normalize(c1.value, 'letter');
+    const v2 = normalize(c2.value, 'letter');
+    // Only evaluate when both have a value
+    if(!v1 || !v2){
+      c1.classList.remove('right','wrong');
+      c2.classList.remove('right','wrong');
+      return false;
+    }
+    const ok = (v1 === 'E' && v2 === 'H') || (v1 === 'H' && v2 === 'E');
+    mark(c1, ok);
+    mark(c2, ok);
+    return ok;
+  }
+
+  // attach listeners
+  document.querySelectorAll('input.small, .checker').forEach(function(el){
+    el.addEventListener('input', function(){ check(el); });
+  });
+
+  document.getElementById('checkAll').addEventListener('click', function(){
+    document.querySelectorAll('.checker').forEach(check);
+    validateC(); // ensure pair check runs too
+  });
+
+  document.getElementById('clearAll').addEventListener('click', function(){
+    document.querySelectorAll('input.small, .checker').forEach(function(el){
+      el.value=''; el.classList.remove('right','wrong'); el.focus(); el.blur();
+    });
+  });
+})();
+</script>
+</body>
+</html>

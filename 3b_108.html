@@ -1,0 +1,135 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Perimeter Check</title>
+<style>
+ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:16px;line-height:1.35}
+ .note{margin:4px 0 16px 0;font-size:14px;color:#333}
+ .q{margin:10px 0}
+ label{display:block;margin-bottom:4px;font-weight:600}
+ .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+ input[type=text]{font-size:18px;padding:6px 10px;border:1px solid #888;border-radius:6px;outline:none;min-width:8ch}
+ .unit{min-width:10ch}
+ .letter{min-width:4.5ch;text-transform:uppercase}
+ .correct{background:#c6f4c6}
+ .incorrect{background:#ffd6d6}
+ small.hint{display:block;color:#555;margin-top:2px}
+ button{margin-top:12px;padding:6px 10px;border:1px solid #666;background:#f3f3f3;border-radius:6px;cursor:pointer}
+</style>
+</head>
+<body>
+<h3>If you keep getting it wrong, raise your hand and ask your teacher for help.</h3>
+<p class="note">Remember to include the unit of measurement. For questions (e), (f), and (g), letters may be typed in uppercase or lowercase.</p>
+
+<div class="q">
+  <label for="qa">Q (a) Perimeter of Figure V</label>
+  <div class="row">=<input id="qa" class="ans unit" type="text" autocomplete="off" data-q="a" data-answers="16 m"></div>
+  <small class="hint">Enter the answer with unit (m).</small>
+</div>
+
+<div class="q">
+  <label for="qb">Q (b) Perimeter of Figure W</label>
+  <div class="row">=<input id="qb" class="ans unit" type="text" autocomplete="off" data-q="b" data-answers="14 m"></div>
+  <small class="hint">Enter the answer with unit (m).</small>
+</div>
+
+<div class="q">
+  <label for="qc">Q (c) Perimeter of Figure X</label>
+  <div class="row">=<input id="qc" class="ans unit" type="text" autocomplete="off" data-q="c" data-answers="16 m"></div>
+  <small class="hint">Enter the answer with unit (m).</small>
+</div>
+
+<div class="q">
+  <label for="qd">Q (d) Perimeter of Figure Y</label>
+  <div class="row">=<input id="qd" class="ans unit" type="text" autocomplete="off" data-q="d" data-answers="18 m"></div>
+  <small class="hint">Enter the answer with unit (m).</small>
+</div>
+
+<div class="q">
+  <label for="qe">Q (e) Figure ____ has the smallest perimeter.</label>
+  <div class="row">Figure <input id="qe" class="ans letter" type="text" maxlength="1" autocomplete="off" data-q="e" data-answers="w"> has the smallest perimeter.</div>
+</div>
+
+<div class="q">
+  <label for="qf">Q (f) Figure ____ has the greatest perimeter.</label>
+  <div class="row">Figure <input id="qf" class="ans letter" type="text" maxlength="1" autocomplete="off" data-q="f" data-answers="y"> has the greatest perimeter.</div>
+</div>
+
+<div class="q">
+  <label for="qg1">Q (g) Figure ____ and Figure ____ have the same perimeter.</label>
+  <div class="row">
+    Figure <input id="qg1" class="letter" type="text" maxlength="1" autocomplete="off">
+    and Figure <input id="qg2" class="letter" type="text" maxlength="1" autocomplete="off">
+    have the same perimeter.
+  </div>
+</div>
+
+<button type="button" id="resetBtn">Reset all</button>
+
+<script>
+(function(){
+  // Normalize by lowering case and removing ALL whitespace
+  const normLoose = s => (s || '').toLowerCase().replace(/\s+/g,'');
+  const setState=(el,ok)=>{
+    el.classList.remove('correct','incorrect');
+    if(!el.value){return;}
+    el.classList.add(ok?'correct':'incorrect');
+  };
+  const checkSimple=(el)=>{
+    const user = normLoose(el.value);
+    const answers = el.dataset.answers.split('|').map(v=>normLoose(v));
+    setState(el, answers.includes(user));
+  };
+  document.querySelectorAll('.ans').forEach(el=>{
+    el.addEventListener('input',()=>checkSimple(el));
+  });
+
+  // Special handling for Q(g) pair (letters; ignore stray spaces/case)
+  const g1=document.getElementById('qg1');
+  const g2=document.getElementById('qg2');
+  const checkG=()=>{
+    const a=(g1.value||'').trim().toUpperCase();
+    const b=(g2.value||'').trim().toUpperCase();
+    const okSet=(a&&b)&&((a==='V'&&b==='X')||(a==='X'&&b==='V'));
+    const aValid=(a==='V'||a==='X');
+    const bValid=(b==='V'||b==='X');
+    g1.classList.remove('correct','incorrect');
+    g2.classList.remove('correct','incorrect');
+    if(a||b){
+      if(okSet){g1.classList.add('correct');g2.classList.add('correct');}
+      else{
+        if(a){g1.classList.add(aValid?'incorrect':'incorrect');}
+        if(b){g2.classList.add(bValid?'incorrect':'incorrect');}
+      }
+    }
+  };
+  g1.addEventListener('input',checkG);
+  g2.addEventListener('input',checkG);
+
+  // Optional: fraction checker helper (numerator and denominator in separate fields)
+  // Usage if added later: give both inputs data-frac-id="name" and a sibling element with data-frac-answer="3/4".
+  const fracInputs=()=>document.querySelectorAll('[data-frac-id]');
+  const checkFracGroup=id=>{
+    const parts=[...document.querySelectorAll('[data-frac-id="'+id+'"]')];
+    const ansEl=document.querySelector('[data-frac-answer="'+id+'"]');
+    if(!ansEl) return;
+    const ans=ansEl.getAttribute('data-answer'); // format "a/b"
+    const [an,ad]=ans.split('/').map(Number);
+    const [n,d]=parts.map(p=>Number((p.value||'').trim()));
+    parts.forEach(p=>p.classList.remove('correct','incorrect'));
+    if(!parts[0].value && !parts[1].value) return;
+    const ok = d!==0 && n*ad===d*an;
+    parts.forEach(p=>p.classList.add(ok?'correct':'incorrect'));
+  };
+
+  // Reset
+  document.getElementById('resetBtn').addEventListener('click',()=>{
+    document.querySelectorAll('input[type=text]').forEach(i=>{
+      i.value=''; i.classList.remove('correct','incorrect');
+    });
+  });
+})();
+</script>
+</body>
+</html>

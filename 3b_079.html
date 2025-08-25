@@ -1,0 +1,118 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Activity Check — Q4</title>
+<style>
+ body{font-family:Arial,Helvetica,sans-serif;line-height:1.35;margin:18px}
+ h1{font-size:18px;margin:0 0 8px}
+ .note{font-size:14px;color:#444;margin:0 0 14px}
+ fieldset{border:1px solid #ccc;margin:10px 0;padding:10px}
+ label{display:block;margin:6px 0 2px;font-size:14px}
+ .row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:4px 0}
+ input[type=text], select{font-size:18px;padding:6px 8px;border:1px solid #999;border-radius:4px}
+ .w6{width:6ch}.w8{width:8ch}.w10{width:10ch}.w14{width:14ch}
+ .ok{background:#c9f7c9}
+ .bad{background:#ffcccc}
+ .guide{margin-top:6px}
+ .eq{font-weight:bold;margin:2px 0}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+
+<fieldset>
+  <div class="eq">Equation:</div>
+  <div class="row">
+    <input id="a_n1" class="w8" type="text">
+    <select id="a_op">
+      <option value="">Choose</option>
+      <option value="+">+</option>
+      <option value="-">-</option>
+      <option value="×">×</option>
+      <option value="÷">÷</option>
+    </select>
+    <input id="a_n2" class="w6" type="text">
+    <span>=</span>
+    <input id="a_res" class="w6" type="text">
+  </div>
+  <div class="guide">Write the statement: Richard is <input id="a_ans" class="w14" type="text"> tall.</div>
+</fieldset>
+
+<fieldset>
+  <div class="eq">Equation:</div>
+  <div class="row">
+    <input id="b_n1" class="w6" type="text">
+    <select id="b_op">
+      <option value="">Choose</option>
+      <option value="+">+</option>
+      <option value="-">-</option>
+      <option value="×">×</option>
+      <option value="÷">÷</option>
+    </select>
+    <input id="b_n2" class="w6" type="text">
+    <span>=</span>
+    <input id="b_res" class="w6" type="text">
+  </div>
+  <div class="guide">Write the statement: Anne is <input id="b_ans" class="w14" type="text"> tall.</div>
+</fieldset>
+
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  const fields=[ 'a_n1','a_op','a_n2','a_res','a_ans','b_n1','b_op','b_n2','b_res','b_ans' ].map($);
+
+  function mark(el,ok){
+    const v=(el.value||'').trim();
+    el.classList.remove('ok','bad');
+    if(!v){return;}
+    el.classList.add(ok?'ok':'bad');
+  }
+  function exact(el,expected){
+    const ok=(el.value||'').trim()===expected;
+    mark(el,ok);
+  }
+  function opIs(el,expected){
+    const v=el.value;
+    const ok=v===expected || (expected==='×' && (v==='×'||v==='x'));
+    mark(el,ok);
+  }
+  // Allow optional space before unit (e.g., "158cm" or "158 cm")
+  function unit(el,num,unit){
+    const v=(el.value||'').trim().replace(/\s+/g,' ');
+    const ok=new RegExp('^'+num+'\\s*'+unit+'$','i').test(v);
+    mark(el,ok);
+  }
+  // Get integer value from a text input (ignores any non-digits)
+  function intVal(el){
+    const m=(el.value||'').match(/\d+/);
+    return m ? parseInt(m[0],10) : NaN;
+  }
+
+  function validate(){
+    // Q4(a): accept 143+15 or 15+143, op must be '+', result 158, final "158cm" or "158 cm"
+    const a1=$('a_n1'), a2=$('a_n2');
+    const v1=intVal(a1), v2=intVal(a2);
+    const pairOK=(v1===143 && v2===15) || (v1===15 && v2===143);
+    mark(a1, pairOK);
+    mark(a2, pairOK);
+    opIs($('a_op'),'+');
+    exact($('a_res'),'158');
+    unit($('a_ans'),'158','cm');
+
+    // Q4(b): keep as-is; final "136cm" or "136 cm"
+    exact($('b_n1'),'158');
+    opIs($('b_op'),'-');
+    exact($('b_n2'),'12');
+    exact($('b_res'),'136');
+    unit($('b_ans'),'136','cm');
+  }
+
+  fields.forEach(el=>{
+    el.addEventListener('input',validate);
+    if(el.tagName==='SELECT'){el.addEventListener('change',validate);}
+  });
+})();
+</script>
+</body>
+</html>

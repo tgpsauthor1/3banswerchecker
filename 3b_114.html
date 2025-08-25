@@ -1,0 +1,90 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Activity Check — Page 114 Q5</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;margin:20px;line-height:1.4}
+  h1{font-size:18px;color:#222;margin:0 0 16px}
+  .q{border:1px solid #ccc;border-radius:8px;padding:12px;margin:12px 0;max-width:560px}
+  .q h2{font-size:16px;margin:0 0 6px}
+  .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .val{width:180px;height:42px;font-size:20px;padding:6px 10px;border:2px solid #888;border-radius:6px;background:#fff;outline:none}
+  .val.ok{background:#c9f7c3;border-color:#2e7d32}
+  .val.err{background:#ffd6d6;border-color:#c62828}
+  .units button{padding:10px 14px;font-size:18px;border:2px solid #888;background:#f7f7f7;border-radius:6px;cursor:pointer}
+  .units button.sel{background:#d5e8ff;border-color:#1565c0}
+  .note{font-size:12px;color:#555}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="q" data-answer="8" data-unit="m">
+  <h2>Question 5(a): Perimeter of one square frame</h2>
+  <div class="row">
+    <label for="q5a" class="note">Enter the final value only:</label>
+    <input id="q5a" class="val" type="text" inputmode="numeric" autocomplete="off">
+    <div class="units" role="group" aria-label="Choose the unit">
+      <button type="button" data-u="m" aria-pressed="false">m</button>
+      <button type="button" data-u="m2" aria-pressed="false">m<sup>2</sup></button>
+    </div>
+  </div>
+  <div class="note">You are filling in Q5(a)</div>
+</div>
+
+<div class="q" data-answer="40" data-unit="m">
+  <h2>Question 5(b): Total length of the wire</h2>
+  <div class="row">
+    <label for="q5b" class="note">Enter the final value only:</label>
+    <input id="q5b" class="val" type="text" inputmode="numeric" autocomplete="off">
+    <div class="units" role="group" aria-label="Choose the unit">
+      <button type="button" data-u="m" aria-pressed="false">m</button>
+      <button type="button" data-u="m2" aria-pressed="false">m<sup>2</sup></button>
+    </div>
+  </div>
+  <div class="note">You are filling in Q5(b)</div>
+</div>
+
+<script>
+(function(){
+  function normalizeNum(s){
+    return s.replace(/[\s,]/g,'').toLowerCase();
+  }
+  function isCorrectValue(val, ans){
+    if(!val) return false;
+    const v = normalizeNum(val);
+    if(!/^[+-]?\d+(\.\d+)?$/.test(v)) return false;
+    return Number(v) === Number(ans);
+  }
+  function check(q){
+    const ans = q.dataset.answer;
+    const unitNeeded = q.dataset.unit;
+    const input = q.querySelector('.val');
+    const selectedBtn = q.querySelector('.units button.sel');
+    const unitChosen = selectedBtn ? selectedBtn.dataset.u : '';
+    const valueOk = isCorrectValue(input.value, ans);
+    const unitOk = unitChosen === unitNeeded;
+    if(valueOk && unitOk){
+      input.classList.add('ok'); input.classList.remove('err');
+    }else if(input.value.length){
+      input.classList.add('err'); input.classList.remove('ok');
+    }else{
+      input.classList.remove('ok','err');
+    }
+  }
+  document.querySelectorAll('.q').forEach(q=>{
+    const input = q.querySelector('.val');
+    input.addEventListener('input', ()=>check(q));
+    q.querySelectorAll('.units button').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        q.querySelectorAll('.units button').forEach(b=>{b.classList.remove('sel'); b.setAttribute('aria-pressed','false');});
+        btn.classList.add('sel'); btn.setAttribute('aria-pressed','true');
+        check(q);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

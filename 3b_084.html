@@ -1,0 +1,100 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jelly Beans — Q4 Final Answer Checker</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.4;margin:16px;color:#111}
+  h1{font-size:18px;margin:0 0 12px}
+  .q{border:1px solid #e3e3e3;border-radius:10px;padding:14px;margin:12px 0}
+  .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:6px 0}
+  label{font-weight:700}
+  small.helper{color:#666}
+  input[type="text"]{width:240px;max-width:92vw;padding:10px 12px;font-size:20px;border:1px solid #888;border-radius:8px;outline:none;color:#c00} /* answers in red ink */
+  .ok{background:#c9f7c3;border-color:#2a7a39}     /* correct → green */
+  .bad{background:#ffd6d6;border-color:#cc3535}   /* incorrect → red */
+  .fraction input[type="text"]{width:110px;text-align:center}
+  .sep{font-size:20px;margin:0 2px}
+  button{padding:6px 10px;border:1px solid #888;border-radius:8px;background:#f6f6f6;cursor:pointer}
+  button:active{transform:scale(.98)}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<section class="q" aria-label="Question 4 checker">
+  <label>Question 4 — Final answer</label>
+  <small class="helper">You are filling in: <strong>Q4 final answer</strong>.</small>
+
+  <ul style="margin:8px 0 10px 20px">
+    <li>Find the total mass of all the packets together.</li>
+    <li>Find how much was sold.</li>
+    <li>Find the amount left.</li>
+    <li>Write the final answer in grams.</li>
+  </ul>
+
+  <div class="row" aria-label="Q4 final statement">
+    <span>She had</span>
+    <input id="q4final" class="ans" type="text" inputmode="text" autocomplete="off" aria-label="Q4 final answer in grams">
+    <span>of jelly beans left.</span>
+  </div>
+
+ 
+
+  <div class="row">
+    <button id="reset" type="button">Reset</button>
+  </div>
+</section>
+
+<script>
+(function(){
+  // Accept exactly "825g" or "825 g" (case-insensitive, ignores surrounding spaces)
+  const finalOk = s => /^\s*825\s*g\s*$/i.test(s || "");
+
+  // Fraction checker: accept any fraction equal to 825/1000 (e.g., 825/1000 or 33/40)
+  function cleanInt(s){
+    const t = (s||"").trim();
+    if(!t) return NaN;
+    const m = t.match(/^-?\d+/);
+    return m ? parseInt(m[0],10) : NaN;
+  }
+  const fracOk = (n,d) => Number.isFinite(n) && Number.isFinite(d) && d!==0 && (n*1000 === d*825);
+
+  const $final = document.getElementById('q4final');
+  const $num = document.getElementById('q4num');
+  const $den = document.getElementById('q4den');
+
+  function paint(el, ok){
+    el.classList.remove('ok','bad');
+    if(!el.value.trim()) return;           // neutral until something is typed
+    el.classList.add(ok ? 'ok' : 'bad');   // green if correct, red if wrong
+  }
+
+  function checkFinal(){
+    const ok = finalOk($final.value);
+    paint($final, ok);
+  }
+
+  function checkFrac(){
+    const n = cleanInt($num.value);
+    const d = cleanInt($den.value);
+    const ok = fracOk(n,d);
+    paint($num, ok);
+    paint($den, ok);
+  }
+
+  $final.addEventListener('input', checkFinal);
+  $num.addEventListener('input', checkFrac);
+  $den.addEventListener('input', checkFrac);
+
+  document.getElementById('reset').addEventListener('click', ()=>{
+    [$final,$num,$den].forEach(el=>{ el.value=""; el.classList.remove('ok','bad'); });
+    $final.focus();
+  });
+})();
+</script>
+</body>
+</html>
+```

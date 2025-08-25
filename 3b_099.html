@@ -1,0 +1,143 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Activity Check – Q21</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+ body{font-family:Arial,Helvetica,sans-serif;line-height:1.35;margin:16px;color:#222}
+ h1{font-size:18px;margin:0 0 8px}
+ label{display:block;margin:14px 0 6px;font-weight:600}
+ input[type=text]{width:280px;max-width:95%;padding:10px 12px;font-size:18px;border:2px solid #999;border-radius:6px;outline:0}
+ input.right{background:#d9ffd9;border-color:#2e7d32}
+ input.wrong{background:#ffd9d9;border-color:#c62828}
+ .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+ .msg{font-size:12px;color:#c62828;height:14px}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<section id="q21">
+  <p><strong>Q21.</strong> Study the map and answer the questions.</p>
+
+  <label for="a">Q21(a) Final answer — Route B</label>
+  <div class="row">
+    <span>a) Route B is</span>
+    <input id="a" type="text" autocomplete="off">
+    <span>long.</span>
+  </div>
+  <div class="msg" id="a-msg"></div>
+
+  <label for="bkm">Q21(b) Final answer — Total distance for the trip</label>
+  <div class="row">
+    <span>b) The total distance she travelled is</span>
+    <input id="bkm" type="text" autocomplete="off" inputmode="decimal">
+    <span>km</span>
+    <input id="bm" type="text" autocomplete="off" inputmode="decimal">
+    <span>m.</span>
+  </div>
+  <div class="msg" id="b-msg"></div>
+</section>
+
+<script>
+(function(){
+  const A_METERS = 2300; // Route B total for Q21(a)
+
+  const byId = id => document.getElementById(id);
+
+  function normalizeUnit(u){
+    u = (u||'').toLowerCase();
+    if(/^m$|^meters?$|^metres?$/.test(u)) return 'm';
+    if(/^km$|^kilometers?$|^kilometres?$/.test(u)) return 'km';
+    return null;
+  }
+  function toNumber(s){ return parseFloat((s||'').replace(/,/g,'')); }
+
+  // Q21(a): accept "2300m", "2300 m", "2km 300m", "2 km 300 m", "2km 300 m", "2 km 300m"
+  function parseDistanceToMeters(s){
+    if(!s) return {ok:false};
+    s = s.trim().replace(/\s+/g,' ');
+
+    // compact "2300m" / "2km"
+    let compact = s.match(/^([\d.,]+)(m|km)$/i);
+    if(compact){
+      const val = toNumber(compact[1]);
+      const unit = normalizeUnit(compact[2]);
+      if(isFinite(val) && unit){ return {ok:true, meters: unit==='km' ? val*1000 : val}; }
+    }
+
+    // compound with optional spaces around units: "2km 300m", "2 km 300 m", etc.
+    let compound = s.match(/^([\d.,]+)\s*(km|kilometers?|kilometres?)\s*([\d.,]+)\s*(m|meters?|metres?)$/i);
+    if(compound){
+      const km = toNumber(compound[1]);
+      const mpart = toNumber(compound[3]);
+      if(isFinite(km) && isFinite(mpart)){ return {ok:true, meters: km*1000 + mpart}; }
+    }
+
+    // single "value unit" with space e.g. "2300 m" or "2.3 km"
+    const parts = s.split(' ');
+    if(parts.length >= 2){
+      const unit = normalizeUnit(parts[parts.length-1]);
+      const num  = toNumber(parts.slice(0,-1).join(' '));
+      if(isFinite(num) && unit){ return {ok:true, meters: unit==='km' ? num*1000 : num}; }
+    }
+    return {ok:false};
+  }
+
+  function checkA(){
+    const el = byId('a'), msg = byId('a-msg');
+    const res = parseDistanceToMeters(el.value);
+    if(!el.value.trim()){ el.classList.remove('right','wrong'); msg.textContent=''; return; }
+    if(res.ok && Math.abs(res.meters - A_METERS) < 0.5){
+      el.classList.add('right'); el.classList.remove('wrong'); msg.textContent='';
+    }else{
+      el.classList.add('wrong'); el.classList.remove('right'); msg.textContent='Try again.';
+    }
+  }
+
+  // Q21(b): inputs are NUMBERS ONLY (units are shown beside the inputs)
+  // Expect exactly 4 km and 350 m.
+  function checkB(){
+    const ekm = byId('bkm');
+    const em  = byId('bm');
+    const msg = byId('b-msg');
+
+    const kmRaw = ekm.value.trim();
+    const mRaw  = em.value.trim();
+
+    // nothing typed -> clear highlights
+    if(!kmRaw){ ekm.classList.remove('right','wrong'); }
+    if(!mRaw){  em.classList.remove('right','wrong'); }
+
+    // if something is typed, validate numerically (ignore commas)
+    let kmOK = false, mOK = false;
+
+    if(kmRaw){
+      const kmVal = toNumber(kmRaw);
+      kmOK = Number.isFinite(kmVal) && Math.abs(kmVal - 4) < 1e-9;
+      ekm.classList.toggle('right', kmOK);
+      ekm.classList.toggle('wrong', !kmOK);
+    }
+
+    if(mRaw){
+      const mVal = toNumber(mRaw);
+      mOK = Number.isFinite(mVal) && Math.abs(mVal - 350) < 1e-9;
+      em.classList.toggle('right', mOK);
+      em.classList.toggle('wrong', !mOK);
+    }
+
+    // status message
+    if(kmRaw || mRaw){
+      msg.textContent = (kmOK && mOK) ? '' : 'Try again';
+    } else {
+      msg.textContent = '';
+    }
+  }
+
+  byId('a').addEventListener('input', checkA);
+  byId('bkm').addEventListener('input', checkB);
+  byId('bm').addEventListener('input',  checkB);
+})();
+</script>
+</body>
+</html>

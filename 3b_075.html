@@ -1,0 +1,78 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Litres and Millilitres Checker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;line-height:1.5;margin:18px;color:#222}
+  h1{font-size:18px;margin:0 0 10px}
+  .rem{font-size:12px;color:#444;margin:0 0 16px}
+  .q{margin:14px 0;padding:10px;border:1px solid #ddd;border-radius:8px}
+  .q b{display:inline-block;min-width:60px}
+  .guide{margin:6px 0}
+  input.num{width:92px;max-width:28vw;height:38px;font-size:18px;text-align:center;border:2px solid #888;border-radius:8px;outline:none}
+  input.num.ok{background:#c9f7c9;border-color:#3a9b3a}
+  input.num.bad{background:#ffd6d6;border-color:#c33}
+  .row{margin:4px 0}
+  .ml,.l{font-weight:bold}
+  .footer-note{margin-top:18px;font-size:12px;color:#555}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<p class="rem">Reminder: Show your thinking in your notebook. Type whole numbers only (no spinners).</p>
+
+<div class="q" id="qa">
+  <div><b>(a)</b> 5530 ml</div>
+  <div class="guide row">= <input class="num" aria-label="Question a, first addend in millilitres" data-answer="5000"> ml + <input class="num" aria-label="Question a, second addend in millilitres" data-answer="530"> ml = <input class="num" aria-label="Question a, litres part" data-answer="5"> ℓ + <input class="num" aria-label="Question a, millilitres part" data-answer="530"> ml = <input class="num" aria-label="Question a, final litres" data-answer="5"> ℓ <input class="num" aria-label="Question a, final millilitres" data-answer="530"> ml</div>
+</div>
+
+<div class="q" id="qb">
+  <div><b>(b)</b> 2015 ml</div>
+  <div class="guide row">= <input class="num" aria-label="Question b, first addend in millilitres" data-answer="2000"> ml + <input class="num" aria-label="Question b, second addend in millilitres" data-answer="15"> ml = <input class="num" aria-label="Question b, litres part" data-answer="2"> ℓ + <input class="num" aria-label="Question b, millilitres part" data-answer="15"> ml = <input class="num" aria-label="Question b, final litres" data-answer="2"> ℓ <input class="num" aria-label="Question b, final millilitres" data-answer="15"> ml</div>
+</div>
+
+<div class="q" id="qc">
+  <div><b>(c)</b> 1009 ml</div>
+  <div class="guide row">= <input class="num" aria-label="Question c, first addend in millilitres" data-answer="1000"> ml + <input class="num" aria-label="Question c, second addend in millilitres" data-answer="9"> ml = <input class="num" aria-label="Question c, litres part" data-answer="1"> ℓ + <input class="num" aria-label="Question c, millilitres part" data-answer="9"> ml = <input class="num" aria-label="Question c, final litres" data-answer="1"> ℓ <input class="num" aria-label="Question c, final millilitres" data-answer="9"> ml</div>
+</div>
+
+<div class="q" id="qd">
+  <div><b>(d)</b> 8665 ml</div>
+  <div class="guide row">= <input class="num" aria-label="Question d, first addend in millilitres" data-answer="8000"> ml + <input class="num" aria-label="Question d, second addend in millilitres" data-answer="665"> ml = <input class="num" aria-label="Question d, litres part" data-answer="8"> ℓ + <input class="num" aria-label="Question d, millilitres part" data-answer="665"> ml = <input class="num" aria-label="Question d, final litres" data-answer="8"> ℓ <input class="num" aria-label="Question d, final millilitres" data-answer="665"> ml</div>
+</div>
+
+<div class="q" id="qe">
+  <div><b>(e)</b> 3064 ml</div>
+  <div class="guide row">= <input class="num" aria-label="Question e, first addend in millilitres" data-answer="3000"> ml + <input class="num" aria-label="Question e, second addend in millilitres" data-answer="64"> ml = <input class="num" aria-label="Question e, litres part" data-answer="3"> ℓ + <input class="num" aria-label="Question e, millilitres part" data-answer="64"> ml = <input class="num" aria-label="Question e, final litres" data-answer="3"> ℓ <input class="num" aria-label="Question e, final millilitres" data-answer="64"> ml</div>
+</div>
+
+<div class="q" id="qf">
+  <div><b>(f)</b> 2004 ml</div>
+  <div class="guide row">= <input class="num" aria-label="Question f, first addend in millilitres" data-answer="2000"> ml + <input class="num" aria-label="Question f, second addend in millilitres" data-answer="4"> ml = <input class="num" aria-label="Question f, litres part" data-answer="2"> ℓ + <input class="num" aria-label="Question f, millilitres part" data-answer="4"> ml = <input class="num" aria-label="Question f, final litres" data-answer="2"> ℓ <input class="num" aria-label="Question f, final millilitres" data-answer="4"> ml</div>
+</div>
+
+<p class="footer-note">Guide patterns you should follow when you write: = ____________ ml + ________ ml = ________ ℓ + ________ ml = ________ ℓ ________ ml.</p>
+
+<script>
+(function(){
+  function cleanDigits(v){return v.replace(/[^\d]/g,'');}
+  function check(el){
+    const ans = el.dataset.answer;
+    const val = cleanDigits(el.value);
+    if(el.value !== val){ el.value = val; }
+    if(val.length===0){ el.classList.remove('ok','bad'); return; }
+    if(ans===val){ el.classList.add('ok'); el.classList.remove('bad'); }
+    else{ el.classList.add('bad'); el.classList.remove('ok'); }
+  }
+  document.querySelectorAll('input.num').forEach(function(el){
+    el.setAttribute('inputmode','numeric');
+    el.setAttribute('autocomplete','off');
+    el.setAttribute('autocorrect','off');
+    el.addEventListener('input',function(){ check(el); });
+    el.addEventListener('blur',function(){ check(el); });
+  });
+})();
+</script>
+</body>
+</html>

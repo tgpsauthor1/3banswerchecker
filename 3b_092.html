@@ -1,0 +1,91 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Length: Km and m — Self-check</title>
+<style>
+  body{font-family:system-ui,Segoe UI,Arial,sans-serif;line-height:1.4;margin:16px;max-width:860px}
+  h1{font-size:1.1rem;color:#003a76;margin:0 0 12px}
+  h2{font-size:1rem;margin:18px 0 8px}
+  ol{margin:6px 0 0 20px}
+  li{margin:10px 0}
+  .tag{display:none}
+  .ans{font-size:1rem;padding:6px 8px;border:2px solid #888;border-radius:6px;width:8ch;max-width:14ch}
+  .unit{margin:0 6px 0 3px}
+  .row{margin:6px 0}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<h2>4. Write in metres.</h2>
+<ol type="a">
+  <li>
+    <input class="ans" aria-label="Q4(a) first addend in metres" data-answer="1000">
+    <span class="unit">m</span> +
+    <input class="ans" aria-label="Q4(a) second addend in metres" data-answer="950">
+    <span class="unit">m</span>
+    <div class="row">= <input class="ans" aria-label="Q4(a) total in metres" data-answer="1950"><span class="unit">m</span></div>
+  </li>
+  <li>
+    <input class="ans" aria-label="Q4(b) total in metres" data-answer="4006"><span class="unit">m</span>
+  </li>
+  <li>
+    <input class="ans" aria-label="Q4(c) total in metres" data-answer="7024"><span class="unit">m</span>
+  </li>
+  <li>
+    <input class="ans" aria-label="Q4(d) total in metres" data-answer="5050"><span class="unit">m</span>
+  </li>
+  <li>
+    <input class="ans" aria-label="Q4(e) total in metres" data-answer="10000"><span class="unit">m</span>
+  </li>
+</ol>
+
+<h2>5. Write in kilometres and metres.</h2>
+<ol type="a">
+  <li>
+    <input class="ans" aria-label="Q5(a) first addend in metres" data-answer="1000"><span class="unit">m</span> +
+    <input class="ans" aria-label="Q5(a) second addend in metres" data-answer="238"><span class="unit">m</span>
+    <div class="row">= <input class="ans" aria-label="Q5(a) kilometres part" data-answer="1"><span class="unit">km</span>
+      <input class="ans" aria-label="Q5(a) metres part" data-answer="238"><span class="unit">m</span>
+    </div>
+  </li>
+  <li>
+    <input class="ans" aria-label="Q5(b) kilometres part" data-answer="2"><span class="unit">km</span>
+    <input class="ans" aria-label="Q5(b) metres part" data-answer="940"><span class="unit">m</span>
+  </li>
+  <li>
+    <input class="ans" aria-label="Q5(c) kilometres part" data-answer="3"><span class="unit">km</span>
+    <input class="ans" aria-label="Q5(c) metres part" data-answer="7"><span class="unit">m</span>
+  </li>
+  <li>
+    <input class="ans" aria-label="Q5(d) kilometres part" data-answer="9"><span class="unit">km</span>
+    <input class="ans" aria-label="Q5(d) metres part" data-answer="23"><span class="unit">m</span>
+  </li>
+  <li>
+    <input class="ans" aria-label="Q5(e) kilometres part" data-answer="1"><span class="unit">km</span>
+    <input class="ans" aria-label="Q5(e) metres part" data-answer="402"><span class="unit">m</span>
+  </li>
+</ol>
+
+<script>
+(function(){
+  function sanitize(s){return (s||"").toString().trim().replace(/\s+/g,'');}
+  function mark(el,ok){
+    if(!sanitize(el.value)){el.style.background='';return;}
+    el.style.background = ok ? '#b7f7b7' : '#ffcccc';
+  }
+  function check(el){
+    var val = sanitize(el.value);
+    var ans = sanitize(el.dataset.answer);
+    mark(el, val===ans);
+  }
+  document.querySelectorAll('.ans').forEach(function(el){
+    el.setAttribute('inputmode','numeric');
+    el.addEventListener('input',function(){check(el);});
+    el.addEventListener('blur',function(){check(el);});
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Activity Check</title>
+<style>
+  body{font-family:system-ui,Arial,sans-serif;line-height:1.45;margin:16px;font-size:18px}
+  h1{font-size:20px;margin:0 0 12px}
+  h2{font-size:18px;margin:16px 0 6px}
+  .row{margin:8px 0}
+  .ans{width:64px;height:40px;font-size:20px;text-align:center;border:2px solid #999;border-radius:6px;margin:0 6px;outline:none}
+  .ans.correct, .ans.ok{background:#c8f7c5;border-color:#2e7d32}
+  .ans.wrong, .ans.bad{background:#ffd6d6;border-color:#c62828}
+  .frac{display:inline-flex;flex-direction:column;align-items:center;margin:0 6px}
+  .bar{width:64px;border-top:2px solid #000;margin:2px 0}
+  .eq{margin:0 8px}
+  .u{margin:0 2px}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<h2>12. Write in litres and millilitres.</h2>
+<div class="row">
+  (a)
+  <input class="ans" inputmode="numeric" data-answer="3000"> ml +
+  <input class="ans" inputmode="numeric" data-answer="849"> ml =
+  <input class="ans" inputmode="numeric" data-answer="3"> ℓ
+  <input class="ans" inputmode="numeric" data-answer="849"> ml
+</div>
+
+<div class="row">
+  (b)
+  <input class="ans" inputmode="numeric" data-answer="2"> ℓ
+  <input class="ans" inputmode="numeric" data-answer="73"> ml
+</div>
+
+<div class="row">
+  (c)
+  <input class="ans" inputmode="numeric" data-answer="9"> ℓ
+  <input class="ans" inputmode="numeric" data-answer="8"> ml
+</div>
+
+<h2>13. List the next 4 equivalent fractions.</h2>
+<div class="row">
+  (a)
+  <span class="frac">
+    <input class="ans" inputmode="numeric" data-answer="2">
+    <div class="bar"></div>
+    <input class="ans" inputmode="numeric" data-answer="14">
+  </span>
+  <span class="eq">=</span>
+  <span class="frac">
+    <input class="ans" inputmode="numeric" data-answer="3">
+    <div class="bar"></div>
+    <input class="ans" inputmode="numeric" data-answer="21">
+  </span>
+  <span class="eq">=</span>
+  <span class="frac">
+    <input class="ans" inputmode="numeric" data-answer="4">
+    <div class="bar"></div>
+    <input class="ans" inputmode="numeric" data-answer="28">
+  </span>
+  <span class="eq">=</span>
+  <span class="frac">
+    <input class="ans" inputmode="numeric" data-answer="5">
+    <div class="bar"></div>
+    <input class="ans" inputmode="numeric" data-answer="35">
+  </span>
+</div>
+
+<div class="row">
+  (b)
+  <span class="frac">
+    <input class="ans" inputmode="numeric" data-answer="8">
+    <div class="bar"></div>
+    <input class="ans" inputmode="numeric" data-answer="10">
+  </span>
+  <span class="eq">=</span>
+  <span class="frac">
+    <input class="ans" inputmode="numeric" data-answer="12">
+    <div class="bar"></div>
+    <input class="ans" inputmode="numeric" data-answer="15">
+  </span>
+  <span class="eq">=</span>
+  <span class="frac">
+    <input class="ans" inputmode="numeric" data-answer="16">
+    <div class="bar"></div>
+    <input class="ans" inputmode="numeric" data-answer="20">
+  </span>
+  <span class="eq">=</span>
+  <span class="frac">
+    <input class="ans" inputmode="numeric" data-answer="20">
+    <div class="bar"></div>
+    <input class="ans" inputmode="numeric" data-answer="25">
+  </span>
+</div>
+
+<h2>14. Find the missing numerator or denominator.</h2>
+<div class="row">
+  (a)
+  <span class="frac">
+    <input class="ans" inputmode="numeric" data-answer="8">
+    <div class="bar"></div>
+    <span>20</span>
+  </span>
+</div>
+
+<div class="row">
+  (b)
+  <span class="frac">
+    <span>24</span>
+    <div class="bar"></div>
+    <input class="ans" inputmode="numeric" data-answer="42">
+  </span>
+</div>
+
+<h2>15. Express each fraction in its simplest form.</h2>
+<div class="row">
+  (a)
+  <span class="frac">
+    <input class="ans" inputmode="numeric" data-answer="4">
+    <div class="bar"></div>
+    <input class="ans" inputmode="numeric" data-answer="5">
+  </span>
+</div>
+
+<div class="row">
+  (b)
+  <span class="frac">
+    <input class="ans" inputmode="numeric" data-answer="1">
+    <div class="bar"></div>
+    <input class="ans" inputmode="numeric" data-answer="4">
+  </span>
+</div>
+
+<script>
+document.addEventListener('input', function(e){
+  const el = e.target;
+  if(!el.classList.contains('ans')) return;
+  const correct = (el.dataset.answer||'').trim();
+  const val = el.value.trim();
+  if(!val){ el.classList.remove('correct','wrong','ok','bad'); return; }
+  if(val === correct){
+    el.classList.add('correct','ok');
+    el.classList.remove('wrong','bad');
+  } else {
+    el.classList.add('wrong','bad');
+    el.classList.remove('correct','ok');
+  }
+});
+</script>
+</body>
+</html>

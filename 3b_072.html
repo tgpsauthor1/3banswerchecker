@@ -1,0 +1,96 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Volume Check</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;line-height:1.4;margin:16px;color:#222}
+  h1{font-size:1.1rem;margin:0 0 12px}
+  .status{margin:6px 0 14px;color:#444;font-size:.95rem}
+  .q{border:1px solid #ddd;border-radius:8px;padding:12px;margin:12px 0;background:#f7f9fb}
+  .q h2{margin:0 0 8px;font-size:1rem}
+  .row{display:flex;align-items:center;gap:8px;margin:8px 0}
+  label{min-width:190px;font-size:.95rem}
+  .unit{min-width:24px}
+  input.ans{font-size:1.15rem;padding:.45rem .6rem;min-width:5ch;border:2px solid #999;border-radius:6px;outline:none}
+  input.ans:focus{border-color:#1976d2;box-shadow:0 0 0 2px rgba(25,118,210,.15)}
+  .correct{background:#c8f7c5;border-color:#2e7d32}
+  .incorrect{background:#ffcccc;border-color:#c62828}
+  .legend{font-size:.85rem;color:#666;margin-top:2px}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<div id="now" class="status" aria-live="polite"></div>
+
+<section class="q" id="q-d" aria-labelledby="q-d-h">
+  <h2 id="q-d-h">Question (d)</h2>
+  <div class="row">
+    <label for="d-litres">Q(d) — litres (ℓ)</label>
+    <input id="d-litres" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-describedby="d-litres-u" data-answer="3" data-q="(d)" data-part="litres">
+    <span id="d-litres-u" class="unit">ℓ</span>
+  </div>
+  <div class="row">
+    <label for="d-ml">Q(d) — millilitres (ml)</label>
+    <input id="d-ml" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-describedby="d-ml-u" data-answer="550" data-q="(d)" data-part="millilitres">
+    <span id="d-ml-u" class="unit">ml</span>
+  </div>
+  <div class="legend">Type only the numbers; units are shown for you.</div>
+</section>
+
+<section class="q" id="q-e" aria-labelledby="q-e-h">
+  <h2 id="q-e-h">Question (e)</h2>
+  <div class="row">
+    <label for="e-litres">Q(e) — litres (ℓ)</label>
+    <input id="e-litres" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-describedby="e-litres-u" data-answer="3" data-q="(e)" data-part="litres">
+    <span id="e-litres-u" class="unit">ℓ</span>
+  </div>
+  <div class="row">
+    <label for="e-ml">Q(e) — millilitres (ml)</label>
+    <input id="e-ml" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-describedby="e-ml-u" data-answer="120" data-q="(e)" data-part="millilitres">
+    <span id="e-ml-u" class="unit">ml</span>
+  </div>
+  <div class="legend">Type only the numbers; units are shown for you.</div>
+</section>
+
+<script>
+(function(){
+  const now = document.getElementById('now');
+  function setStatus(q, part){
+    now.textContent = 'Now filling: Q' + q + ' — ' + part;
+  }
+  function clearStatus(){
+    now.textContent = '';
+  }
+  function sanitize(v){
+    return v.replace(/[^\d-]/g,'').trim();
+  }
+  function check(el){
+    const expected = el.getAttribute('data-answer');
+    const val = sanitize(el.value);
+    if (val.length === 0){
+      el.classList.remove('correct','incorrect');
+      return;
+    }
+    const ok = Number(val) === Number(expected);
+    el.classList.toggle('correct', ok);
+    el.classList.toggle('incorrect', !ok);
+  }
+  document.querySelectorAll('input.ans').forEach(el=>{
+    el.addEventListener('focus', ()=>setStatus(el.getAttribute('data-q'), el.getAttribute('data-part')));
+    el.addEventListener('blur', clearStatus);
+    el.addEventListener('input', (e)=>{
+      const pos = e.target.selectionStart;
+      const before = e.target.value;
+      const cleaned = sanitize(before);
+      if (before !== cleaned){
+        e.target.value = cleaned;
+        try{ e.target.setSelectionRange(pos-1,pos-1); }catch(_){}
+      }
+      check(el);
+    });
+  });
+})();
+</script>
+</body>
+</html>

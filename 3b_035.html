@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Practice 5: Comparing and Ordering Fractions</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 { text-align: center; }
+    .hint {
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #888;
+      min-height: 3em;
+    }
+    .question {
+      margin: 20px 0;
+    }
+    .fraction {
+      display: inline-block;
+      vertical-align: middle;
+      text-align: center;
+    }
+    /* Remove spinner controls */
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+    /* Wider inputs */
+    .fraction input {
+      width: 3em;
+      text-align: center;
+      margin: 0 .2em;
+      font-size: 1em;
+      padding: 2px;
+    }
+    .fraction .bar {
+      display: block;
+      height: 1px;
+      background: #000;
+      margin: 2px 0;
+    }
+    input.correct { background-color: #ccffcc; }
+    input.incorrect { background-color: #ffcccc; }
+    button { margin-left: 1em; }
+  </style>
+</head>
+<body>
+
+  <h1>Practice 5: Comparing and Ordering Fractions</h1>
+
+  <div id="hint" class="hint"></div>
+
+  <div class="question" id="q1a">
+    <strong>1a.</strong>
+    <span class="fraction">
+      <input id="q1a_n1" type="number" min="0" /> 
+      <div class="bar"></div> 
+      <input id="q1a_d1" type="number" min="1" />
+    </span>
+    <strong>&lt;</strong>
+    <span class="fraction">
+      <input id="q1a_n2" type="number" min="0" />
+      <div class="bar"></div> 
+      <input id="q1a_d2" type="number" min="1" />
+    </span>
+  </div>
+
+  <div class="question" id="q1b">
+    <strong>1b.</strong>
+    <span class="fraction">
+      <input id="q1b_n1" type="number" min="0" />
+      <div class="bar"></div>
+      <input id="q1b_d1" type="number" min="1" />
+    </span>
+    <strong>&gt;</strong>
+    <span class="fraction">
+      <input id="q1b_n2" type="number" min="0" />
+      <div class="bar"></div>
+      <input id="q1b_d2" type="number" min="1" />
+    </span>
+  </div>
+
+  <div class="question" id="q1c">
+    <strong>1c.</strong>
+    <span class="fraction">
+      <input id="q1c_n1" type="number" min="0" />
+      <div class="bar"></div>
+      <input id="q1c_d1" type="number" min="1" />
+    </span>
+    <strong>&lt;</strong>
+    <span class="fraction">
+      <input id="q1c_n2" type="number" min="0" />
+      <div class="bar"></div>
+      <input id="q1c_d2" type="number" min="1" />
+    </span>
+  </div>
+
+  <div class="question" id="q1d">
+    <strong>1d.</strong>
+    <span class="fraction">
+      <input id="q1d_n1" type="number" min="0" />
+      <div class="bar"></div>
+      <input id="q1d_d1" type="number" min="1" />
+    </span>
+    <strong>&gt;</strong>
+    <span class="fraction">
+      <input id="q1d_n2" type="number" min="0" />
+      <div class="bar"></div>
+      <input id="q1d_d2" type="number" min="1" />
+    </span>
+  </div>
+
+  <script>
+    const answers = {
+      q1a: { n1: 3, d1: 8, n2: 5, d2: 8 },
+      q1b: { n1: 1, d1: 4, n2: 1, d2: 6 },
+      q1c: { n1: 2, d1: 5, n2: 4, d2: 5 },
+      q1d: { n1: 1, d1: 7, n2: 1, d2: 11 },
+    };
+
+    const hints = {
+      q1a: "Look at the shaded parts for both fractions. Trace it out with your fingers. Compare the size of all the shaded parts for each fraction. Which is greater? Remember that the arrow points to the smaller fraction. Remember to count and write out the numerator and denominator correctly.",
+      q1b: "Look at the shaded parts for both fractions. Trace it out with your fingers. Compare the size of each shaded part. Which one is larger? Remember that the arrow points to the larger fraction. Remember to count and write out the numerator and denominator correctly.",
+      q1c: "Look at the shaded parts for for both fractions. Trace it out with your fingers. Compare how many parts are shaded in each circle. Which is greater? Remember that the arrow points to the fraction with more shaded parts. Remember to count and write out the numerator and denominator correctly.",
+      q1d: "Look at the shaded parts for for both fractions. Trace it out with your fingers. Notice how big each shaded part is. Which piece is larger? Remember that the arrow points to the fraction with the larger piece. Remember to count and write out the numerator and denominator correctly."
+    };
+
+    let currentHint = "";
+
+    function speakHint() {
+      if (!currentHint) return;
+      const msg = new SpeechSynthesisUtterance(currentHint);
+      window.speechSynthesis.speak(msg);
+    }
+
+    function showHint(text) {
+      currentHint = text;
+      const hintDiv = document.getElementById("hint");
+      hintDiv.innerHTML = text + ' <button onclick="speakHint()">Speak</button>';
+    }
+
+    function clearHint() {
+      currentHint = "";
+      document.getElementById("hint").textContent = "";
+    }
+
+    function checkQuestion(qId) {
+      const ans = answers[qId];
+      let allCorrect = true;
+      ["n1","d1","n2","d2"].forEach(key => {
+        const input = document.getElementById(`${qId}_${key}`);
+        const val = parseInt(input.value, 10);
+        if (val === ans[key]) {
+          input.classList.add("correct");
+          input.classList.remove("incorrect");
+        } else {
+          input.classList.add("incorrect");
+          input.classList.remove("correct");
+          allCorrect = false;
+        }
+      });
+      if (allCorrect) {
+        clearHint();
+      } else {
+        showHint(hints[qId]);
+      }
+    }
+
+    Object.keys(answers).forEach(qId => {
+      ["n1","d1","n2","d2"].forEach(key => {
+        document.getElementById(`${qId}_${key}`)
+          .addEventListener("input", () => checkQuestion(qId));
+      });
+    });
+  </script>
+
+</body>
+</html>

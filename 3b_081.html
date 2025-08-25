@@ -1,0 +1,94 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Practice 11 Checker</title>
+<style>
+ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.35;margin:16px;color:#123}
+ h1{font-size:18px;margin:0 0 8px}
+ .note{font-size:14px;margin:4px 0 16px;color:#444}
+ .q{border:1px solid #e0e0e0;border-radius:8px;padding:12px;margin:12px 0}
+ .q h2{font-size:16px;margin:0 0 6px}
+ .hints{margin:6px 0 10px;padding-left:18px}
+ .hints li{margin:2px 0}
+ label{display:block;font-weight:600;margin-bottom:6px}
+ .final{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+ .final span.statement{min-width:180px}
+ .ans{width:240px;max-width:90vw;padding:10px 12px;font-size:18px;border-radius:6px;border:1px solid #bbb;outline:none;transition:background-color .2s}
+ .ok{background:#c9f7cc}
+ .bad{background:#ffd6d6}
+ small.meta{display:block;color:#666;margin-top:6px}
+ .helper{font-size:12px;color:#666}
+ button.reset{margin-left:4px;padding:6px 10px;font-size:12px;border:1px solid #aaa;border-radius:6px;background:#fafafa;cursor:pointer}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<section class="q" id="Q1">
+  <h2>Question 1 — Final answer checker</h2>
+  <div class="helper">You are filling in: Q1 final answer.</div>
+  <ul class="hints">
+    <li>Work out how far Anna jogged in metres first.</li>
+    <li>Then convert your result to kilometres.</li>
+  </ul>
+  <div class="final">
+    <span class="statement">Anna jogged</span>
+    <label for="q1" class="sr">Q1 final answer</label>
+    <input id="q1" class="ans" type="text" inputmode="text" autocomplete="off">
+    <span>.</span>
+    <button class="reset" type="button" data-for="q1">Reset</button>
+  </div>
+</section>
+
+<section class="q" id="Q2">
+  <h2>Question 2 — Final answer checker</h2>
+  <div class="helper">You are filling in: Q2 final answer.</div>
+  <ul class="hints">
+    <li>Change 2 kg to grams first.</li>
+    <li>Subtract the amount sold from 2500 g.</li>
+  </ul>
+  <div class="final">
+    <span class="statement">He had</span>
+    <label for="q2" class="sr">Q2 final answer</label>
+    <input id="q2" class="ans" type="text" inputmode="text" autocomplete="off">
+    <span>of mushrooms left.</span>
+    <button class="reset" type="button" data-for="q2">Reset</button>
+  </div>
+</section>
+
+<script>
+(function(){
+  const normalize = s => s.trim().toLowerCase().replace(/\.$/,'').replace(/\s+/g,' ');
+  const sets = {
+    q1: new Set(["1 km","1km"]),
+    q2: new Set(["500 g","500g"])
+  };
+
+  function paint(el, ok){
+    el.classList.remove('ok','bad');
+    if(el.value==='') return;
+    el.classList.add(ok ? 'ok' : 'bad');
+  }
+
+  function check(el, key){
+    const s = normalize(el.value);
+    paint(el, sets[key].has(s)); // accept ONLY the exact allowed forms
+  }
+
+  const q1 = document.getElementById('q1');
+  const q2 = document.getElementById('q2');
+  q1.addEventListener('input',()=>check(q1,'q1'));
+  q2.addEventListener('input',()=>check(q2,'q2'));
+
+  document.querySelectorAll('.reset').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const id = btn.getAttribute('data-for');
+      const el = document.getElementById(id);
+      el.value=''; el.classList.remove('ok','bad'); el.focus();
+    });
+  });
+})();
+</script>
+</body>
+</html>

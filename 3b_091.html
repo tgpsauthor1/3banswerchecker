@@ -1,0 +1,96 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Review 5 Checker</title>
+<style>
+ body{font-family:Arial,Helvetica,sans-serif;line-height:1.6;margin:16px;color:#222}
+ h1{font-size:18px;margin:0 0 12px}
+ h2{font-size:17px;margin:16px 0 8px}
+ .q{margin:10px 0}
+ .line{margin:6px 0}
+ .tag{font-size:12px;color:#555;margin-right:6px}
+ input.ans{width:90px;max-width:30vw;padding:6px 8px;font-size:18px;border:2px solid #888;border-radius:6px;outline:none}
+ input.ans.correct{background:#c9f7c9;border-color:#2e7d32}
+ input.ans.wrong{background:#ffd6d6;border-color:#c62828}
+ small{color:#555}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<h2>1) Write in centimetres.</h2>
+<div class="q">
+  <div class="line">
+    <span class="tag">Q1a</span> 
+    <input class="ans" aria-label="Q1a first blank (centimetres)" autocomplete="off" inputmode="numeric" data-answer="300"> cm +
+    <input class="ans" aria-label="Q1a second blank (centimetres)" autocomplete="off" inputmode="numeric" data-answer="14"> cm
+  </div>
+  <div class="line">
+    <span class="tag">Q1a</span>
+    = <input class="ans" aria-label="Q1a total in centimetres" autocomplete="off" inputmode="numeric" data-answer="314"> cm
+  </div>
+  <div class="line">
+    <span class="tag">Q1b</span>
+    <input class="ans" aria-label="Q1b total in centimetres" autocomplete="off" inputmode="numeric" data-answer="507"> cm
+  </div>
+  <div class="line">
+    <span class="tag">Q1c</span>
+   <input class="ans" aria-label="Q1c total in centimetres" autocomplete="off" inputmode="numeric" data-answer="1000"> cm
+  </div>
+</div>
+
+<h2>2) Write in metres and centimetres.</h2>
+<div class="q">
+  <div class="line">
+    <span class="tag">Q2a</span>
+   
+    <input class="ans" aria-label="Q2a first blank in centimetres" autocomplete="off" inputmode="numeric" data-answer="100"> cm +
+    <input class="ans" aria-label="Q2a second blank in centimetres" autocomplete="off" inputmode="numeric" data-answer="69"> cm
+  </div>
+  <div class="line">
+    <span class="tag">Q2a</span>
+    = <input class="ans" aria-label="Q2a metres" autocomplete="off" inputmode="numeric" data-answer="1"> m
+    <input class="ans" aria-label="Q2a centimetres" autocomplete="off" inputmode="numeric" data-answer="69"> cm
+  </div>
+  <div class="line">
+    <span class="tag">Q2b</span>
+    
+    <input class="ans" aria-label="Q2b metres" autocomplete="off" inputmode="numeric" data-answer="8"> m
+    <input class="ans" aria-label="Q2b centimetres" autocomplete="off" inputmode="numeric" data-answer="1"> cm
+  </div>
+  <div class="line">
+    <span class="tag">Q2c</span>
+   
+    <input class="ans" aria-label="Q2c metres" autocomplete="off" inputmode="numeric" data-answer="7"> m
+    <input class="ans" aria-label="Q2c centimetres" autocomplete="off" inputmode="numeric" data-answer="20"> cm
+  </div>
+</div>
+
+<h2>3) Fill in the blank.</h2>
+<div class="q">
+  <div class="line">
+    <span class="tag">Q3</span>
+    The distance from Point A to Point B is 
+    <input class="ans" aria-label="Q3 distance in metres" autocomplete="off" inputmode="numeric" data-answer="1839"> m
+  </div>
+</div>
+
+<script>
+(function(){
+  const norm = s => s.replace(/\s+/g,'').toLowerCase();
+  function check(e){
+    const el = e.target;
+    const exp = (el.dataset.answer||'').trim();
+    const val = (el.value||'').trim();
+    el.classList.remove('correct','wrong');
+    if(!val) return;
+    if(norm(val)===norm(exp)) el.classList.add('correct'); else el.classList.add('wrong');
+  }
+  document.querySelectorAll('input.ans').forEach(i=>{
+    i.addEventListener('input',check,{passive:true});
+  });
+})();
+</script>
+</body>
+</html>

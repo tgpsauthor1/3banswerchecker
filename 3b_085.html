@@ -1,0 +1,70 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Activity Check – Q6</title>
+<style>
+  body{font-family:system-ui,Segoe UI,Arial,sans-serif;line-height:1.4;margin:16px;color:#222}
+  h1{font-size:18px;margin:0 0 12px}
+  .box{border:1px solid #bbb;border-radius:8px;padding:12px;margin:12px 0}
+  label{font-weight:600;display:block;margin-bottom:6px}
+  .hint{font-size:14px;color:#555;margin:6px 0}
+  input[type=text]{font-size:18px;padding:8px 10px;border:2px solid #888;border-radius:6px;min-width:220px}
+  .correct{background:#c9f7c9;border-color:#2c9a2c}
+  .incorrect{background:#ffd9d9;border-color:#c62828}
+  .note{font-size:13px;color:#444;margin-top:6px}
+  .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .final-line{font-size:18px;margin-top:10px}
+  button{padding:6px 10px;font-size:14px;border:1px solid #666;border-radius:6px;background:#f2f2f2;cursor:pointer}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="box" id="q6">
+  <div class="row">
+    <label for="q6-final">Q6 – Final answer (type number and unit):</label>
+  </div>
+  <div class="hint">Hints (do these on your paper first):</div>
+  <ul class="hint">
+    <li>Change 7 ℓ to millilitres.</li>
+    <li>Find how much paint is left after using 6040 ml.</li>
+    <li>Share the remaining paint equally between 2 containers.</li>
+  </ul>
+
+  <div class="final-line">
+    He poured
+    <input type="text" id="q6-final" autocomplete="off" inputmode="text" aria-label="Q6 final answer">
+    of paint into each container.
+  </div>
+  <div class="row" style="margin-top:10px">
+    <button type="button" id="reset-q6">Reset</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  const input = document.getElementById('q6-final');
+  const resetBtn = document.getElementById('reset-q6');
+
+  function normalize(v){
+    return (v||'').toLowerCase()
+            .replace(/\s+/g,' ')
+            .replace(/millilitres|milliliters/g,'ml')
+            .trim();
+  }
+
+  function check(){
+    const v = normalize(input.value);
+    const ok = /^480\s*ml$/.test(v); // accepts "480 ml" or "480ml"
+    if(!v){ input.classList.remove('correct','incorrect'); return; }
+    input.classList.toggle('correct', ok);
+    input.classList.toggle('incorrect', !ok);
+  }
+
+  input.addEventListener('input',check);
+  resetBtn.addEventListener('click',()=>{ input.value=''; input.classList.remove('correct','incorrect'); input.focus(); });
+})();
+</script>
+</body>
+</html>

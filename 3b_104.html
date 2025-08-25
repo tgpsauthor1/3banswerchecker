@@ -1,0 +1,105 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Area Check</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;line-height:1.4;margin:16px}
+h1{font-size:1.05rem;margin:0 0 12px}
+.section{margin:10px 0}
+label{display:block;margin:8px 0 4px;font-weight:600}
+.row{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+input.answer{width:130px;max-width:55vw;padding:8px 10px;font-size:1rem;border:2px solid #777;border-radius:8px;outline:none}
+input.answer.correct{background:#c8f7c5;border-color:#2d8f2d}
+input.answer.wrong{background:#ffb3b3;border-color:#a31a1a}
+.small{font-size:.95rem}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="section">
+  <label for="qA">(a) Area of Figure A =</label>
+  <div class="row">
+    <input id="qA" class="answer" type="text" inputmode="numeric" autocomplete="off" data-type="number" data-answer="11" aria-label="Question (a): Area of Figure A">
+    <span class="small">square units</span>
+  </div>
+</div>
+
+<div class="section">
+  <label for="qB">(b) Area of Figure B =</label>
+  <div class="row">
+    <input id="qB" class="answer" type="text" inputmode="numeric" autocomplete="off" data-type="number" data-answer="19" aria-label="Question (b): Area of Figure B">
+    <span class="small">square units</span>
+  </div>
+</div>
+
+<div class="section">
+  <label for="qC">(c) Area of Figure C =</label>
+  <div class="row">
+    <input id="qC" class="answer" type="text" inputmode="numeric" autocomplete="off" data-type="number" data-answer="17" aria-label="Question (c): Area of Figure C">
+    <span class="small">square units</span>
+  </div>
+</div>
+
+<div class="section">
+  <label for="qD">(d) Area of Figure D =</label>
+  <div class="row">
+    <input id="qD" class="answer" type="text" inputmode="numeric" autocomplete="off" data-type="number" data-answer="10" aria-label="Question (d): Area of Figure D">
+    <span class="small">square units</span>
+  </div>
+</div>
+
+<div class="section">
+  <label for="qE">(e) Figure ____ has the smallest area.</label>
+  <div class="row">
+    <input id="qE" class="answer" type="text" autocomplete="off" data-type="text" data-answer="D" data-ci="true" aria-label="Question (e): Type the letter of the figure with the smallest area">
+  </div>
+</div>
+
+<div class="section">
+  <label for="qF">(f) Figure ____ has the greatest area.</label>
+  <div class="row">
+    <input id="qF" class="answer" type="text" autocomplete="off" data-type="text" data-answer="B" data-ci="true" aria-label="Question (f): Type the letter of the figure with the greatest area">
+  </div>
+</div>
+
+<script>
+(function(){
+  const setState=(el,isRight)=>{
+    el.classList.remove('correct','wrong');
+    if(el.value.trim()==='') return;
+    el.classList.add(isRight?'correct':'wrong');
+  };
+  const checkNumber=(el)=>{
+    const want=String(parseInt(el.dataset.answer,10));
+    const got=el.value.replace(/[^\d-]/g,'').trim();
+    setState(el, got!=='' && String(parseInt(got,10))===want);
+  };
+  const checkText=(el)=>{
+    const want=el.dataset.answer.toLowerCase().trim();
+    let got=el.value.trim().toLowerCase();
+    // accept just the letter or "figure x"
+    if(got.startsWith('figure ')) got=got.replace(/^figure\s+/,'');
+    got=got.replace(/[^a-z]/g,''); // keep letters only
+    if(el.dataset.ci==='true') setState(el, got===want.toLowerCase());
+    else setState(el, got===el.dataset.answer);
+  };
+  document.querySelectorAll('input.answer').forEach(el=>{
+    const t=el.dataset.type||'text';
+    const handler=()=> t==='number'?checkNumber(el):checkText(el);
+    el.addEventListener('input',handler);
+    el.addEventListener('blur',handler);
+  });
+
+  // Optional helper for future fraction questions (numerator/denominator in separate fields)
+  window.checkFraction=(numInput,denInput,ansNum,ansDen)=>{
+    const n=document.getElementById(numInput), d=document.getElementById(denInput);
+    const ok = String(parseInt(n.value.replace(/[^\d-]/g,''),10))===String(parseInt(ansNum,10)) &&
+               String(parseInt(d.value.replace(/[^\d-]/g,''),10))===String(parseInt(ansDen,10));
+    [n,d].forEach(el=>{el.classList.remove('correct','wrong'); if(el.value.trim()!=='') el.classList.add(ok?'correct':'wrong');});
+  };
+})();
+</script>
+</body>
+</html>

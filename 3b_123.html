@@ -1,0 +1,155 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Review 6 – Answer Checker</title>
+<style>
+ body{font-family:Arial,Helvetica,sans-serif;line-height:1.6;padding:16px;color:#222}
+ h1{font-size:18px;margin:0 0 12px}
+ .q{margin:10px 0;padding:8px 10px;border:1px solid #ddd;border-radius:6px}
+ label{display:block;font-weight:bold;margin-bottom:6px;font-size:14px}
+ .line{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+ .ans{width:120px;max-width:40vw;padding:10px 12px;font-size:18px;border:1px solid #888;border-radius:6px;outline:none}
+ .sup2 sup{font-size:0.8em}
+ .correct{background:#c8f7c5}
+ .wrong{background:#ffbdbd}
+ small.hint{color:#666}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<section class="q" id="q1a-wrap">
+  <label for="q1a">Q1a – Area of Figure A</label>
+  <div class="line">
+    <span>Area of Figure A =</span>
+    <input id="q1a" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Q1a value (enter number only)">
+    <span class="sup2">cm<sup>2</sup></span>
+  </div>
+  <small class="hint">Enter the value only</small>
+</section>
+
+<section class="q" id="q1b-wrap">
+  <label for="q1b">Q1b – Area of Figure B</label>
+  <div class="line">
+    <span>Area of Figure B =</span>
+    <input id="q1b" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Q1b value (enter number only)">
+    <span class="sup2">cm<sup>2</sup></span>
+  </div>
+</section>
+
+<section class="q" id="q1c-wrap">
+  <label for="q1c">Q1c – Area of Figure C</label>
+  <div class="line">
+    <span>Area of Figure C =</span>
+    <input id="q1c" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Q1c value (enter number only)">
+    <span class="sup2">cm<sup>2</sup></span>
+  </div>
+</section>
+
+<section class="q" id="q1d-wrap">
+  <label for="q1d">Q1d – Area of Figure D</label>
+  <div class="line">
+    <span>Area of Figure D =</span>
+    <input id="q1d" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Q1d value (enter number only)">
+    <span class="sup2">cm<sup>2</sup></span>
+  </div>
+</section>
+
+<section class="q" id="q1e-wrap">
+  <label for="q1e">Q1e – Which figure has the smallest area?</label>
+  <div class="line">
+    <span>Figure</span>
+    <input id="q1e" class="ans" type="text" autocomplete="off" aria-label="Q1e figure letter">
+    <span>has the smallest area.</span>
+  </div>
+</section>
+
+<section class="q" id="q1f-wrap">
+  <label for="q1f">Q1f – Which figure has the greatest area?</label>
+  <div class="line">
+    <span>Figure</span>
+    <input id="q1f" class="ans" type="text" autocomplete="off" aria-label="Q1f figure letter">
+    <span>has the greatest area.</span>
+  </div>
+</section>
+
+<section class="q" id="q1g-wrap">
+  <label for="q1g1">Q1g – Which two figures have the same area?</label>
+  <div class="line">
+    <span>Figure</span>
+    <input id="q1g1" class="ans" type="text" autocomplete="off" aria-label="Q1g first figure letter">
+    <span>and Figure</span>
+    <input id="q1g2" class="ans" type="text" autocomplete="off" aria-label="Q1g second figure letter">
+    <span>have the same area.</span>
+  </div>
+</section>
+
+<script>
+(function(){
+  const byId=id=>document.getElementById(id);
+  const setState=(el,ok)=>{
+    el.classList.remove('correct','wrong');
+    if(!el.value.trim()) return;
+    el.classList.add(ok?'correct':'wrong');
+  };
+  const isNumberCorrect=(val,correct)=>{
+    if(!val) return null;
+    const n = Number(String(val).trim());
+    return Number.isFinite(n) && n===Number(correct);
+  };
+  const norm = s => String(s||'').replace(/[^a-z0-9]/gi,'').toLowerCase();
+
+  // Q1a–d numeric cm²
+  const nums = {q1a:6,q1b:6,q1c:5,q1d:11};
+  Object.keys(nums).forEach(id=>{
+    const el=byId(id);
+    el.addEventListener('input',()=>{
+      setState(el, isNumberCorrect(el.value, nums[id]));
+    });
+  });
+
+  // Q1e,f single letters (case-insensitive)
+  const letters = {q1e:'c', q1f:'d'};
+  Object.keys(letters).forEach(id=>{
+    const el=byId(id);
+    el.addEventListener('input',()=>{
+      const ok = norm(el.value)===letters[id];
+      setState(el, ok);
+    });
+  });
+
+  // Q1g pair (A and B in any order)
+  const g1=byId('q1g1'), g2=byId('q1g2');
+  function checkPair(){
+    const a=norm(g1.value), b=norm(g2.value);
+    let ok1=false, ok2=false;
+    if(!a && !b){ g1.classList.remove('correct','wrong'); g2.classList.remove('correct','wrong'); return; }
+    const setAB = new Set([a,b]);
+    const good = setAB.has('a') && setAB.has('b') && setAB.size===2;
+    ok1 = good && (a==='a' || a==='b');
+    ok2 = good && (b==='a' || b==='b');
+    setState(g1, ok1);
+    setState(g2, ok2);
+  }
+  g1.addEventListener('input',checkPair);
+  g2.addEventListener('input',checkPair);
+
+  // Fraction checker support (for any future items):
+  // Use data-frac="num/den" on a wrapper with two inputs having data-role="num" and data-role="den"
+  document.querySelectorAll('[data-frac]').forEach(wrap=>{
+    const [cn,cd] = wrap.getAttribute('data-frac').split('/').map(Number);
+    const num = wrap.querySelector('[data-role="num"]');
+    const den = wrap.querySelector('[data-role="den"]');
+    const fCheck=()=>{
+      const ok = Number(num.value.trim())===cn && Number(den.value.trim())===cd;
+      setState(num, ok);
+      setState(den, ok);
+    };
+    num.addEventListener('input',fCheck);
+    den.addEventListener('input',fCheck);
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>24-Hour Clock — Self Check</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:16px;line-height:1.35}
+  h1{font-size:18px;margin:0 0 14px}
+  .qwrap{max-width:760px}
+  .row{display:flex;align-items:center;gap:10px;margin:10px 0;padding:8px;border:1px solid #ddd;border-radius:6px}
+  .qtag{min-width:90px;font-weight:700;color:#144d8b}
+  .clocklbl{font-weight:600}
+  .fields{display:flex;align-items:center;gap:6px}
+  .box{width:3.4em;padding:8px 10px;font-size:18px;border:1px solid #888;border-radius:5px;outline:0}
+  .ok{background:#c7f5c4}
+  .bad{background:#ffd6d6}
+  .note{font-size:12px;color:#555}
+  .colon{font-weight:700;font-size:20px}
+  button{padding:8px 12px;border:1px solid #888;background:#f6f6f6;border-radius:6px;cursor:pointer}
+  .controls{margin:14px 0 6px;display:flex;gap:8px}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="qwrap" id="app">
+  <div class="controls">
+    <button type="button" id="checkAll">Check all</button>
+    <button type="button" id="clearAll">Clear all</button>
+  </div>
+
+  <div class="row clock" data-q="Q1" data-clock="1" data-hh="19" data-mm="50">
+    <div class="qtag">Q1 • Clock 1</div>
+    <div class="clocklbl">Enter the time shown (24-hour):</div>
+    <div class="fields">
+      <label class="note" for="c1h">Hour</label>
+      <input id="c1h" class="box hh" inputmode="numeric" autocomplete="off" maxlength="2" aria-label="Q1 Clock 1 hour">
+      <span class="colon">:</span>
+      <label class="note" for="c1m">Min</label>
+      <input id="c1m" class="box mm" inputmode="numeric" autocomplete="off" maxlength="2" aria-label="Q1 Clock 1 minutes">
+    </div>
+  </div>
+
+  <div class="row clock" data-q="Q1" data-clock="2" data-hh="10" data-mm="45">
+    <div class="qtag">Q1 • Clock 2</div>
+    <div class="clocklbl">Enter the time shown (24-hour):</div>
+    <div class="fields">
+      <label class="note" for="c2h">Hour</label>
+      <input id="c2h" class="box hh" inputmode="numeric" autocomplete="off" maxlength="2" aria-label="Q1 Clock 2 hour">
+      <span class="colon">:</span>
+      <label class="note" for="c2m">Min</label>
+      <input id="c2m" class="box mm" inputmode="numeric" autocomplete="off" maxlength="2" aria-label="Q1 Clock 2 minutes">
+    </div>
+  </div>
+
+  <div class="row clock" data-q="Q1" data-clock="3" data-hh="15" data-mm="00">
+    <div class="qtag">Q1 • Clock 3</div>
+    <div class="clocklbl">Enter the time shown (24-hour):</div>
+    <div class="fields">
+      <label class="note" for="c3h">Hour</label>
+      <input id="c3h" class="box hh" inputmode="numeric" autocomplete="off" maxlength="2" aria-label="Q1 Clock 3 hour">
+      <span class="colon">:</span>
+      <label class="note" for="c3m">Min</label>
+      <input id="c3m" class="box mm" inputmode="numeric" autocomplete="off" maxlength="2" aria-label="Q1 Clock 3 minutes">
+    </div>
+  </div>
+
+  <div class="row clock" data-q="Q1" data-clock="4" data-hh="08" data-mm="30">
+    <div class="qtag">Q1 • Clock 4</div>
+    <div class="clocklbl">Enter the time shown (24-hour):</div>
+    <div class="fields">
+      <label class="note" for="c4h">Hour</label>
+      <input id="c4h" class="box hh" inputmode="numeric" autocomplete="off" maxlength="2" aria-label="Q1 Clock 4 hour">
+      <span class="colon">:</span>
+      <label class="note" for="c4m">Min</label>
+      <input id="c4m" class="box mm" inputmode="numeric" autocomplete="off" maxlength="2" aria-label="Q1 Clock 4 minutes">
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const clean2 = v => v.replace(/[^\d]/g,'').slice(0,2);          // keep at most 2 digits
+  const isTwoDigits = v => /^\d{2}$/.test(v);
+  const within = (n,min,max)=>!isNaN(n)&&n>=min&&n<=max;
+
+  function mark(el, state){        // state: true=ok, false=bad, undefined=clear
+    el.classList.remove('ok','bad');
+    if(state===true) el.classList.add('ok');
+    else if(state===false) el.classList.add('bad');
+  }
+
+  function validateRow(row){
+    const hh = row.querySelector('.hh');
+    const mm = row.querySelector('.mm');
+
+    // sanitize input (digits only, max 2)
+    let hv = clean2(hh.value);
+    let mv = clean2(mm.value);
+    if(hv !== hh.value) hh.value = hv;
+    if(mv !== mm.value) mm.value = mv;
+
+    // untouched
+    if(hv.length===0 && mv.length===0){ mark(hh); mark(mm); return; }
+
+    // enforce two-digit requirement for any filled field
+    if((hv.length>0 && !isTwoDigits(hv)) || (mv.length>0 && !isTwoDigits(mv))){
+      if(hv.length>0 && !isTwoDigits(hv)) mark(hh,false); else if(hv.length===0) mark(hh);
+      if(mv.length>0 && !isTwoDigits(mv)) mark(mm,false); else if(mv.length===0) mark(mm);
+      return;
+    }
+
+    // if both present, validate range and correctness
+    if(isTwoDigits(hv) && isTwoDigits(mv)){
+      const hOk = within(parseInt(hv,10),0,23);
+      const mOk = within(parseInt(mv,10),0,59);
+      if(!hOk || !mOk){ mark(hh,false); mark(mm,false); return; }
+
+      const ansH = String(row.dataset.hh).padStart(2,'0');
+      const ansM = String(row.dataset.mm).padStart(2,'0');
+
+      const correct = (hv===ansH && mv===ansM);
+      mark(hh,correct); mark(mm,correct);
+      return;
+    }
+
+    // one box filled correctly with 2 digits, the other empty -> no verdict yet
+    if(isTwoDigits(hv)) mark(hh); else mark(hh,false);  // should not reach else due to earlier checks
+    if(isTwoDigits(mv)) mark(mm); else mark(mm,false);
+  }
+
+  // wire up live validation
+  document.querySelectorAll('.row.clock').forEach(row=>{
+    row.addEventListener('input', e=>{
+      if(e.target.classList.contains('hh')||e.target.classList.contains('mm')){
+        validateRow(row);
+      }
+    });
+  });
+
+  document.getElementById('checkAll').addEventListener('click',()=>{
+    document.querySelectorAll('.row.clock').forEach(validateRow);
+  });
+
+  document.getElementById('clearAll').addEventListener('click',()=>{
+    document.querySelectorAll('.row.clock .box').forEach(i=>{
+      i.value=''; i.classList.remove('ok','bad');
+    });
+  });
+})();
+</script>
+</body>
+</html>

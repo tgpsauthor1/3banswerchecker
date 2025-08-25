@@ -1,0 +1,89 @@
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Perimeter Check - Q2</title><style>
+body{font-family:Arial,Helvetica,sans-serif;line-height:1.4;margin:16px;color:#222}
+h1{font-size:18px;margin:0 0 14px}
+.section{max-width:820px}
+.q{margin:10px 0}
+label{display:block;margin-bottom:4px;font-weight:600}
+.prompt{font-weight:400}
+input[type=text]{font-size:16px;padding:8px 10px;border:2px solid #888;border-radius:6px;min-width:120px}
+.small{min-width:60px}
+.unit{margin-left:6px}
+.correct{background:#c8f7c5;border-color:#2e7d32}
+.incorrect{background:#ffd6d6;border-color:#c62828}
+.hint{color:#666;font-size:12px;margin-left:8px}
+</style></head><body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<div class="section">
+<div class="q">
+<label for="q2a">Question 2(a) – Perimeter of Figure P</label>
+<span class="prompt">Perimeter of Figure P =</span>
+<input id="q2a" data-type="num" data-answer="14" inputmode="numeric" autocomplete="off" class="small" aria-label="Question 2a input for Figure P">
+<span class="unit">m</span><span class="hint">Enter just the value</span>
+</div>
+<div class="q">
+<label for="q2b">Question 2(b) – Perimeter of Figure Q</label>
+<span class="prompt">Perimeter of Figure Q =</span>
+<input id="q2b" data-type="num" data-answer="18" inputmode="numeric" autocomplete="off" class="small" aria-label="Question 2b input for Figure Q">
+<span class="unit">m</span><span class="hint">Enter just the value</span>
+</div>
+<div class="q">
+<label for="q2c">Question 2(c) – Perimeter of Figure R</label>
+<span class="prompt">Perimeter of Figure R =</span>
+<input id="q2c" data-type="num" data-answer="16" inputmode="numeric" autocomplete="off" class="small" aria-label="Question 2c input for Figure R">
+<span class="unit">m</span>
+</div>
+<div class="q">
+<label for="q2d">Question 2(d) – Perimeter of Figure S</label>
+<span class="prompt">Perimeter of Figure S =</span>
+<input id="q2d" data-type="num" data-answer="20" inputmode="numeric" autocomplete="off" class="small" aria-label="Question 2d input for Figure S">
+<span class="unit">m</span>
+</div>
+<div class="q">
+<label for="q2e">Question 2(e) – Compare perimeters</label>
+<span class="prompt">Figure Q has a smaller perimeter than Figure</span>
+<input id="q2e" data-type="letter" data-answer="S" maxlength="1" autocomplete="off" class="small" aria-label="Question 2e: enter the figure letter">
+<span class="hint">Enter P, Q, R or S</span>
+</div>
+<div class="q">
+<label for="q2f">Question 2(f) – Compare perimeters</label>
+<span class="prompt">Figure R has a greater perimeter than Figure</span>
+<input id="q2f" data-type="letter" data-answer="P" maxlength="1" autocomplete="off" class="small" aria-label="Question 2f: enter the figure letter">
+</div>
+<div class="q">
+<label for="q2g">Question 2(g) – Smallest perimeter</label>
+<span class="prompt">Figure</span>
+<input id="q2g" data-type="letter" data-answer="P" maxlength="1" autocomplete="off" class="small" aria-label="Question 2g: enter the figure letter">
+<span class="prompt">has the smallest perimeter.</span>
+</div>
+</div>
+
+<script>
+(function(){
+  function setState(el, ok){
+    el.classList.remove('correct','incorrect');
+    if(!el.value.trim()) return;
+    el.classList.add(ok ? 'correct' : 'incorrect');
+  }
+  function cleanNum(v){return v.replace(/[^0-9]/g,'');}
+  function check(el){
+    var type=el.dataset.type, ans=el.dataset.answer;
+    var val=el.value;
+    if(type==='num'){ val=cleanNum(val); el.value=val; setState(el, val===ans); }
+    else if(type==='letter'){ val=(val||'').trim().toUpperCase(); setState(el, val===ans.toUpperCase()); }
+    else if(type==='frac'){ // optional fraction support: numerator/denominator fields use data-fpair
+      var pairId=el.dataset.fpair; if(!pairId) return;
+      var n=document.getElementById(pairId+'n'), d=document.getElementById(pairId+'d');
+      var an=el.dataset.n, ad=el.dataset.d;
+      var ok = ( (n.value||'').replace(/[^0-9]/g,'')===String(an) ) && ( (d.value||'').replace(/[^0-9]/g,'')===String(ad) );
+      setState(n, (n.value||'').replace(/[^0-9]/g,'')===String(an));
+      setState(d, (d.value||'').replace(/[^0-9]/g,'')===String(ad));
+      if(n===el||d===el){} // noop
+    }
+  }
+  document.querySelectorAll('input[data-type]').forEach(function(el){
+    el.addEventListener('input',function(){check(el);});
+    el.addEventListener('blur',function(){check(el);});
+  });
+})();
+</script>
+</body></html>

@@ -1,0 +1,52 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Activity Check — Q23</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;line-height:1.4;margin:16px;color:#222}
+  h1{font-size:18px;margin:0 0 10px}
+  .card{border:1px solid #ddd;border-radius:8px;padding:12px;margin:12px 0}
+  label{display:block;font-weight:600;margin:8px 0 4px}
+  .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  input[type="text"]{font-size:18px;padding:10px 12px;width:220px;border:1px solid #888;border-radius:6px;outline:none}
+  input.valid{background:#d6f5d6;border-color:#2d8a2d}
+  input.invalid{background:#ffd6d6;border-color:#c44343}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="card">
+
+
+  <label for="q23">Q23 — Final answer</label>
+  <div class="row">
+    <span>She ran</span>
+    <input id="q23" type="text" autocomplete="off" inputmode="text" data-answer="800 m" aria-label="Q23 final answer">
+    <span>further than she walked.</span>
+  </div>
+</div>
+
+<script>
+(function(){
+  function norm(s){
+    return s.replace(/\s+/g,'').trim().toLowerCase();
+  }
+  function validate(el){
+    const val = norm(el.value);
+    const ans = "800m";
+    if(!val){ el.classList.remove('valid','invalid'); return; }
+    if(val === ans){
+      el.classList.add('valid'); el.classList.remove('invalid');
+    }else{
+      el.classList.add('invalid'); el.classList.remove('valid');
+    }
+  }
+  const inp = document.getElementById('q23');
+  inp.addEventListener('input',()=>validate(inp));
+  inp.addEventListener('blur',()=>validate(inp));
+})();
+</script>
+</body>
+</html>

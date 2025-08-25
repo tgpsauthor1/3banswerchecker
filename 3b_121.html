@@ -1,0 +1,86 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Activity Check</title>
+<style>
+ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.35;margin:16px}
+ h1{font-size:18px;margin:0 0 8px}
+ .reminder{background:#fff7d6;border-left:4px solid #f0c419;padding:8px 12px;margin:8px 0 16px}
+ section{margin:14px 0;padding:10px;border:1px solid #ddd;border-radius:6px}
+ label{display:block;font-size:14px;margin:6px 0 2px;color:#333}
+ .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+ input[type=text]{padding:8px 10px;font-size:18px;width:120px;border:1px solid #bbb;border-radius:4px;outline:0}
+ .w80{width:80px}
+ .status{font-size:12px;color:#666;margin-top:4px}
+ .correct{background:#c9f7c8}
+ .incorrect{background:#ffd4d4}
+ .alert{color:#c00;font-weight:600}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<div class="reminder">Use your timeline to help. Do not type operations like + or -.</div>
+
+<section aria-labelledby="q5h">
+  <div class="row" style="margin-bottom:6px">
+    <strong>Q5.</strong>
+  
+  </div>
+  <div>How long was the flight?</div>
+  <label for="q5h">Q5 – Flight duration (hours)</label>
+  <div class="row">
+    <span>The flight was</span>
+    <input id="q5h" class="w80" type="text" inputmode="numeric" autocomplete="off" aria-label="Q5 hours">
+    <span>h</span>
+    <label for="q5m" style="margin:0">Q5 – Flight duration (minutes)</label>
+    <input id="q5m" class="w80" type="text" inputmode="numeric" autocomplete="off" aria-label="Q5 minutes">
+    <span>min long.</span>
+  </div>
+</section>
+
+<section aria-labelledby="q6">
+  <div class="row" style="margin-bottom:6px">
+    <strong>Q6.</strong>
+   
+  </div>
+  <label for="q6">Q6 – Arrival time</label>
+  <div class="row">
+    <input id="q6" type="text" autocomplete="off" inputmode="text" aria-label="Q6 time">
+  </div>
+</section>
+
+<script>
+function setState(el, ok){
+  el.classList.remove('correct','incorrect');
+  if(el.value.trim()==='') return;
+  el.classList.add(ok?'correct':'incorrect');
+}
+// Q5 check
+function checkQ5(){
+  const h = document.getElementById('q5h');
+  const m = document.getElementById('q5m');
+  const hv = parseInt(h.value.replace(/\D/g,''),10);
+  const mv = parseInt(m.value.replace(/\D/g,''),10);
+  setState(h, hv===7);
+  setState(m, mv===49);
+}
+document.getElementById('q5h').addEventListener('input', checkQ5);
+document.getElementById('q5m').addEventListener('input', checkQ5);
+
+// Q6 check
+function isQ6Correct(s){
+  const t = s.trim().toLowerCase();
+  if (t.replace(/[\s:]/g,'') === '1705') return true;        // 1705 or 17 05 or 17:05
+  if (/^5:05\s*pm$/.test(t)) return true;                    // 5:05pm or 5:05 pm
+  return false;
+}
+function checkQ6(){
+  const el = document.getElementById('q6');
+  setState(el, isQ6Correct(el.value));
+}
+document.getElementById('q6').addEventListener('input', checkQ6);
+</script>
+</body>
+</html>
+

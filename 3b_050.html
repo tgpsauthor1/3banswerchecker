@@ -1,0 +1,186 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Fractions Checker</title>
+<style>
+ body{font-family:Arial,Helvetica,sans-serif; margin:16px; line-height:1.3}
+ h2{font-size:18px; margin:0 0 12px}
+ .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px}
+ .q{border:1px solid #bbb; border-radius:6px; padding:10px}
+ .qlabel{font-weight:bold; margin-bottom:6px}
+ .fraction{display:inline-block; text-align:center}
+ .fraction input{width:86px; font-size:20px; padding:8px; text-align:center; border:1px solid #888; border-radius:4px; outline:none}
+ .bar{border-top:2px solid #000; margin:4px 0}
+ input.whole{width:110px; font-size:20px; padding:10px; text-align:center; border:1px solid #888; border-radius:4px}
+ .correct{background:#c9f7c9}
+ .wrong{background:#ffd6d6}
+ small{color:#444}
+</style>
+</head>
+<body>
+<h2>If you keep getting it wrong, raise your hand and ask your teacher for help.</h2>
+<p>Add or subtract. Type each answer in its simplest form.</p>
+
+<div class="grid">
+  <div class="q">
+    <div class="qlabel">Q(a) — Answer</div>
+    <div class="fraction" data-q="a">
+      <input class="num" aria-label="Q(a) numerator" placeholder="numerator">
+      <div class="bar"></div>
+      <input class="den" aria-label="Q(a) denominator" placeholder="denominator">
+    </div>
+    <small>Target form: fraction</small>
+  </div>
+
+  <div class="q">
+    <div class="qlabel">Q(b) — Answer</div>
+    <div class="fraction" data-q="b">
+      <input class="num" aria-label="Q(b) numerator" placeholder="numerator">
+      <div class="bar"></div>
+      <input class="den" aria-label="Q(b) denominator" placeholder="denominator">
+    </div>
+    <small>Target form: fraction</small>
+  </div>
+
+  <div class="q">
+    <div class="qlabel">Q(c) — Answer</div>
+    <div class="fraction" data-q="c">
+      <input class="num" aria-label="Q(c) numerator" placeholder="numerator">
+      <div class="bar"></div>
+      <input class="den" aria-label="Q(c) denominator" placeholder="denominator">
+    </div>
+    <small>Target form: fraction</small>
+  </div>
+
+  <div class="q">
+    <div class="qlabel">Q(d) — Answer</div>
+    <div class="fraction" data-q="d">
+      <input class="num" aria-label="Q(d) numerator" placeholder="numerator">
+      <div class="bar"></div>
+      <input class="den" aria-label="Q(d) denominator" placeholder="denominator">
+    </div>
+    <small>Target form: fraction</small>
+  </div>
+
+  <div class="q">
+    <div class="qlabel">Q(e) — Answer</div>
+    <div class="fraction" data-q="e">
+      <input class="num" aria-label="Q(e) numerator" placeholder="numerator">
+      <div class="bar"></div>
+      <input class="den" aria-label="Q(e) denominator" placeholder="denominator">
+    </div>
+    <small>Target form: fraction</small>
+  </div>
+
+  <div class="q">
+    <div class="qlabel">Q(f) — Answer</div>
+    <div class="fraction" data-q="f">
+      <input class="num" aria-label="Q(f) numerator" placeholder="numerator">
+      <div class="bar"></div>
+      <input class="den" aria-label="Q(f) denominator" placeholder="denominator">
+    </div>
+    <small>Target form: fraction</small>
+  </div>
+
+  <div class="q">
+    <div class="qlabel">Q(g) — Answer</div>
+    <div class="fraction" data-q="g">
+      <input class="num" aria-label="Q(g) numerator" placeholder="numerator">
+      <div class="bar"></div>
+      <input class="den" aria-label="Q(g) denominator" placeholder="denominator">
+    </div>
+    <small>Target form: fraction</small>
+  </div>
+
+  <div class="q">
+    <div class="qlabel">Q(h) — Answer</div>
+    <div class="fraction" data-q="h">
+      <input class="num" aria-label="Q(h) numerator" placeholder="numerator">
+      <div class="bar"></div>
+      <input class="den" aria-label="Q(h) denominator" placeholder="denominator">
+    </div>
+    <small>Target form: fraction</small>
+  </div>
+
+  <div class="q">
+    <div class="qlabel">Q(i) — Answer</div>
+    <div class="fraction" data-q="i">
+      <input class="num" aria-label="Q(i) numerator" placeholder="numerator">
+      <div class="bar"></div>
+      <input class="den" aria-label="Q(i) denominator" placeholder="denominator">
+    </div>
+    <small>Target form: fraction</small>
+  </div>
+
+  <div class="q">
+    <div class="qlabel">Q(j) — Answer</div>
+    <input class="whole" data-q="j" aria-label="Q(j) whole number" placeholder="whole number">
+    <small>Target form: whole number</small>
+  </div>
+</div>
+
+<script>
+(function(){
+  const answers={
+    a:{t:'f',n:1,d:2},
+    b:{t:'f',n:1,d:2},
+    c:{t:'f',n:4,d:5},
+    d:{t:'f',n:1,d:4},
+    e:{t:'f',n:3,d:10},
+    f:{t:'f',n:3,d:4},
+    g:{t:'f',n:8,d:9},
+    h:{t:'f',n:5,d:12},
+    i:{t:'f',n:1,d:2},
+    j:{t:'w',v:1}
+  };
+
+  const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a||1};
+
+  function sanitizeDigits(str){return str.replace(/[^0-9\-]/g,'');}
+
+  function color(elList,state){
+    elList.forEach(el=>{
+      el.classList.remove('correct','wrong');
+      if(state==='correct') el.classList.add('correct');
+      else if(state==='wrong') el.classList.add('wrong');
+    });
+  }
+
+  document.querySelectorAll('.fraction').forEach(box=>{
+    const q=box.dataset.q;
+    const ans=answers[q];
+    const num=box.querySelector('.num');
+    const den=box.querySelector('.den');
+
+    function onInput(){
+      num.value=sanitizeDigits(num.value);
+      den.value=sanitizeDigits(den.value);
+      const n=num.value.trim(), d=den.value.trim();
+      if(n==='' && d===''){ color([num,den]); return; }
+      const ni=parseInt(n,10), di=parseInt(d,10);
+      if(!Number.isInteger(ni)||!Number.isInteger(di)||!di){ color([num,den],'wrong'); return; }
+
+      // must be simplest form
+      const simplest=gcd(ni,di)===1;
+      const matches = (ni===ans.n && di===ans.d);
+
+      color([num,den], (simplest && matches)?'correct':'wrong');
+    }
+
+    num.addEventListener('input',onInput);
+    den.addEventListener('input',onInput);
+  });
+
+  document.querySelectorAll('input.whole').forEach(inp=>{
+    inp.addEventListener('input',()=>{
+      inp.value=sanitizeDigits(inp.value);
+      const v=inp.value.trim();
+      if(v===''){ color([inp]); return; }
+      const num=parseInt(v,10);
+      color([inp], (Number.isInteger(num) && num===answers[inp.dataset.q].v)?'correct':'wrong');
+    });
+  });
+})();
+</script>
+</body>
+</html>

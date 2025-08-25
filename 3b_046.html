@@ -1,0 +1,188 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Arrange the fractions (Greatest first)</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;margin:16px;color:#111}
+  h1{font-size:20px;margin:8px 0 12px}
+  .note{font-weight:700;margin-bottom:10px}
+  .section{margin:16px 0}
+  .label{font-weight:700;margin-bottom:6px}
+  .row{display:flex;align-items:flex-end;flex-wrap:wrap;gap:8px}
+  .frac{display:inline-flex;flex-direction:column;align-items:center}
+  .tag{font-size:12px;color:#444;margin-bottom:2px}
+  .num,.den{width:72px;padding:8px 10px;font-size:20px;text-align:center;border:1px solid #888;border-radius:4px;background:#fff;outline:none}
+  .bar{width:72px;border-top:2px solid #000;margin:4px 0}
+  .comma{font-size:28px;padding:0 4px;user-select:none}
+  .mini{font-size:12px;color:#333;margin-top:4px}
+  .correct{background:#baf5c1!important}
+  .wrong{background:#ffd2d2!important}
+  button{padding:8px 12px;font-size:14px;border:1px solid #555;border-radius:6px;background:#f3f3f3;cursor:pointer}
+</style>
+</head>
+<body>
+<p class="note">If you keep getting it wrong, raise your hand and ask your teacher for help.</p>
+<h1>2. Arrange the fractions in order. Begin with the greatest.</h1>
+
+<div class="section" id="sec-a">
+  <div class="label">(a)</div>
+  <div class="row">
+    <div class="frac" data-group="a" data-index="0">
+      <div class="tag">2(a)-1 (greatest)</div>
+      <input class="num" inputmode="numeric" aria-label="Question 2(a) 1st numerator">
+      <div class="bar"></div>
+      <input class="den" inputmode="numeric" aria-label="Question 2(a) 1st denominator">
+      <div class="mini">greatest</div>
+    </div>
+    <span class="comma">,</span>
+    <div class="frac" data-group="a" data-index="1">
+      <div class="tag">2(a)-2</div>
+      <input class="num" inputmode="numeric" aria-label="Question 2(a) 2nd numerator">
+      <div class="bar"></div>
+      <input class="den" inputmode="numeric" aria-label="Question 2(a) 2nd denominator">
+    </div>
+    <span class="comma">,</span>
+    <div class="frac" data-group="a" data-index="2">
+      <div class="tag">2(a)-3</div>
+      <input class="num" inputmode="numeric" aria-label="Question 2(a) 3rd numerator">
+      <div class="bar"></div>
+      <input class="den" inputmode="numeric" aria-label="Question 2(a) 3rd denominator">
+    </div>
+  </div>
+</div>
+
+<div class="section" id="sec-b">
+  <div class="label">(b)</div>
+  <div class="row">
+    <div class="frac" data-group="b" data-index="0">
+      <div class="tag">2(b)-1 (greatest)</div>
+      <input class="num" inputmode="numeric" aria-label="Question 2(b) 1st numerator">
+      <div class="bar"></div>
+      <input class="den" inputmode="numeric" aria-label="Question 2(b) 1st denominator">
+      <div class="mini">greatest</div>
+    </div>
+    <span class="comma">,</span>
+    <div class="frac" data-group="b" data-index="1">
+      <div class="tag">2(b)-2</div>
+      <input class="num" inputmode="numeric" aria-label="Question 2(b) 2nd numerator">
+      <div class="bar"></div>
+      <input class="den" inputmode="numeric" aria-label="Question 2(b) 2nd denominator">
+    </div>
+    <span class="comma">,</span>
+    <div class="frac" data-group="b" data-index="2">
+      <div class="tag">2(b)-3</div>
+      <input class="num" inputmode="numeric" aria-label="Question 2(b) 3rd numerator">
+      <div class="bar"></div>
+      <input class="den" inputmode="numeric" aria-label="Question 2(b) 3rd denominator">
+    </div>
+  </div>
+</div>
+
+<div class="section" id="sec-c">
+  <div class="label">(c)</div>
+  <div class="row">
+    <div class="frac" data-group="c" data-index="0">
+      <div class="tag">2(c)-1 (greatest)</div>
+      <input class="num" inputmode="numeric" aria-label="Question 2(c) 1st numerator">
+      <div class="bar"></div>
+      <input class="den" inputmode="numeric" aria-label="Question 2(c) 1st denominator">
+      <div class="mini">greatest</div>
+    </div>
+    <span class="comma">,</span>
+    <div class="frac" data-group="c" data-index="1">
+      <div class="tag">2(c)-2</div>
+      <input class="num" inputmode="numeric" aria-label="Question 2(c) 2nd numerator">
+      <div class="bar"></div>
+      <input class="den" inputmode="numeric" aria-label="Question 2(c) 2nd denominator">
+    </div>
+    <span class="comma">,</span>
+    <div class="frac" data-group="c" data-index="2">
+      <div class="tag">2(c)-3</div>
+      <input class="num" inputmode="numeric" aria-label="Question 2(c) 3rd numerator">
+      <div class="bar"></div>
+      <input class="den" inputmode="numeric" aria-label="Question 2(c) 3rd denominator">
+    </div>
+    <span class="comma">,</span>
+    <div class="frac" data-group="c" data-index="3">
+      <div class="tag">2(c)-4</div>
+      <input class="num" inputmode="numeric" aria-label="Question 2(c) 4th numerator">
+      <div class="bar"></div>
+      <input class="den" inputmode="numeric" aria-label="Question 2(c) 4th denominator">
+    </div>
+  </div>
+</div>
+
+<div class="section" id="sec-d">
+  <div class="label">(d)</div>
+  <div class="row">
+    <div class="frac" data-group="d" data-index="0">
+      <div class="tag">2(d)-1 (greatest)</div>
+      <input class="num" inputmode="numeric" aria-label="Question 2(d) 1st numerator">
+      <div class="bar"></div>
+      <input class="den" inputmode="numeric" aria-label="Question 2(d) 1st denominator">
+      <div class="mini">greatest</div>
+    </div>
+    <span class="comma">,</span>
+    <div class="frac" data-group="d" data-index="1">
+      <div class="tag">2(d)-2</div>
+      <input class="num" inputmode="numeric" aria-label="Question 2(d) 2nd numerator">
+      <div class="bar"></div>
+      <input class="den" inputmode="numeric" aria-label="Question 2(d) 2nd denominator">
+    </div>
+    <span class="comma">,</span>
+    <div class="frac" data-group="d" data-index="2">
+      <div class="tag">2(d)-3</div>
+      <input class="num" inputmode="numeric" aria-label="Question 2(d) 3rd numerator">
+      <div class="bar"></div>
+      <input class="den" inputmode="numeric" aria-label="Question 2(d) 3rd denominator">
+    </div>
+    <span class="comma">,</span>
+    <div class="frac" data-group="d" data-index="3">
+      <div class="tag">2(d)-4</div>
+      <input class="num" inputmode="numeric" aria-label="Question 2(d) 4th numerator">
+      <div class="bar"></div>
+      <input class="den" inputmode="numeric" aria-label="Question 2(d) 4th denominator">
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:18px">
+  <button id="reset" type="button">Clear all answers</button>
+</div>
+
+<script>
+(function(){
+  const keys={
+    a:[[4,5],[6,9],[2,9]],
+    b:[[9,12],[1,2],[3,10]],
+    c:[[5,7],[3,6],[2,8],[1,12]],
+    d:[[8,11],[3,7],[3,8],[1,4]]
+  };
+  function clean(v){return v.replace(/[^\d]/g,'');}
+  function setState(el,ok){
+    const fields=[el.querySelector('.num'),el.querySelector('.den')];
+    fields.forEach(inp=>{
+      const empty=inp.value.trim()==='';
+      inp.classList.remove('correct','wrong');
+      if(!empty) inp.classList.add(ok?'correct':'wrong');
+    });
+  }
+  function check(el){
+    const g=el.dataset.group,i=+el.dataset.index,ans=keys[g][i];
+    const n=clean(el.querySelector('.num').value),d=clean(el.querySelector('.den').value);
+    if(n===''&&d===''){el.querySelectorAll('input').forEach(x=>x.classList.remove('correct','wrong'));return;}
+    const ok=(n===String(ans[0])&&d===String(ans[1]));
+    setState(el,ok);
+  }
+  document.querySelectorAll('.frac').forEach(f=>{
+    f.addEventListener('input',e=>{if(e.target.tagName==='INPUT')check(f);});
+    f.addEventListener('change',()=>check(f));
+  });
+  document.getElementById('reset').addEventListener('click',()=>{
+    document.querySelectorAll('.frac input').forEach(i=>{i.value='';i.classList.remove('correct','wrong');});
+  });
+})();
+</script>
+</body>
+</html>

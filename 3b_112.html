@@ -1,0 +1,165 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Activity Check</title>
+<style>
+ body{font-family:Arial,Helvetica,sans-serif;line-height:1.4;padding:16px;color:#111}
+ h1{font-size:18px;margin:0 0 12px}
+ .q{margin:10px 0;padding:8px 10px;border:1px solid #ddd;border-radius:6px}
+ .q small{color:#555;display:block;margin-bottom:6px}
+ .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+ input[type=text]{width:130px;padding:8px 10px;font-size:20px;border:1px solid #888;border-radius:6px;outline:none}
+ .correct{background:#c8f7c5}
+ .wrong{background:#ffd1d1}
+ .unit button{padding:6px 10px;font-size:18px;border:1px solid #666;border-radius:6px;background:#fff;cursor:pointer}
+ .unit button+button{margin-left:6px}
+ .unit button.selected{outline:2px solid #2c7}
+ .unit button.good{background:#c8f7c5}
+ .unit button.bad{background:#ffd1d1}
+ .section-title{font-weight:bold;margin-top:12px}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="section-title">Q2(a) – Figure E</div>
+<div class="q">
+  <small>Q2(a) E – Area (enter value then choose unit)</small>
+  <div class="row">
+    <input type="text" class="ans" data-answer="64" aria-label="Q2a E Area value">
+    <div class="unit" data-correct="cm2" aria-label="Q2a E Area unit">
+      <button type="button" data-unit="cm">cm</button>
+      <button type="button" data-unit="cm2">cm<sup>2</sup></button>
+    </div>
+  </div>
+</div>
+<div class="q">
+  <small>Q2(a) E – Perimeter (enter value then choose unit)</small>
+  <div class="row">
+    <input type="text" class="ans" data-answer="40" aria-label="Q2a E Perimeter value">
+    <div class="unit" data-correct="cm" aria-label="Q2a E Perimeter unit">
+      <button type="button" data-unit="cm">cm</button>
+      <button type="button" data-unit="cm2">cm<sup>2</sup></button>
+    </div>
+  </div>
+</div>
+
+<div class="section-title">Q2(a) – Figure F</div>
+<div class="q">
+  <small>Q2(a) F – Area</small>
+  <div class="row">
+    <input type="text" class="ans" data-answer="64" aria-label="Q2a F Area value">
+    <div class="unit" data-correct="cm2" aria-label="Q2a F Area unit">
+      <button type="button" data-unit="cm">cm</button>
+      <button type="button" data-unit="cm2">cm<sup>2</sup></button>
+    </div>
+  </div>
+</div>
+<div class="q">
+  <small>Q2(a) F – Perimeter</small>
+  <div class="row">
+    <input type="text" class="ans" data-answer="32" aria-label="Q2a F Perimeter value">
+    <div class="unit" data-correct="cm" aria-label="Q2a F Perimeter unit">
+      <button type="button" data-unit="cm">cm</button>
+      <button type="button" data-unit="cm2">cm<sup>2</sup></button>
+    </div>
+  </div>
+</div>
+
+<div class="q">
+  <small>Q2(a) – Comparison: Figure E and Figure F have the same ____ but different ____.</small>
+  <div class="row">
+    <input type="text" class="word" data-word="area" placeholder="same: ?" aria-label="Q2a same what">
+    <input type="text" class="word" data-word="perimeter" placeholder="different: ?" aria-label="Q2a different what">
+  </div>
+</div>
+
+<div class="section-title">Q2(b) – Figure G</div>
+<div class="q">
+  <small>Q2(b) G – Area</small>
+  <div class="row">
+    <input type="text" class="ans" data-answer="100" aria-label="Q2b G Area value">
+    <div class="unit" data-correct="m2" aria-label="Q2b G Area unit">
+      <button type="button" data-unit="m">m</button>
+      <button type="button" data-unit="m2">m<sup>2</sup></button>
+    </div>
+  </div>
+</div>
+<div class="q">
+  <small>Q2(b) G – Perimeter</small>
+  <div class="row">
+    <input type="text" class="ans" data-answer="40" aria-label="Q2b G Perimeter value">
+    <div class="unit" data-correct="m" aria-label="Q2b G Perimeter unit">
+      <button type="button" data-unit="m">m</button>
+      <button type="button" data-unit="m2">m<sup>2</sup></button>
+    </div>
+  </div>
+</div>
+
+<div class="section-title">Q2(b) – Figure H</div>
+<div class="q">
+  <small>Q2(b) H – Area</small>
+  <div class="row">
+    <input type="text" class="ans" data-answer="91" aria-label="Q2b H Area value">
+    <div class="unit" data-correct="m2" aria-label="Q2b H Area unit">
+      <button type="button" data-unit="m">m</button>
+      <button type="button" data-unit="m2">m<sup>2</sup></button>
+    </div>
+  </div>
+</div>
+<div class="q">
+  <small>Q2(b) H – Perimeter</small>
+  <div class="row">
+    <input type="text" class="ans" data-answer="40" aria-label="Q2b H Perimeter value">
+    <div class="unit" data-correct="m" aria-label="Q2b H Perimeter unit">
+      <button type="button" data-unit="m">m</button>
+      <button type="button" data-unit="m2">m<sup>2</sup></button>
+    </div>
+  </div>
+</div>
+
+<div class="q">
+  <small>Q2(b) – Comparison: Figure G and Figure H have the same ____ but different ____.</small>
+  <div class="row">
+    <input type="text" class="word" data-word="perimeter" placeholder="same: ?" aria-label="Q2b same what">
+    <input type="text" class="word" data-word="area" placeholder="different: ?" aria-label="Q2b different what">
+  </div>
+</div>
+
+<script>
+(function(){
+  function setState(el, ok){
+    el.classList.remove('correct','wrong');
+    if(el.value.trim()==='') return;
+    el.classList.add(ok?'correct':'wrong');
+  }
+  function numEqual(a,b){
+    if(a.trim()==='') return false;
+    var x=Number(a.replace(/\s+/g,''));
+    return !isNaN(x) && x===Number(b);
+  }
+  document.querySelectorAll('input.ans[data-answer]').forEach(function(inp){
+    inp.addEventListener('input',function(){
+      setState(inp, numEqual(inp.value, inp.dataset.answer));
+    });
+  });
+  document.querySelectorAll('input.word[data-word]').forEach(function(inp){
+    inp.addEventListener('input',function(){
+      var ok=inp.value.trim().toLowerCase()===inp.dataset.word.toLowerCase();
+      setState(inp, ok);
+    });
+  });
+  document.querySelectorAll('.unit').forEach(function(group){
+    group.addEventListener('click',function(e){
+      if(e.target.tagName!=='BUTTON') return;
+      var btn=e.target;
+      group.querySelectorAll('button').forEach(function(b){b.classList.remove('selected','good','bad');});
+      btn.classList.add('selected');
+      btn.classList.add(btn.dataset.unit===group.dataset.correct?'good':'bad');
+    });
+  });
+})();
+</script>
+</body>
+</html>

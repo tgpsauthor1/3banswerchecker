@@ -1,0 +1,138 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Measuring Length Check</title>
+<style>
+ body{font-family:Arial,Helvetica,sans-serif;line-height:1.5;margin:16px;color:#111}
+ h1{font-size:18px;margin:0 0 8px}
+ .note{color:#0a4c9a;margin:0 0 12px}
+ .item{margin:10px 0}
+ .row{margin:6px 0}
+ .ans{width:110px;font-size:20px;padding:6px 8px;border:2px solid #6aa6ff;border-radius:6px}
+ .ok{background:#c9f7c9}
+ .bad{background:#ffc9c9}
+ .tag{font-size:12px;color:#666;margin-left:6px}
+ .bar{display:flex;gap:8px;align-items:center;margin:12px 0}
+ button{padding:6px 10px;font-size:14px}
+ .sep{margin:0 4px;display:inline-block}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<p class="note">Show your thinking in each line. Type the parts in every blank.</p>
+
+<div class="bar">
+ <span id="score">Score: 0/0</span>
+ <button id="resetBtn" type="button">Reset</button>
+</div>
+
+<div class="item">
+ <strong>1) Write in centimetres.</strong>
+ <div class="row">a) 1 m = <input class="ans" data-answer="100" aria-label="Q1(a) total centimetres"> cm <span class="tag">[Q1(a) total cm]</span></div>
+ <div class="row">b) 3 m = <input class="ans" data-answer="300" aria-label="Q1(b) total centimetres"> cm <span class="tag">[Q1(b) total cm]</span></div>
+
+ <div class="row">c) 1 m 54 cm = 
+   <input class="ans" data-answer="1" aria-label="Q1(c) metres"> m +
+   <input class="ans" data-answer="54" aria-label="Q1(c) centimetres"> cm
+   <span class="tag">[Q1(c) parts]</span>
+ </div>
+ <div class="row">= 
+   <input class="ans" data-answer="100" aria-label="Q1(c) 1 m in cm"> cm +
+   <input class="ans" data-answer="54" aria-label="Q1(c) extra centimetres"> cm
+   <span class="tag">[Q1(c) conversion]</span>
+ </div>
+ <div class="row">= 
+   <input class="ans" data-answer="154" aria-label="Q1(c) total centimetres"> cm
+   <span class="tag">[Q1(c) final]</span>
+ </div>
+
+ <div class="row">d) 4 m 78 cm = 
+   <input class="ans" data-answer="4" aria-label="Q1(d) metres"> m +
+   <input class="ans" data-answer="78" aria-label="Q1(d) centimetres"> cm
+   <span class="tag">[Q1(d) parts]</span>
+ </div>
+ <div class="row">=
+   <input class="ans" data-answer="400" aria-label="Q1(d) 4 m in cm"> cm +
+   <input class="ans" data-answer="78" aria-label="Q1(d) extra centimetres"> cm
+   <span class="tag">[Q1(d) conversion]</span>
+ </div>
+ <div class="row">=
+   <input class="ans" data-answer="478" aria-label="Q1(d) total centimetres"> cm
+   <span class="tag">[Q1(d) final]</span>
+ </div>
+
+ <div class="row">e) 2 m 4 cm =
+   <span class="sep"></span>
+   <input class="ans" data-answer="200" aria-label="Q1(e) metres in cm"> cm +
+   <input class="ans" data-answer="4" aria-label="Q1(e) extra centimetres"> cm
+   <span class="sep"></span>=
+   <input class="ans" data-answer="204" aria-label="Q1(e) total centimetres"> cm
+   <span class="tag">[Q1(e) show your working]</span>
+ </div>
+
+ <div class="row">f) 9 m 20 cm =
+   <span class="sep"></span>
+   <input class="ans" data-answer="900" aria-label="Q1(f) metres in cm"> cm +
+   <input class="ans" data-answer="20" aria-label="Q1(f) extra centimetres"> cm
+   <span class="sep"></span>=
+   <input class="ans" data-answer="920" aria-label="Q1(f) total centimetres"> cm
+   <span class="tag">[Q1(f) show your working]</span>
+ </div>
+</div>
+
+<div class="item">
+ <strong>2) Write in metres and centimetres.</strong>
+ <div class="row">a) 200 cm = <input class="ans" data-answer="2" aria-label="Q2(a) metres"> m <span class="tag">[Q2(a) total m]</span></div>
+
+ <div class="row">b) 118 cm =
+   <input class="ans" data-answer="100" aria-label="Q2(b) 100 cm"> cm +
+   <input class="ans" data-answer="18" aria-label="Q2(b) 18 cm"> cm
+   <span class="tag">[Q2(b) breakdown]</span>
+ </div>
+ <div class="row">=
+   <input class="ans" data-answer="1" aria-label="Q2(b) metres"> m
+   <input class="ans" data-answer="18" aria-label="Q2(b) centimetres"> cm
+   <span class="tag">[Q2(b) final]</span>
+ </div>
+</div>
+
+<script>
+(function(){
+  const inputs = Array.from(document.querySelectorAll('input.ans'));
+  const scoreEl = document.getElementById('score');
+  function parseNum(s){
+    const cleaned = s.trim().toLowerCase().replace(/[^\d\-]/g,'');
+    if(cleaned==='') return null;
+    return Number(cleaned);
+  }
+  function checkOne(el){
+    const target = Number(el.dataset.answer);
+    const val = parseNum(el.value);
+    el.classList.remove('ok','bad');
+    if(el.value.trim()==='') return false;
+    if(val===target){ el.classList.add('ok'); return true; }
+    el.classList.add('bad'); return false;
+  }
+  function updateScore(){
+    let correct=0, total=inputs.length, filled=0;
+    inputs.forEach(el=>{
+      if(el.value.trim()!=='') filled++;
+      if(el.classList.contains('ok')) correct++;
+    });
+    scoreEl.textContent = 'Score: '+correct+'/'+total+(filled<total?' — fill every blank to finish':'');
+  }
+  inputs.forEach(el=>{
+    el.setAttribute('inputmode','numeric');
+    el.addEventListener('input',()=>{ checkOne(el); updateScore(); });
+  });
+  document.getElementById('resetBtn').addEventListener('click',()=>{
+    inputs.forEach(el=>{ el.value=''; el.classList.remove('ok','bad'); });
+    updateScore();
+    inputs[0]?.focus();
+  });
+  updateScore();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Worksheet Answer Checker</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    h1 { margin-bottom: 0.2em; }
+    h2 { margin-top: 1em; margin-bottom: 0.5em; }
+    #hints-container {
+      display: flex;
+      align-items: center;
+      border: 1px solid #f0ad4e;
+      background: #fcf8e3;
+      color: #8a6d3b;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+    }
+    #hints {
+      flex: 1;
+      font-size: 0.95em;
+    }
+    #speakBtn {
+      margin-left: 10px;
+      padding: 6px 12px;
+      font-size: 0.95em;
+      cursor: pointer;
+      background: #5bc0de;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    input.answer {
+      width: 3em;
+      padding: 5px;
+      margin: 0 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1em;
+    }
+    input.correct { background-color: #c8e6c9; }
+    input.incorrect { background-color: #ffcdd2; }
+    label { display: block; margin: 10px 0; }
+  </style>
+</head>
+<body>
+  <h1>Check Your Answers</h1>
+  <div id="hints-container">
+    <div id="hints"></div>
+    <button id="speakBtn">Speak</button>
+  </div>
+
+  <!-- Question 1 -->
+  <h2>Question 1: Make 1/3 into other fractions</h2>
+  <label>1‑a: <input type="text" id="q1_6" class="answer" placeholder="__"> / 6</label>
+  <label>1‑b: <input type="text" id="q1_9" class="answer" placeholder="__"> / 9</label>
+  <label>1‑c: <input type="text" id="q1_12" class="answer" placeholder="__"> / 12</label>
+
+  <!-- Question 2 -->
+  <h2>Question 2: Make 1/4 into other fractions</h2>
+  <label>2‑a: <input type="text" id="q2_8" class="answer" placeholder="__"> / 8</label>
+  <label>2‑b: <input type="text" id="q2_12" class="answer" placeholder="__"> / 12</label>
+  <label>2‑c: <input type="text" id="q2_16" class="answer" placeholder="__"> / 16</label>
+
+  <!-- Question 3 -->
+  <h2>Question 3: Make each fraction equal 1 whole</h2>
+  <label>3‑a: <input type="text" id="q3_num5" class="answer" placeholder="__"> / 5</label>
+  <label>3‑b: 7 / <input type="text" id="q3_den7" class="answer" placeholder="__"></label>
+  <label>3‑c: <input type="text" id="q3_num9" class="answer" placeholder="__"> / 9</label>
+  <label>3‑d: 10 / <input type="text" id="q3_den10" class="answer" placeholder="__"></label>
+
+  <script>
+    // accepted answers
+    const correctAnswers = {
+      q1_6:    ['2'], q1_9:    ['3'], q1_12:   ['4'],
+      q2_8:    ['2'], q2_12:   ['3'], q2_16:   ['4'],
+      q3_num5:['5'], q3_den7: ['7'], q3_num9:['9'], q3_den10:['10']
+    };
+
+    // simple hints for little learners
+    const hints = {
+      q1_6:    'Cut circle into 6 pieces. How many match one piece from three?',
+      q1_9:    'Cut circle into 9 pieces. How many match one piece from three?',
+      q1_12:   'Cut circle into 12 pieces. How many match one piece from three?',
+      q2_8:    'Cut bar into 8. How many pieces match one piece from four?',
+      q2_12:   'Cut bar into 12. How many match one piece from four?',
+      q2_16:   'Cut bar into 16. How many match one piece from four?',
+      q3_num5:'Five of these pieces make one whole. How many pieces is that?',
+      q3_den7: 'Seven pieces shown. How many make a whole?',
+      q3_num9:'Shape is cut into 9 parts. How many parts make a whole?',
+      q3_den10:'Ten pieces shown. How many make a whole?'
+    };
+
+    const hintBox = document.getElementById('hints');
+    const activeHints = new Set();
+
+    function showHints() {
+      if (activeHints.size === 0) {
+        hintBox.textContent = '';
+        document.getElementById('hints-container').style.display = 'none';
+      } else {
+        document.getElementById('hints-container').style.display = 'flex';
+        hintBox.innerHTML = '<ul>' +
+          [...activeHints].map(h => `<li>${h}</li>`).join('') +
+          '</ul>';
+      }
+    }
+
+    function checkField(e) {
+      const id = e.target.id;
+      const val = e.target.value.trim();
+      if (val === '') {
+        e.target.classList.remove('correct','incorrect');
+        activeHints.delete(hints[id]);
+      } else if (correctAnswers[id].includes(val)) {
+        e.target.classList.add('correct');
+        e.target.classList.remove('incorrect');
+        activeHints.delete(hints[id]);
+      } else {
+        e.target.classList.add('incorrect');
+        e.target.classList.remove('correct');
+        activeHints.add(hints[id]);
+      }
+      showHints();
+    }
+
+    document.querySelectorAll('input.answer').forEach(i => {
+      i.addEventListener('input', checkField);
+    });
+
+    // Speak button functionality
+    document.getElementById('speakBtn').addEventListener('click', () => {
+      const text = hintBox.textContent.trim();
+      if (!text) return;
+      const utter = new SpeechSynthesisUtterance(text);
+      speechSynthesis.speak(utter);
+    });
+  </script>
+</body>
+</html>

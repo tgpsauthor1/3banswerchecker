@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fraction Checker – Question 6</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+    h1 { margin-bottom: 0.5em; }
+    h2 { margin-top: 1.2em; font-size: 1.2em; margin-bottom: 0.5em; }
+    #hints-container {
+      display: none;
+      align-items: center;
+      border: 2px solid #f0ad4e;
+      background: #fcf8e3;
+      color: #8a6d3b;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+    }
+    #hints { flex: 1; font-size: 1em; }
+    #speakBtn {
+      margin-left: 10px;
+      padding: 6px 12px;
+      font-size: 0.95em;
+      cursor: pointer;
+      background: #5bc0de;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    .frac-row { margin: 12px 0; font-size: 1.1em; }
+    .frac-row label { display: inline-block; width: 80px; vertical-align: middle; }
+    .frac-row input.ans {
+      width: 2.5em;
+      padding: 4px;
+      margin: 0 4px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      text-align: center;
+      vertical-align: middle;
+      border-radius: 4px;
+    }
+    .slash { display: inline-block; width: 1em; text-align: center; }
+    input.correct { background: #c8e6c9; }
+    input.incorrect { background: #ffcdd2; }
+  </style>
+</head>
+<body>
+
+  <h1>Question 6: Write the Missing Fractions</h1>
+  <div id="hints-container">
+    <div id="hints"></div>
+    <button id="speakBtn">Speak</button>
+  </div>
+
+  <h2>6(a) Three number lines → pick any three equivalent fractions</h2>
+  <div class="frac-row">
+    <label>6(a):</label>
+    <input id="q6a_1_num" class="ans" placeholder="num"><span class="slash">/</span><input id="q6a_1_den" class="ans" placeholder="den">
+    ,
+    <input id="q6a_2_num" class="ans" placeholder="num"><span class="slash">/</span><input id="q6a_2_den" class="ans" placeholder="den">
+    and
+    <input id="q6a_3_num" class="ans" placeholder="num"><span class="slash">/</span><input id="q6a_3_den" class="ans" placeholder="den">
+    are equivalent fractions.
+  </div>
+
+  <h2>6(b) Three number lines → pick any three equivalent fractions</h2>
+  <div class="frac-row">
+    <label>6(b):</label>
+    <input id="q6b_1_num" class="ans" placeholder="num"><span class="slash">/</span><input id="q6b_1_den" class="ans" placeholder="den">
+    ,
+    <input id="q6b_2_num" class="ans" placeholder="num"><span class="slash">/</span><input id="q6b_2_den" class="ans" placeholder="den">
+    and
+    <input id="q6b_3_num" class="ans" placeholder="num"><span class="slash">/</span><input id="q6b_3_den" class="ans" placeholder="den">
+    are equivalent fractions.
+  </div>
+
+  <script>
+    // Allowed denominators for each question:
+    const allowedDen = {
+      q6a: [3, 6, 9],
+      q6b: [4, 8, 12]
+    };
+
+    // Hint messages
+    const hintNum = 'Use a ruler. On the three number lines, which 3 fractions match up from top to bottom?';
+    const hintDen = 'Use a ruler. On the three number lines, which 3 fractions match up from top to bottom?';
+
+    const hintBox       = document.getElementById('hints');
+    const hintContainer = document.getElementById('hints-container');
+    const speakBtn      = document.getElementById('speakBtn');
+    const activeHints   = new Set();
+
+    function showHints() {
+      if (activeHints.size) {
+        hintBox.innerHTML = '<strong>Hint:</strong><ul>' +
+          [...activeHints].map(h => `<li>${h}</li>`).join('') +
+          '</ul>';
+        hintContainer.style.display = 'flex';
+      } else {
+        hintContainer.style.display = 'none';
+      }
+    }
+
+    function checkGroup(groupId) {
+      const ds   = allowedDen[groupId];
+      const nums = [], dens = [];
+      // collect values
+      for (let i = 1; i <= 3; i++) {
+        nums.push( parseInt(document.getElementById(`${groupId}_${i}_num`).value,  10) );
+        dens.push( parseInt(document.getElementById(`${groupId}_${i}_den`).value, 10) );
+      }
+      // clear all styles & hints
+      for (let i = 1; i <= 3; i++) {
+        ['num','den'].forEach(f => {
+          document.getElementById(`${groupId}_${i}_${f}`)
+                  .classList.remove('correct','incorrect');
+        });
+      }
+      activeHints.clear();
+
+      // if any blank or invalid → individual hints
+      if (nums.some(isNaN) || dens.some(isNaN)) {
+        for (let i = 1; i <= 3; i++) {
+          const nEl = document.getElementById(`${groupId}_${i}_num`);
+          const dEl = document.getElementById(`${groupId}_${i}_den`);
+          const n   = nums[i-1], d = dens[i-1];
+          if (!isNaN(n)) {
+            if (ds.includes(n)) nEl.classList.add('correct');
+            else { nEl.classList.add('incorrect'); activeHints.add(hintNum); }
+          }
+          if (!isNaN(d)) {
+            if (ds.includes(d)) dEl.classList.add('correct');
+            else { dEl.classList.add('incorrect'); activeHints.add(hintDen); }
+          }
+        }
+        showHints();
+        return;
+      }
+
+      // all filled: check denominators allowed & all fractions equivalent
+      const allDenAllowed = dens.every(d => ds.includes(d));
+      const eq1 = nums[0]*dens[1] === nums[1]*dens[0];
+      const eq2 = nums[0]*dens[2] === nums[2]*dens[0];
+
+      if (allDenAllowed && eq1 && eq2) {
+        // correct
+        for (let i = 1; i <= 3; i++) {
+          ['num','den'].forEach(f => {
+            document.getElementById(`${groupId}_${i}_${f}`).classList.add('correct');
+          });
+        }
+        activeHints.clear();
+      } else {
+        // wrong group → generic hints
+        for (let i = 1; i <= 3; i++) {
+          ['num','den'].forEach(f => {
+            document.getElementById(`${groupId}_${i}_${f}`).classList.add('incorrect');
+          });
+        }
+        activeHints.add(hintNum);
+        activeHints.add(hintDen);
+      }
+      showHints();
+    }
+
+    // attach input listeners
+    document.querySelectorAll('input.ans').forEach(input =>
+      input.addEventListener('input', e => {
+        const [group] = e.target.id.split('_');
+        checkGroup(group);
+      })
+    );
+
+    // Speak button functionality
+    speakBtn.addEventListener('click', () => {
+      const text = hintBox.textContent.trim();
+      if (!text) return;
+      const utter = new SpeechSynthesisUtterance(text);
+      speechSynthesis.speak(utter);
+    });
+  </script>
+</body>
+</html>

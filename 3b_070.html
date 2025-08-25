@@ -1,0 +1,78 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Capacity Check</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:16px;color:#222}
+  h1{font-size:18px;margin:0 0 12px}
+  .q{border-top:1px solid #ddd;padding:12px 0}
+  .q h2{font-size:16px;margin:0 0 8px}
+  .row{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:6px 0}
+  label{font-size:13px;color:#555;margin-right:6px}
+  .unit{font-weight:600;margin-right:12px}
+  input[type="text"]{min-width:90px;font-size:20px;padding:8px 10px;border:2px solid #1c6bc8;border-radius:8px;color:#c00;outline:none}
+  input.ok{background:#c8f5c1}
+  input.bad{background:#ffd6d6}
+  .hint{font-size:12px;color:#6b6b6b}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="q" id="qc">
+  <h2>Question (c)</h2>
+  <div class="row">
+    <label for="cL">Q(c) – litres</label>
+    <input id="cL" type="text" inputmode="numeric" aria-label="Question c litres" data-ans="1" placeholder="">
+    <span class="unit">ℓ</span>
+    <label for="cMl">Q(c) – millilitres</label>
+    <input id="cMl" type="text" inputmode="numeric" aria-label="Question c millilitres" data-ans="470" placeholder="">
+    <span class="unit">ml</span>
+  </div>
+  <div class="hint">Type the numbers only. Units are shown for you.</div>
+</div>
+
+<div class="q" id="qd">
+  <h2>Question (d)</h2>
+  <div class="row">
+    <label for="dL">Q(d) – litres</label>
+    <input id="dL" type="text" inputmode="numeric" aria-label="Question d litres" data-ans="2" placeholder="">
+    <span class="unit">ℓ</span>
+    <label for="dMl">Q(d) – millilitres</label>
+    <input id="dMl" type="text" inputmode="numeric" aria-label="Question d millilitres" data-ans="30" placeholder="">
+    <span class="unit">ml</span>
+  </div>
+</div>
+
+<div class="q" id="qe">
+  <h2>Question (e)</h2>
+  <div class="row">
+    <label for="eL">Q(e) – litres</label>
+    <input id="eL" type="text" inputmode="numeric" aria-label="Question e litres" data-ans="2" placeholder="">
+    <span class="unit">ℓ</span>
+    <label for="eMl">Q(e) – millilitres</label>
+    <input id="eMl" type="text" inputmode="numeric" aria-label="Question e millilitres" data-ans="800" placeholder="">
+    <span class="unit">ml</span>
+  </div>
+</div>
+
+<script>
+(function(){
+  function clean(v){return (v||"").replace(/[^\d]/g,"")}
+  function check(el){
+    const ans = clean(el.dataset.ans||"");
+    const val = clean(el.value);
+    el.classList.remove('ok','bad');
+    if(!el.value.trim()){ return; }
+    if(val && ans && Number(val)===Number(ans)){ el.classList.add('ok'); }
+    else{ el.classList.add('bad'); }
+  }
+  document.querySelectorAll('input[data-ans]').forEach(function(el){
+    el.addEventListener('input', function(){ check(el); });
+    el.addEventListener('blur', function(){ check(el); });
+  });
+})();
+</script>
+</body>
+</html>

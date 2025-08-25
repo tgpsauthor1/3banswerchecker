@@ -1,0 +1,124 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Find the volume of liquid — Check Answers</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;line-height:1.35;margin:16px;color:#111}
+  h1{font-size:18px;color:#003b8e;margin:0 0 12px}
+  h2{font-size:16px;margin:8px 0 16px}
+  .q{border:1px solid #e2e2e2;border-radius:8px;padding:10px 12px;margin:10px 0}
+  .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  label{font-weight:600}
+  small.helper{color:#666}
+  input[type="text"]{width:140px;padding:8px 10px;font-size:20px;color:#c00;border:1px solid #777;border-radius:6px;outline:none}
+  .unit{margin-left:2px}
+  .ok{background:#c9f5c6}
+  .bad{background:#ffc9c9}
+  button{padding:6px 10px;border:1px solid #777;background:#f6f6f6;border-radius:6px;cursor:pointer}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<h2>2) Find the volume of liquid.</h2>
+
+<div class="q" data-answer="8" data-qid="2(a)">
+  <div class="row"><label>Question 2(a) — Volume (ml)</label><small class="helper">You are filling in Q2(a).</small></div>
+  <div class="row">
+    <input type="text" class="ans" aria-label="Question 2(a) answer in millilitres"><span class="unit">ml</span>
+  </div>
+</div>
+
+<div class="q" data-answer="8" data-qid="2(b)">
+  <div class="row"><label>Question 2(b) — Volume (ml)</label><small class="helper">You are filling in Q2(b).</small></div>
+  <div class="row">
+    <input type="text" class="ans" aria-label="Question 2(b) answer in millilitres"><span class="unit">ml</span>
+  </div>
+</div>
+
+<div class="q" data-answer="65" data-qid="2(c)">
+  <div class="row"><label>Question 2(c) — Volume (ml)</label><small class="helper">You are filling in Q2(c).</small></div>
+  <div class="row">
+    <input type="text" class="ans" aria-label="Question 2(c) answer in millilitres"><span class="unit">ml</span>
+  </div>
+</div>
+
+<div class="q" data-answer="20" data-qid="2(d)">
+  <div class="row"><label>Question 2(d) — Volume (ml)</label><small class="helper">You are filling in Q2(d).</small></div>
+  <div class="row">
+    <input type="text" class="ans" aria-label="Question 2(d) answer in millilitres"><span class="unit">ml</span>
+  </div>
+</div>
+
+<div class="q" data-answer="450" data-qid="2(e)">
+  <div class="row"><label>Question 2(e) — Volume (ml)</label><small class="helper">You are filling in Q2(e).</small></div>
+  <div class="row">
+    <input type="text" class="ans" aria-label="Question 2(e) answer in millilitres"><span class="unit">ml</span>
+  </div>
+</div>
+
+<div class="q" data-answer="250" data-qid="2(f)">
+  <div class="row"><label>Question 2(f) — Volume (ml)</label><small class="helper">You are filling in Q2(f).</small></div>
+  <div class="row">
+    <input type="text" class="ans" aria-label="Question 2(f) answer in millilitres"><span class="unit">ml</span>
+  </div>
+</div>
+
+<div class="q" data-answer="700" data-qid="2(g)">
+  <div class="row"><label>Question 2(g) — Volume (ml)</label><small class="helper">You are filling in Q2(g).</small></div>
+  <div class="row">
+    <input type="text" class="ans" aria-label="Question 2(g) answer in millilitres"><span class="unit">ml</span>
+  </div>
+</div>
+
+<div class="q" data-answer="800" data-qid="2(h)">
+  <div class="row"><label>Question 2(h) — Volume (ml)</label><small class="helper">You are filling in Q2(h).</small></div>
+  <div class="row">
+    <input type="text" class="ans" aria-label="Question 2(h) answer in millilitres"><span class="unit">ml</span>
+  </div>
+</div>
+
+<div class="row" style="margin-top:12px;gap:12px">
+  <button id="clearAll" type="button" aria-label="Clear all answers">Clear all</button>
+</div>
+
+<script>
+(function(){
+  const EPS=1e-9;
+  const setState=(el,state)=>{
+    if(!el) return;
+    el.classList.remove('ok','bad');
+    const v=el.value.trim();
+    if(!v) return;
+    el.classList.add(state?'ok':'bad');
+    el.setAttribute('aria-invalid',state?'false':'true');
+  };
+  const parseNum=(s)=>{
+    if(!s) return NaN;
+    s = s.replace(/ml/ig,'').replace(/[^\d.+\-eE]/g,''); // strip non-numeric/unit
+    return parseFloat(s);
+  };
+  const isCorrect=(val,ans)=>Math.abs(val-ans)<EPS;
+
+  document.querySelectorAll('.q').forEach(q=>{
+    const answer = parseFloat(q.dataset.answer);
+    const ansEl = q.querySelector('.ans');
+
+    const check=()=>{
+      const v=parseNum(ansEl.value);
+      const good = ansEl.value.trim()!=='' && !Number.isNaN(v) && isCorrect(v,answer);
+      if(ansEl.value.trim()!=='') setState(ansEl,good); else ansEl.classList.remove('ok','bad');
+    };
+
+    ansEl.addEventListener('input',check);
+  });
+
+  document.getElementById('clearAll').addEventListener('click',()=>{
+    document.querySelectorAll('input[type="text"]').forEach(i=>{
+      i.value=''; i.classList.remove('ok','bad'); i.removeAttribute('aria-invalid');
+    });
+  });
+})();
+</script>
+</body>
+</html>

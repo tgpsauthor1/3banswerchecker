@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Practice 5 – Compare Fractions</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      line-height: 1.4;
+    }
+    h1, h2 {
+      margin-bottom: 10px;
+    }
+    #hints-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    #hint {
+      flex: 1;
+      min-height: 2em;
+      color: #0055a5;
+      font-weight: bold;
+    }
+    #speakBtn {
+      margin-left: 10px;
+      padding: 6px 12px;
+      font-size: 0.95em;
+      cursor: pointer;
+      background: #5bc0de;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .fraction {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 1.3em;
+    }
+    .fraction span {
+      margin: 0 5px;
+    }
+    button {
+      width: 50px;
+      padding: 6px;
+      font-size: 1.3em;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+    button.correct {
+      background-color: lightgreen;
+    }
+    button.wrong {
+      background-color: lightcoral;
+    }
+  </style>
+</head>
+<body>
+  <h1>Practice 5 – Recall</h1>
+  <h2>2. Compare the fractions. Click the correct symbol '<' or '>'.</h2>
+  <div id="hints-container">
+    <div id="hint"></div>
+    <button id="speakBtn">Speak</button>
+  </div>
+
+  <!-- Questions (a–f) -->
+  <div class="question">
+    <strong>(a)</strong>
+    <div class="fraction">
+      <span>1</span>/<span>3</span>
+      <button id="2a-less">&lt;</button>
+      <button id="2a-greater">&gt;</button>
+      <span>1</span>/<span>5</span>
+    </div>
+  </div>
+
+  <div class="question">
+    <strong>(b)</strong>
+    <div class="fraction">
+      <span>1</span>/<span>8</span>
+      <button id="2b-less">&lt;</button>
+      <button id="2b-greater">&gt;</button>
+      <span>1</span>/<span>12</span>
+    </div>
+  </div>
+
+  <div class="question">
+    <strong>(c)</strong>
+    <div class="fraction">
+      <span>4</span>/<span>7</span>
+      <button id="2c-less">&lt;</button>
+      <button id="2c-greater">&gt;</button>
+      <span>6</span>/<span>7</span>
+    </div>
+  </div>
+
+  <div class="question">
+    <strong>(d)</strong>
+    <div class="fraction">
+      <span>3</span>/<span>11</span>
+      <button id="2d-less">&lt;</button>
+      <button id="2d-greater">&gt;</button>
+      <span>7</span>/<span>11</span>
+    </div>
+  </div>
+
+  <div class="question">
+    <strong>(e)</strong>
+    <div class="fraction">
+      <span>1</span>/<span>2</span>
+      <button id="2e-less">&lt;</button>
+      <button id="2e-greater">&gt;</button>
+      <span>1</span>/<span>6</span>
+    </div>
+  </div>
+
+  <div class="question">
+    <strong>(f)</strong>
+    <div class="fraction">
+      <span>2</span>/<span>9</span>
+      <button id="2f-less">&lt;</button>
+      <button id="2f-greater">&gt;</button>
+      <span>5</span>/<span>9</span>
+    </div>
+  </div>
+
+  <script>
+    // correct answers map
+    const correctAnswers = {
+      '2a': '>', '2b': '>', '2c': '<',
+      '2d': '<', '2e': '>', '2f': '<'
+    };
+
+    // hints per question
+    const hints = {
+      '2a': 'Remember that when the numerator is the same, the fraction with the greater denominator is smaller. The arrow points towards the smaller fraction.',
+      '2b': 'Remember that when the numerator is the same, the fraction with the greater denominator is smaller. The arrow points towards the smaller fraction.',
+      '2c': 'Remember that when the denominator is the same, the fraction with the smaller numerator is smaller. The arrow points towards the smaller fraction.',
+      '2d': 'Remember that when the denominator is the same, the fraction with the smaller numerator is smaller. The arrow points towards the smaller fraction.',
+      '2e': 'Remember that when the numerator is the same, the fraction with the greater denominator is smaller. The arrow points towards the smaller fraction.',
+      '2f': 'Remember that when the denominator is the same, the fraction with the smaller numerator is smaller. The arrow points towards the smaller fraction.'
+    };
+
+    const hintBox = document.getElementById('hint');
+    const speakBtn = document.getElementById('speakBtn');
+
+    // attach listeners
+    Object.keys(correctAnswers).forEach(q => {
+      const lessBtn = document.getElementById(q + '-less');
+      const greaterBtn = document.getElementById(q + '-greater');
+      [ {btn: lessBtn, val: '<'}, {btn: greaterBtn, val: '>'} ].forEach(({btn, val}) => {
+        btn.addEventListener('click', () => {
+          // clear both buttons
+          lessBtn.classList.remove('correct','wrong');
+          greaterBtn.classList.remove('correct','wrong');
+
+          if (val === correctAnswers[q]) {
+            btn.classList.add('correct');
+            hintBox.textContent = '';
+          } else {
+            btn.classList.add('wrong');
+            hintBox.textContent = hints[q];
+          }
+        });
+      });
+    });
+
+    // Speak button functionality
+    speakBtn.addEventListener('click', () => {
+      const text = hintBox.textContent.trim();
+      if (!text) return;
+      const utter = new SpeechSynthesisUtterance(text);
+      speechSynthesis.speak(utter);
+    });
+  </script>
+</body>
+</html>

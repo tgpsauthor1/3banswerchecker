@@ -1,0 +1,72 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mass in grams — Self-check</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;line-height:1.35;margin:16px;color:#222}
+  h1{font-size:18px;margin:0 0 10px}
+  h2{font-size:18px;margin:14px 0 8px}
+  .guides{font-size:14px;color:#444;margin:6px 0 14px}
+  .guides span{display:inline-block;margin-right:16px;white-space:pre}
+  .q{border:1px solid #ddd;border-radius:8px;padding:10px;margin:10px 0}
+  .meta{font-weight:600;margin-bottom:6px}
+  label{display:flex;align-items:center;gap:8px}
+  .ans{width:180px;padding:8px 10px;font-size:18px;border:1px solid #888;border-radius:6px;outline:none}
+  .ans.correct{background:#c8f7c5}
+  .ans.wrong{background:#ffd1d1}
+  .u{color:#666}
+  .key{color:#c00}
+  .note{font-size:12px;color:#666;margin-top:6px}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="guides">
+  Guides: <span>__________ g</span><span>__________ kg __________ g</span>
+</div>
+
+<h2>2. Write the mass in grams.</h2>
+
+<div class="q">
+  <div class="meta">Q2(a) — crab</div>
+  <label for="q2a">Answer<input id="q2a" class="ans" inputmode="numeric" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="__________" aria-label="Q2(a) crab, enter mass in grams" data-answer="2800"> <span class="u">g</span></label>
+  <div class="note">You are answering: Question 2(a) — crab</div>
+</div>
+
+<div class="q">
+  <div class="meta">Q2(b) — parcel</div>
+  <label for="q2b">Answer<input id="q2b" class="ans" inputmode="numeric" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="__________" aria-label="Q2(b) parcel, enter mass in grams" data-answer="3700"> <span class="u">g</span></label>
+  <div class="note">You are answering: Question 2(b) — parcel</div>
+</div>
+
+<div class="q">
+  <div class="meta">Q2(c) — flower pot</div>
+  <label for="q2c">Answer<input id="q2c" class="ans" inputmode="numeric" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="__________" aria-label="Q2(c) flower pot, enter mass in grams" data-answer="6800"> <span class="u">g</span></label>
+  <div class="note">You are answering: Question 2(c) — flower pot</div>
+</div>
+
+<div class="q">
+  <div class="meta">Q2(d) — iron pot</div>
+  <label for="q2d">Answer<input id="q2d" class="ans" inputmode="numeric" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="__________" aria-label="Q2(d) iron pot, enter mass in grams" data-answer="4200"> <span class="u">g</span></label>
+  <div class="note">You are answering: Question 2(d) — iron pot</div>
+</div>
+
+<script>
+(function(){
+  function cleanDigits(s){return (s||"").replace(/[^\d]/g,"");}
+  document.querySelectorAll('.ans[data-answer]').forEach(function(inp){
+    inp.addEventListener('input',function(){
+      var v = cleanDigits(inp.value);
+      if(v!==inp.value) inp.value=v;
+      inp.classList.remove('correct','wrong');
+      if(v.length===0) return;
+      var ok = Number(v)===Number(inp.dataset.answer);
+      inp.classList.add(ok?'correct':'wrong');
+    });
+  });
+})();
+</script>
+</body>
+</html>

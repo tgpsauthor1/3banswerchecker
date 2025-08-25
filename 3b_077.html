@@ -1,0 +1,161 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Practice 10 Checker</title>
+<style>
+ body{font-family:Arial,Helvetica,sans-serif;margin:16px;line-height:1.4}
+ h1{font-size:18px;margin:0 0 8px}
+ small.note{display:block;margin:4px 0 12px;color:#444}
+ section{margin:14px 0;padding:10px;border:1px solid #ddd;border-radius:6px}
+ .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:6px 0}
+ label{font-size:12px;color:#555;margin-right:6px}
+ input.txt{padding:8px 10px;font-size:16px;border:1px solid #bbb;border-radius:6px;min-width:100px}
+ input.final{min-width:160px}
+ select.op{padding:8px 10px;font-size:16px;border:1px solid #bbb;border-radius:6px}
+ .correct{background:#d9f7d9;border-color:#46a546}
+ .wrong{background:#ffd6d6;border-color:#d33}
+ .fixed-unit{font-size:16px;margin-left:4px}
+ .frac{display:inline-flex;flex-direction:column;align-items:center;margin:0 6px}
+ .frac input{width:70px;text-align:center}
+ .bar{width:100%;height:2px;background:#555;margin:2px 0}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<small class="note">Type a space between the number and the unit for final answers (e.g., 250 m, 2 kg). Choose the operation from the dropdown.</small>
+
+<section id="q1">
+  <div>1. Sarah ran 400 m on Monday. She ran 150 m further on Monday than on Tuesday. How far did she run on Tuesday?</div>
+
+  <div class="row">
+    <label for="q1a">Q1 Equation — first number</label>
+    <input class="txt" id="q1a" aria-label="Q1 equation first number" data-kind="number" data-answer="400">
+    <label for="q1op">Q1 operation</label>
+    <select class="op" id="q1op" aria-label="Q1 operation" data-kind="op" data-answer="-">
+      <option value="">Select</option>
+      <option value="+">+</option>
+      <option value="-">-</option>
+      <option value="×">×</option>
+      <option value="÷">÷</option>
+    </select>
+    <label for="q1b">Q1 Equation — second number</label>
+    <input class="txt" id="q1b" aria-label="Q1 equation second number" data-kind="number" data-answer="150">
+    <span>=</span>
+    <label for="q1c">Q1 Equation — result</label>
+    <input class="txt" id="q1c" aria-label="Q1 equation result" data-kind="number" data-answer="250">
+  </div>
+
+  <div class="row">
+    <span>She ran</span>
+    <label for="q1final">Q1 Final answer</label>
+    <input class="txt final" id="q1final" aria-label="Q1 final answer (include unit with space)" data-kind="final-unit" data-answer="250 m">
+    <span>on Tuesday.</span>
+  </div>
+</section>
+
+<section id="q2">
+  <div>2. A container filled with 10 kg of rice has a mass of 12 kg. What is the mass of the container when it is empty?</div>
+
+  <div class="row">
+    <label for="q2a">Q2 Equation — first number</label>
+    <input class="txt" id="q2a" aria-label="Q2 equation first number" data-kind="number" data-answer="12">
+    <label for="q2op">Q2 operation</label>
+    <select class="op" id="q2op" aria-label="Q2 operation" data-kind="op" data-answer="-">
+      <option value="">Select</option>
+      <option value="+">+</option>
+      <option value="-">-</option>
+      <option value="×">×</option>
+      <option value="÷">÷</option>
+    </select>
+    <label for="q2b">Q2 Equation — second number</label>
+    <input class="txt" id="q2b" aria-label="Q2 equation second number" data-kind="number" data-answer="10">
+    <span>=</span>
+    <label for="q2c">Q2 Equation — result</label>
+    <input class="txt" id="q2c" aria-label="Q2 equation result" data-kind="number" data-answer="2">
+  </div>
+
+  <div class="row">
+    <span>The container has a mass of</span>
+    <label for="q2final">Q2 Final answer</label>
+    <input class="txt final" id="q2final" aria-label="Q2 final answer (include unit with space)" data-kind="final-unit" data-answer="2 kg">
+    <span>when it is empty.</span>
+  </div>
+</section>
+
+<!-- Fraction support (optional for other pages) -->
+<section id="fraction-template" style="display:none">
+  <div class="row">
+    <label>Fraction (Q#): numerator and denominator in separate boxes</label>
+    <span class="frac" data-kind="fraction" data-num="1" data-den="2">
+      <input class="txt" aria-label="Fraction numerator">
+      <span class="bar"></span>
+      <input class="txt" aria-label="Fraction denominator">
+    </span>
+  </div>
+</section>
+
+<script>
+(function(){
+  const byKind = (el)=>el.dataset.kind;
+
+  function mark(el, ok){
+    el.classList.remove('correct','wrong');
+    if(!el.value.trim()) return; // no color until typed
+    el.classList.add(ok?'correct':'wrong');
+  }
+
+  function normalize(s){return s.replace(/\s+/g,' ').trim();}
+
+  function checkNumber(el){
+    const exp = String(el.dataset.answer||'').trim();
+    const val = normalize(el.value);
+    mark(el, val===exp);
+  }
+
+  function checkOp(el){
+    const exp = el.dataset.answer;
+    mark(el, el.value===exp);
+  }
+
+  function checkFinalWithUnit(el){
+    const exp = normalize(el.dataset.answer||'');
+    const val = normalize(el.value);
+    // Allow no-space form for Q1 and Q2
+    const allowed = [exp, exp.replace(' ', '')];
+    const ok = allowed.includes(val);
+    mark(el, ok);
+  }
+
+  function attachFractionCheck(container){
+    const numExp = container.dataset.num;
+    const denExp = container.dataset.den;
+    const inputs = container.querySelectorAll('input');
+    function evalFrac(){
+      const n = normalize(inputs[0].value);
+      const d = normalize(inputs[1].value);
+      const done = !!n || !!d;
+      inputs.forEach(i=>i.classList.remove('correct','wrong'));
+      if(!done) return;
+      const ok = n===String(numExp) && d===String(denExp);
+      inputs.forEach(i=>i.classList.add(ok?'correct':'wrong'));
+    }
+    inputs.forEach(i=>i.addEventListener('input',evalFrac));
+  }
+
+  document.querySelectorAll('input[data-kind], select[data-kind]').forEach(el=>{
+    const kind = byKind(el);
+    const handler = ()=>{
+      if(kind==='number') checkNumber(el);
+      else if(kind==='op') checkOp(el);
+      else if(kind==='final-unit') checkFinalWithUnit(el);
+    };
+    el.addEventListener('input',handler);
+    el.addEventListener('change',handler);
+  });
+
+  document.querySelectorAll('[data-kind="fraction"]').forEach(attachFractionCheck);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Practice 5 – Circle Fractions</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; line-height: 1.4; }
+    h1, h2 { margin-bottom: 10px; }
+    #hints-container { display: flex; align-items: center; margin-bottom: 20px; }
+    #hint { flex: 1; min-height: 3em; color: #0055a5; font-weight: bold; }
+    #speakBtn { margin-left: 10px; padding: 6px 12px; font-size: 0.95em; cursor: pointer; background: #5bc0de; color: white; border: none; border-radius: 4px; }
+    .question { margin-bottom: 25px; }
+    .options { display: flex; gap: 20px; margin-top: 10px; }
+    button { padding: 10px 15px; font-size: 1.3em; cursor: pointer; }
+    button.correct { background-color: lightgreen; }
+    button.wrong   { background-color: lightcoral; }
+  </style>
+</head>
+<body>
+  <h1>Practice 5 – Recall</h1>
+  <h2>3. Circle the smallest fraction.</h2>
+
+  <div id="hints-container">
+    <div id="hint"></div>
+    <button id="speakBtn">Speak</button>
+  </div>
+
+  <div class="question">
+    <strong>3(a)</strong>
+    <div class="options">
+      <button id="q3a-1">1/4</button>
+      <button id="q3a-2">1/10</button>
+      <button id="q3a-3">1/3</button>
+    </div>
+  </div>
+  
+  <div class="question">
+    <strong>3(b)</strong>
+    <div class="options">
+      <button id="q3b-1">1/5</button>
+      <button id="q3b-2">1/2</button>
+      <button id="q3b-3">1/8</button>
+    </div>
+  </div>
+
+  <div class="question">
+    <strong>3(c)</strong>
+    <div class="options">
+      <button id="q3c-1">1/9</button>
+      <button id="q3c-2">1/7</button>
+      <button id="q3c-3">1/6</button>
+    </div>
+  </div>
+
+  <h2>4. Circle the greatest fraction.</h2>
+
+  <div class="question">
+    <strong>4(a)</strong>
+    <div class="options">
+      <button id="q4a-1">3/5</button>
+      <button id="q4a-2">4/5</button>
+      <button id="q4a-3">2/5</button>
+    </div>
+  </div>
+
+  <div class="question">
+    <strong>4(b)</strong>
+    <div class="options">
+      <button id="q4b-1">7/9</button>
+      <button id="q4b-2">3/9</button>
+      <button id="q4b-3">6/9</button>
+    </div>
+  </div>
+
+  <div class="question">
+    <strong>4(c)</strong>
+    <div class="options">
+      <button id="q4c-1">5/12</button>
+      <button id="q4c-2">1/12</button>
+      <button id="q4c-3">10/12</button>
+    </div>
+  </div>
+
+  <script>
+    const correct = {
+      q3a: 'q3a-2', q3b: 'q3b-3', q3c: 'q3c-1',
+      q4a: 'q4a-2', q4b: 'q4b-1', q4c: 'q4c-3'
+    };
+    const hints = {
+      q3a: 'Remember that when the numerator is the same, the fraction with the greater denominator is the smallest. Remember to choose the SMALLEST fraction.',
+      q3b: 'Remember that when the numerator is the same, the fraction with the greater denominator is the smallest. Remember to choose the SMALLEST fraction.',
+      q3c: 'Remember that when the numerator is the same, the fraction with the greater denominator is the smallest. Remember to choose the SMALLEST fraction.',
+      q4a: 'Remember that when the denominator is the same, the fraction with the greater numerator is the greatest. Find which fraction has the greatest numerator. Remember to choose the GREATEST fraction.',
+      q4b: 'Remember that when the denominator is the same, the fraction with the greater numerator is the greatest. Find which fraction has the greatest numerator. Remember to choose the GREATEST fraction.',
+      q4c: 'Remember that when the denominator is the same, the fraction with the greater numerator is the greatest. Find which fraction has the greatest numerator. Remember to choose the GREATEST fraction.'
+    };
+    const hintBox = document.getElementById('hint');
+    
+    Object.keys(correct).forEach(q => {
+      const opts = [...document.querySelectorAll(`button[id^="${q}-"]`)];
+      opts.forEach(btn => {
+        btn.addEventListener('click', () => {
+          opts.forEach(b => b.classList.remove('correct','wrong'));
+          if (btn.id === correct[q]) {
+            btn.classList.add('correct');
+            hintBox.textContent = '';
+          } else {
+            btn.classList.add('wrong');
+            hintBox.textContent = hints[q];
+          }
+        });
+      });
+    });
+    
+    // Speak button functionality
+    const speakBtn = document.getElementById('speakBtn');
+    speakBtn.addEventListener('click', () => {
+      const text = hintBox.textContent.trim();
+      if (!text) return;
+      const utter = new SpeechSynthesisUtterance(text);
+      speechSynthesis.speak(utter);
+    });
+  </script>
+</body>
+</html>

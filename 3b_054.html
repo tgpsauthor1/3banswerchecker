@@ -1,0 +1,104 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Activity Checker</title>
+<style>
+  body{font-family:Arial,sans-serif;line-height:1.5;margin:16px;color:#111}
+  h1{font-size:18px;margin:0 0 8px}
+  .note{font-size:13px;color:#444;margin:0 0 16px}
+  .q{margin:12px 0;padding:8px 10px;border:1px solid #ddd;border-radius:8px}
+  .line{margin:6px 0}
+  .guide{font-size:12px;color:#666;margin-top:4px}
+  .ans{width:90px;padding:6px 8px;font-size:18px;border:2px solid #6aa1ff;border-radius:8px;text-align:center;background:#eef5ff;outline:none}
+  .correct{background:#c9f7c9;border-color:#1e8e3e}
+  .incorrect{background:#ffd3d3;border-color:#c62828}
+  .tag{font-size:10px;color:#666;display:block;margin-top:2px}
+  .progress{margin-top:14px;font-weight:bold}
+  .row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .sm{width:70px}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<p class="note">Type each sub-answer. Show your thinking by completing every blank. Fields turn green when correct and red when not.</p>
+
+<div class="q">
+  <div class="line">(2c) 526 cm</div>
+  <div class="row">= <input class="ans" inputmode="numeric" aria-label="Q2(c) cm part 1" data-answer="500"> cm + <input class="ans" inputmode="numeric" aria-label="Q2(c) cm part 2" data-answer="26"> cm = <input class="ans sm" inputmode="numeric" aria-label="Q2(c) metres" data-answer="5"> m <input class="ans sm" inputmode="numeric" aria-label="Q2(c) centimetres" data-answer="26"> cm</div>
+  <div class="guide">Guide: = ____ cm + ____ cm = ____ m ____ cm</div>
+</div>
+
+<div class="q">
+  <div class="line">(2d) 740 cm</div>
+  <div class="row">= <input class="ans" inputmode="numeric" aria-label="Q2(d) cm part 1" data-answer="700"> cm + <input class="ans" inputmode="numeric" aria-label="Q2(d) cm part 2" data-answer="40"> cm = <input class="ans sm" inputmode="numeric" aria-label="Q2(d) metres" data-answer="7"> m <input class="ans sm" inputmode="numeric" aria-label="Q2(d) centimetres" data-answer="40"> cm</div>
+  <div class="guide">Guide: = ____ cm + ____ cm = ____ m ____ cm</div>
+</div>
+
+<div class="q">
+  <div class="line">(2e) 305 cm</div>
+  <div class="row">= <input class="ans" inputmode="numeric" aria-label="Q2(e) cm part 1" data-answer="300"> cm + <input class="ans" inputmode="numeric" aria-label="Q2(e) cm part 2" data-answer="5"> cm = <input class="ans sm" inputmode="numeric" aria-label="Q2(e) metres" data-answer="3"> m <input class="ans sm" inputmode="numeric" aria-label="Q2(e) centimetres" data-answer="5"> cm</div>
+  <div class="guide">Guide: = ____ cm + ____ cm = ____ m ____ cm</div>
+</div>
+
+<div class="q">
+  <div class="line">(2f) 809 cm</div>
+  <div class="row">= <input class="ans" inputmode="numeric" aria-label="Q2(f) cm part 1" data-answer="800"> cm + <input class="ans" inputmode="numeric" aria-label="Q2(f) cm part 2" data-answer="9"> cm = <input class="ans sm" inputmode="numeric" aria-label="Q2(f) metres" data-answer="8"> m <input class="ans sm" inputmode="numeric" aria-label="Q2(f) centimetres" data-answer="9"> cm</div>
+  <div class="guide">Guide: = ____ cm + ____ cm = ____ m ____ cm</div>
+</div>
+
+<div class="q">
+  <div class="line">(3a) Write in metres</div>
+  <div class="row">1 km = <input class="ans" inputmode="numeric" aria-label="Q3(a) metres" data-answer="1000"> m</div>
+</div>
+
+<div class="q">
+  <div class="line">(3b) Write in metres</div>
+  <div class="row">2 km = <input class="ans" inputmode="numeric" aria-label="Q3(b) metres" data-answer="2000"> m</div>
+</div>
+
+<div class="q">
+  <div class="line">(3c) 1 km 360 m</div>
+  <div class="row">= <input class="ans sm" inputmode="numeric" aria-label="Q3(c) kilometres" data-answer="1"> km + <input class="ans" inputmode="numeric" aria-label="Q3(c) metres part 1" data-answer="360"> m</div>
+  <div class="row">= <input class="ans" inputmode="numeric" aria-label="Q3(c) convert km to metres" data-answer="1000"> m + <input class="ans" inputmode="numeric" aria-label="Q3(c) metres part 2" data-answer="360"> m</div>
+  <div class="row">= <input class="ans" inputmode="numeric" aria-label="Q3(c) total metres" data-answer="1360"> m</div>
+</div>
+
+<div class="q">
+  <div class="line">(3d) 3 km 269 m</div>
+  <div class="row">= <input class="ans sm" inputmode="numeric" aria-label="Q3(d) kilometres" data-answer="3"> km + <input class="ans" inputmode="numeric" aria-label="Q3(d) metres part 1" data-answer="269"> m</div>
+  <div class="row">= <input class="ans" inputmode="numeric" aria-label="Q3(d) convert km to metres" data-answer="3000"> m + <input class="ans" inputmode="numeric" aria-label="Q3(d) metres part 2" data-answer="269"> m</div>
+  <div class="row">= <input class="ans" inputmode="numeric" aria-label="Q3(d) total metres" data-answer="3269"> m</div>
+</div>
+
+<div class="progress" id="progress">Correct: 0 / 28</div>
+
+<script>
+(function(){
+  const inputs=[...document.querySelectorAll('.ans')];
+  const progress=document.getElementById('progress');
+  function verify(el){
+    const exp=el.dataset.answer||'';
+    const v=el.value.trim();
+    el.classList.remove('correct','incorrect');
+    if(!v){return;}
+    let ok=false;
+    if(/^\d+$/.test(exp)){
+      ok=/^\d+$/.test(v) && parseInt(v,10)===parseInt(exp,10);
+    }else{
+      ok=v.replace(/\s+/g,'').toLowerCase()===exp.replace(/\s+/g,'').toLowerCase();
+    }
+    el.classList.add(ok?'correct':'incorrect');
+  }
+  function updateProgress(){
+    const correct=inputs.filter(i=>i.classList.contains('correct')).length;
+    progress.textContent='Correct: '+correct+' / '+inputs.length;
+  }
+  inputs.forEach(i=>{
+    i.addEventListener('input',e=>{verify(i);updateProgress();});
+    i.addEventListener('blur',e=>{verify(i);updateProgress();});
+  });
+})();
+</script>
+</body>
+</html>

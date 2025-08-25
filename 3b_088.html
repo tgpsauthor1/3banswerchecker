@@ -1,0 +1,72 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q9 Checker</title>
+<style>
+ body{font-family:Arial,Helvetica,sans-serif;line-height:1.35;margin:18px;color:#222}
+ h1{font-size:18px;margin:0 0 12px 0}
+ .note{font-size:13px;color:#444;margin-bottom:14px}
+ .card{border:1px solid #ddd;border-radius:8px;padding:12px;margin:12px 0}
+ label{display:block;font-weight:600;margin-bottom:6px}
+ .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+ .ipt{font-size:18px;padding:10px 12px;border:1px solid #aaa;border-radius:6px;width:170px}
+ .bad{background:#ffd6d6}
+ .ok{background:#c9f7c5}
+ button{padding:8px 12px;border:1px solid #555;background:#fff;border-radius:6px;cursor:pointer}
+ .hint li{margin:6px 0}
+ .fineprint{font-size:12px;color:#666;margin-top:8px}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+
+<div class="card">
+  <label>Q9 • What are you filling in?</label>
+  <div class="note">Final answer only. Fill the kilograms part and the grams part.</div>
+  <div class="row" aria-label="Q9 final statement">
+    <span>Mr Ho had</span>
+    <input id="q9kg" class="ipt check" type="text" inputmode="numeric" autocomplete="off">
+    <span>kg</span>
+    <input id="q9g" class="ipt check" type="text" inputmode="numeric" autocomplete="off">
+    <span>g of grapes at first.</span>
+  </div>
+
+</div>
+
+<div class="card hint">
+  <label>Hints (read before asking for help)</label>
+  <ul>
+    <li>What is the mass of grapes in 1 box?</li>
+<li>What is the mass of grapes in 8 boxes?</li>
+    <li>Put back the mass of the grapes that he threw away.</li>
+    <li>Give your answer in kilograms and grams.</li>
+  </ul>
+</div>
+
+<script>
+(function(){
+  const answers={q9kg:v=>/^\s*4\s*$/.test(v), q9g:v=>/^\s*510\s*$/.test(v)};
+  const inputs=[...document.querySelectorAll('.check')];
+
+  function paint(el,ok){
+    el.classList.remove('ok','bad');
+    if(el.value.trim()===""){return;}
+    el.classList.add(ok?'ok':'bad');
+  }
+  function evaluate(){
+    inputs.forEach(el=>{
+      const ok=answers[el.id](el.value);
+      paint(el,ok);
+    });
+  }
+  inputs.forEach(el=>el.addEventListener('input',evaluate));
+  document.getElementById('checkBtn').addEventListener('click',evaluate);
+  document.getElementById('resetBtn').addEventListener('click',()=>{
+    inputs.forEach(el=>{el.value='';el.classList.remove('ok','bad');});
+  });
+})();
+</script>
+</body>
+</html>

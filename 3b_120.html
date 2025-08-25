@@ -1,0 +1,78 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Check Your Answers</title>
+<style>
+  body{font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;line-height:1.4;margin:0;padding:16px;background:#fff}
+  .note{background:#eef7ff;border-left:4px solid #3a7bd5;padding:8px;margin:6px 0;font-size:14px}
+  h2{font-size:18px;margin:18px 0 8px}
+  label{display:block;margin:.5rem 0 .25rem;font-weight:600}
+  .row{display:flex;align-items:center;gap:.5rem;margin:0 0 12px}
+  input[type=text]{width:240px;padding:8px 10px;font-size:18px;color:#c00;border:1px solid #bbb;border-radius:4px;outline:none}
+  input[type=text]:focus{border-color:#3a7bd5;box-shadow:0 0 0 2px #d7e8ff}
+  .ok{background:#c8f7c5!important}
+  .bad{background:#ffd4d4!important}
+  .status{min-width:88px;font-size:12px;color:#333}
+  button{padding:8px 12px;font-size:14px;border:1px solid #333;background:#fff;border-radius:4px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="note">If you keep getting it wrong, raise your hand and ask your teacher for help.</div>
+<div class="note">Reminder: Use the timeline for your thinking. Do not type operations like + or - in the answer boxes.</div>
+
+<h2>Q3 • Start time of the learning journey</h2>
+<label for="q3">Enter the start time</label>
+<div class="row">
+  <input id="q3" class="q3" type="text" inputmode="latin" autocomplete="off">
+  <span class="status" aria-live="polite"></span>
+</div>
+
+<h2>Q4 • Time Alan reached the Cameron Highlands</h2>
+<label for="q4">Enter the arrival time</label>
+<div class="row">
+  <input id="q4" class="q4" type="text" inputmode="latin" autocomplete="off">
+  <span class="status" aria-live="polite"></span>
+</div>
+
+<button id="reset">Reset all</button>
+
+<script>
+  const norm = s => s.replace(/\s+/g,' ').trim().toLowerCase();
+
+  function checkQ3(v){
+    v = norm(v);
+    return v==='0855' || v==='08 55' || v==='8:55am' || v==='8:55 am';
+  }
+  function checkQ4(v){
+    v = norm(v);
+    return v==='0730' || v==='07 30' || v==='7:30am' || v==='7:30 am';
+  }
+
+  function setState(el, ok){
+    el.classList.remove('ok','bad');
+    const status = el.nextElementSibling;
+    if(!el.value.trim()){
+      if(status) status.textContent='';
+      return;
+    }
+    el.classList.add(ok?'ok':'bad');
+    if(status) status.textContent = ok ? 'Correct' : 'Keep trying';
+  }
+
+  document.addEventListener('input', e=>{
+    const t = e.target;
+    if(t.classList.contains('q3')) setState(t, checkQ3(t.value));
+    if(t.classList.contains('q4')) setState(t, checkQ4(t.value));
+  });
+
+  document.getElementById('reset').addEventListener('click', ()=>{
+    document.querySelectorAll('input[type=text]').forEach(i=>{
+      i.value=''; i.classList.remove('ok','bad');
+      const s=i.nextElementSibling; if(s) s.textContent='';
+    });
+  });
+</script>
+</body>
+</html>
+

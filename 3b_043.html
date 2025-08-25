@@ -1,0 +1,132 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Compare Fractions – Self Check</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;line-height:1.4;margin:16px;color:#111}
+  h1{font-size:18px;margin:0 0 14px}
+  .q{margin:18px 0}
+  .q p{margin:0 0 10px}
+  .work{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .tag{font-size:12px;color:#555;margin:0 0 4px;text-align:center}
+  .frac{display:inline-flex;flex-direction:column;align-items:center}
+  .frac input{width:64px;height:38px;font-size:22px;text-align:center;border:1px solid #888;border-radius:8px;outline:none}
+  .line{width:64px;border-bottom:3px solid #111;margin:6px 0}
+  .cmp{font-size:28px;font-weight:bold}
+  .legend{font-size:12px;color:#555;margin-top:6px}
+  .note{font-size:12px;color:#666}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="q" id="qa">
+  <p>(a) Which is smaller, 3/5 or 7/10?</p>
+  <div class="work">
+    <div>
+      <div class="tag">Q(a) Left fraction</div>
+      <div class="frac">
+        <input inputmode="numeric" pattern="[0-9]*" title="Q(a) left numerator" aria-label="Q(a) left numerator" data-ans="3">
+        <div class="line"></div>
+        <input inputmode="numeric" pattern="[0-9]*" title="Q(a) left denominator" aria-label="Q(a) left denominator" data-ans="5">
+      </div>
+    </div>
+    <div class="cmp" aria-hidden="true">&lt;</div>
+    <div>
+      <div class="tag">Q(a) Right fraction</div>
+      <div class="frac">
+        <input inputmode="numeric" pattern="[0-9]*" title="Q(a) right numerator" aria-label="Q(a) right numerator" data-ans="7">
+        <div class="line"></div>
+        <input inputmode="numeric" pattern="[0-9]*" title="Q(a) right denominator" aria-label="Q(a) right denominator" data-ans="10">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="q" id="qb">
+  <p>(b) Which is greater, 6/12 or 4/6?</p>
+  <div class="work">
+    <div>
+      <div class="tag">Q(b) Left fraction</div>
+      <div class="frac">
+        <input inputmode="numeric" pattern="[0-9]*" title="Q(b) left numerator" aria-label="Q(b) left numerator" data-ans="4">
+        <div class="line"></div>
+        <input inputmode="numeric" pattern="[0-9]*" title="Q(b) left denominator" aria-label="Q(b) left denominator" data-ans="6">
+      </div>
+    </div>
+    <div class="cmp" aria-hidden="true">&gt;</div>
+    <div>
+      <div class="tag">Q(b) Right fraction</div>
+      <div class="frac">
+        <input inputmode="numeric" pattern="[0-9]*" title="Q(b) right numerator" aria-label="Q(b) right numerator" data-ans="6">
+        <div class="line"></div>
+        <input inputmode="numeric" pattern="[0-9]*" title="Q(b) right denominator" aria-label="Q(b) right denominator" data-ans="12">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="q" id="qc">
+  <p>(c) Which is smaller, 2/9 or 1/5?</p>
+  <div class="work">
+    <div>
+      <div class="tag">Q(c) Left fraction</div>
+      <div class="frac">
+        <input inputmode="numeric" pattern="[0-9]*" title="Q(c) left numerator" aria-label="Q(c) left numerator" data-ans="1">
+        <div class="line"></div>
+        <input inputmode="numeric" pattern="[0-9]*" title="Q(c) left denominator" aria-label="Q(c) left denominator" data-ans="5">
+      </div>
+    </div>
+    <div class="cmp" aria-hidden="true">&lt;</div>
+    <div>
+      <div class="tag">Q(c) Right fraction</div>
+      <div class="frac">
+        <input inputmode="numeric" pattern="[0-9]*" title="Q(c) right numerator" aria-label="Q(c) right numerator" data-ans="2">
+        <div class="line"></div>
+        <input inputmode="numeric" pattern="[0-9]*" title="Q(c) right denominator" aria-label="Q(c) right denominator" data-ans="9">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="q" id="qd">
+  <p>(d) Which is greater, 3/10 or 5/7?</p>
+  <div class="work">
+    <div>
+      <div class="tag">Q(d) Left fraction</div>
+      <div class="frac">
+        <input inputmode="numeric" pattern="[0-9]*" title="Q(d) left numerator" aria-label="Q(d) left numerator" data-ans="5">
+        <div class="line"></div>
+        <input inputmode="numeric" pattern="[0-9]*" title="Q(d) left denominator" aria-label="Q(d) left denominator" data-ans="7">
+      </div>
+    </div>
+    <div class="cmp" aria-hidden="true">&gt;</div>
+    <div>
+      <div class="tag">Q(d) Right fraction</div>
+      <div class="frac">
+        <input inputmode="numeric" pattern="[0-9]*" title="Q(d) right numerator" aria-label="Q(d) right numerator" data-ans="3">
+        <div class="line"></div>
+        <input inputmode="numeric" pattern="[0-9]*" title="Q(d) right denominator" aria-label="Q(d) right denominator" data-ans="10">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const setBg=(el,state)=>{
+    if(!el.value.trim()){el.style.background='';return;}
+    el.style.background= state ? '#b9f6c2' : '#ffc9c9';
+  };
+  document.querySelectorAll('input[data-ans]').forEach(inp=>{
+    inp.addEventListener('input',e=>{
+      // digits only
+      const cleaned=inp.value.replace(/[^\d]/g,'').slice(0,4);
+      if(cleaned!==inp.value) inp.value=cleaned;
+      setBg(inp, cleaned===inp.dataset.ans);
+    });
+    inp.addEventListener('blur',()=>setBg(inp, inp.value===inp.dataset.ans));
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Q3 Checker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+ body{font-family:Arial,Helvetica,sans-serif;line-height:1.35;margin:16px;max-width:880px}
+ h1{font-size:18px;margin:0 0 12px}
+ h2{font-size:16px;margin:16px 0 8px}
+ p.note{font-size:13px;color:#555;margin:4px 0 10px}
+ .block{border:1px solid #ddd;border-radius:6px;padding:12px;margin:10px 0}
+ label{display:block;font-size:13px;margin:8px 0 4px;color:#333}
+ .row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:4px 0}
+ input[type=text]{min-width:72px;padding:6px 8px;font-size:18px;border:1px solid #aaa;border-radius:4px}
+ select{padding:6px 8px;font-size:18px;border:1px solid #aaa;border-radius:4px;background:#fff}
+ .unit{font-size:18px}
+ .good{background:#d2f8d2}
+ .bad{background:#ffd6d6}
+ small.hint{color:#777}
+ .statement{min-width:120px}
+ .eqnum{min-width:68px}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="block">
+  <div><strong>Q3.</strong> Tank A contains 14 ℓ of water. Tank B contains 27 ℓ of water.</div>
+  <p class="note">Pick the correct operation from the dropdown. Type numbers only; the ℓ unit is shown for you. When you must type a unit (like m, kg, ml), remember to type a space between the number and the unit.</p>
+</div>
+
+<div class="block" id="q3a">
+  <h2>(a) How much more water does Tank B contain than Tank A?</h2>
+
+  <label>Q3(a) — Equation</label>
+  <div class="row">
+    <input aria-label="Q3(a) first number" class="eqnum" id="a_n1" type="text" placeholder="___">
+    <span class="unit">ℓ</span>
+    <select aria-label="Q3(a) operation" id="a_op">
+      <option value="">?</option>
+      <option>+</option>
+      <option>-</option>
+      <option>×</option>
+      <option>÷</option>
+    </select>
+    <input aria-label="Q3(a) second number" class="eqnum" id="a_n2" type="text" placeholder="___">
+    <span class="unit">ℓ</span>
+    <span>=</span>
+    <input aria-label="Q3(a) result" class="eqnum" id="a_res" type="text" placeholder="___">
+    <span class="unit">ℓ</span>
+  </div>
+  <small class="hint">Enter the equation for the comparison.</small>
+
+  <label>Q3(a) — Statement</label>
+  <div class="row">
+    <span>Tank B contains</span>
+    <input aria-label="Q3(a) statement number" id="a_stmt" class="statement" type="text" placeholder="___">
+    <span class="unit">ℓ</span>
+    <span>of water more than Tank A.</span>
+  </div>
+</div>
+
+<div class="block" id="q3b">
+  <h2>(b) How much water do Tank A and Tank B contain altogether?</h2>
+
+  <label>Q3(b) — Equation</label>
+  <div class="row">
+    <input aria-label="Q3(b) first number" class="eqnum" id="b_n1" type="text" placeholder="___">
+    <span class="unit">ℓ</span>
+    <select aria-label="Q3(b) operation" id="b_op">
+      <option value="">?</option>
+      <option>+</option>
+      <option>-</option>
+      <option>×</option>
+      <option>÷</option>
+    </select>
+    <input aria-label="Q3(b) second number" class="eqnum" id="b_n2" type="text" placeholder="___">
+    <span class="unit">ℓ</span>
+    <span>=</span>
+    <input aria-label="Q3(b) result" class="eqnum" id="b_res" type="text" placeholder="___">
+    <span class="unit">ℓ</span>
+  </div>
+  <small class="hint">Enter the complete equation.</small>
+
+  <label>Q3(b) — Statement</label>
+  <div class="row">
+    <span>Tank A and Tank B contain</span>
+    <input aria-label="Q3(b) statement number" id="b_stmt" class="statement" type="text" placeholder="___">
+    <span class="unit">ℓ</span>
+    <span>of water altogether.</span>
+  </div>
+</div>
+
+<script>
+function onlyNumber(v){
+  if(!v) return NaN;
+  const m = String(v).replace(/[^\d.\-]/g,'').match(/-?\d+(\.\d+)?/);
+  return m ? Number(m[0]) : NaN;
+}
+function mark(el, ok){
+  el.classList.remove('good','bad');
+  if(el.value.trim()==='') return;
+  el.classList.add(ok?'good':'bad');
+}
+function checkA(){
+  const n1=document.getElementById('a_n1');
+  const n2=document.getElementById('a_n2');
+  const op=document.getElementById('a_op');
+  const res=document.getElementById('a_res');
+  const stmt=document.getElementById('a_stmt');
+  mark(n1, onlyNumber(n1.value)===27);
+  mark(n2, onlyNumber(n2.value)===14);
+  mark(op, op.value==='-');
+  mark(res, onlyNumber(res.value)===13);
+  mark(stmt, onlyNumber(stmt.value)===13);
+}
+function checkB(){
+  const n1=document.getElementById('b_n1');
+  const n2=document.getElementById('b_n2');
+  const op=document.getElementById('b_op');
+  const res=document.getElementById('b_res');
+  const stmt=document.getElementById('b_stmt');
+
+  const v1 = onlyNumber(n1.value);
+  const v2 = onlyNumber(n2.value);
+  const pairOK = (v1===27 && v2===14) || (v1===14 && v2===27);
+
+  // Accept either order for the addends
+  mark(n1, pairOK);
+  mark(n2, pairOK);
+
+  mark(op, op.value==='+');
+  mark(res, onlyNumber(res.value)===41);
+  mark(stmt, onlyNumber(stmt.value)===41);
+}
+document.getElementById('q3a').addEventListener('input',checkA);
+document.getElementById('q3b').addEventListener('input',checkB);
+</script>
+</body>
+</html>

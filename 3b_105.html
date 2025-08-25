@@ -1,0 +1,119 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Practice 2 — Area in Square Centimetres</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.4;margin:16px;color:#113}
+  h1{font-size:18px;margin:0 0 8px}
+  .note{font-size:14px;margin:4px 0 14px;color:#245}
+  .status{background:#eef;border:1px solid #ccd;padding:6px 8px;border-radius:6px;margin-bottom:12px;font-size:14px}
+  .grid{display:grid;gap:10px}
+  .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  label{min-width:220px}
+  .unit{min-width:48px}
+  input[type=text]{width:100px;font-size:18px;padding:8px 10px;border:2px solid #333;border-radius:8px;outline:none}
+  input.correct{background:#bdf5c2}
+  input.wrong{background:#ffd6d6}
+  .frac{display:inline-flex;flex-direction:column;align-items:center}
+  .frac input[type=text]{width:64px;text-align:center}
+  .divider{width:100%;height:2px;background:#333;margin:2px 0;border-radius:1px}
+  .controls{margin-top:12px;display:flex;gap:8px}
+  button{padding:8px 12px;font-size:14px;border:1px solid #333;border-radius:8px;background:#f3f3f3;cursor:pointer}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<div class="note">Reminder: type only the number; the unit cm<sup>2</sup> is already shown next to each answer box.</div>
+<div id="status" class="status" aria-live="polite">You are not typing in any question yet.</div>
+
+<section class="grid" aria-label="Practice 2 — Question 1 answers">
+  <div class="row">
+    <label for="q1a">Question 1(a) — Area of figure (a):</label>
+    <input id="q1a" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Question 1(a) area, enter the number only" data-answer="14">
+    <span class="unit">cm<sup>2</sup></span>
+  </div>
+
+  <div class="row">
+    <label for="q1b">Question 1(b) — Area of figure (b):</label>
+    <input id="q1b" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Question 1(b) area, enter the number only" data-answer="8">
+    <span class="unit">cm<sup>2</sup></span>
+  </div>
+
+  <div class="row">
+    <label for="q1c">Question 1(c) — Area of figure (c):</label>
+    <input id="q1c" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Question 1(c) area, enter the number only" data-answer="11">
+    <span class="unit">cm<sup>2</sup></span>
+  </div>
+
+  <div class="row">
+    <label for="q1d">Question 1(d) — Area of figure (d):</label>
+    <input id="q1d" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Question 1(d) area, enter the number only" data-answer="13">
+    <span class="unit">cm<sup>2</sup></span>
+  </div>
+
+  <div class="row">
+    <label for="q1e">Question 1(e) — Area of figure (e):</label>
+    <input id="q1e" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Question 1(e) area, enter the number only" data-answer="11">
+    <span class="unit">cm<sup>2</sup></span>
+  </div>
+
+  <div class="row">
+    <label for="q1f">Question 1(f) — Area of figure (f):</label>
+    <input id="q1f" class="ans" type="text" inputmode="numeric" autocomplete="off" aria-label="Question 1(f) area, enter the number only" data-answer="14">
+    <span class="unit">cm<sup>2</sup></span>
+  </div>
+</section>
+
+<div class="controls">
+  <button type="button" id="checkAll">Check all</button>
+  <button type="button" id="resetAll">Reset</button>
+</div>
+
+<script>
+  const status = document.getElementById('status');
+  const fields = Array.from(document.querySelectorAll('.ans'));
+  function cleanNumber(v){return v.replace(/[^\d-]/g,'').trim();}
+  function mark(el,ok){
+    el.classList.toggle('correct', ok);
+    el.classList.toggle('wrong', !ok && el.value.trim()!=='');
+  }
+  function validateOne(el){
+    const val = cleanNumber(el.value);
+    const ans = String(el.dataset.answer);
+    mark(el, val!=='' && val===ans);
+  }
+  fields.forEach(el=>{
+    el.addEventListener('focus',()=>{
+      const lbl = document.querySelector(`label[for="${el.id}"]`);
+      status.textContent = `You are filling: ${lbl?lbl.textContent.trim():el.id}`;
+    });
+    el.addEventListener('blur',()=>{status.textContent='You are not typing in any question yet.';});
+    el.addEventListener('input',()=>validateOne(el));
+  });
+  document.getElementById('checkAll').addEventListener('click',()=>fields.forEach(validateOne));
+  document.getElementById('resetAll').addEventListener('click',()=>{
+    fields.forEach(f=>{f.value=''; f.classList.remove('correct','wrong');});
+    status.textContent='You are not typing in any question yet.';
+  });
+
+  // Fraction support (for any future fraction questions)
+  // Usage: wireFraction({num:'#n1', den:'#d1', answer:[a,b]})
+  function gcd(a,b){return b?gcd(b,a%b):Math.abs(a);}
+  function wireFraction(cfg){
+    const n = document.querySelector(cfg.num), d = document.querySelector(cfg.den);
+    function check(){
+      const nv = parseInt(n.value,10), dv = parseInt(d.value,10);
+      if(!Number.isFinite(nv)||!Number.isFinite(dv)||dv===0){n.classList.remove('correct','wrong');d.classList.remove('correct','wrong');return;}
+      const g1=gcd(nv,dv), g2=gcd(cfg.answer[0],cfg.answer[1]);
+      const ok = nv/g1===cfg.answer[0]/g2 && dv/g1===cfg.answer[1]/g2;
+      n.classList.toggle('correct',ok); d.classList.toggle('correct',ok);
+      n.classList.toggle('wrong',!ok);  d.classList.toggle('wrong',!ok);
+    }
+    n.addEventListener('input',check); d.addEventListener('input',check);
+  }
+  // Example (disabled by default):
+  // wireFraction({num:'#frac1n', den:'#frac1d', answer:[1,2]});
+</script>
+</body>
+</html>

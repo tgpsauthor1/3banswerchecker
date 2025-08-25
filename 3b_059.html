@@ -1,0 +1,132 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Measuring Mass in Kilograms and Grams — Checker</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;line-height:1.35;margin:20px;color:#123}
+  h1{font-size:18px;margin:0 0 10px}
+  .note{font-size:14px;margin:6px 0 16px;color:#045}
+  .status{margin:8px 0 16px;font-weight:bold;color:#333}
+  .q{margin:12px 0;padding:10px;border:1px solid #c8d3e0;border-radius:6px}
+  .qtitle{font-weight:bold;margin-bottom:8px}
+  label{display:inline-block;margin:6px 8px 6px 0}
+  .unit{margin-left:6px}
+  input.answer{width:9ch;min-width:9ch;padding:8px 10px;font-size:18px;border:2px solid #8aa8c7;border-radius:6px;outline:none;background:#fff}
+  input.answer::placeholder{color:#b0b0b0}
+  .ok{background:#b6f5c2!important}
+  .bad{background:#ffc2c2!important}
+  .btns{margin-top:8px}
+  button{padding:6px 10px;font-size:14px;border:1px solid #88a;border-radius:6px;background:#eef}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<div class="note">Type your answers. Boxes turn green when correct and red when incorrect. Guides: _______ kg _______ g</div>
+<div id="which" class="status" aria-live="polite">Click a box to begin. I will tell you which question you are filling.</div>
+
+<section class="q" aria-labelledby="q1a">
+  <div id="q1a" class="qtitle">1(a) potatoes — mass in kilograms and grams</div>
+  <label>
+    <span>1(a) kg:</span>
+    <input class="answer" data-key="1a-kg" data-say="Question 1(a) kilograms" placeholder="_______">
+    <span class="unit">kg</span>
+  </label>
+  <label>
+    <span>1(a) g:</span>
+    <input class="answer" data-key="1a-g" data-say="Question 1(a) grams" placeholder="_______">
+    <span class="unit">g</span>
+  </label>
+</section>
+
+<section class="q" aria-labelledby="q1b">
+  <div id="q1b" class="qtitle">1(b) clams — mass in kilograms and grams</div>
+  <label>
+    <span>1(b) kg:</span>
+    <input class="answer" data-key="1b-kg" data-say="Question 1(b) kilograms" placeholder="_______">
+    <span class="unit">kg</span>
+  </label>
+  <label>
+    <span>1(b) g:</span>
+    <input class="answer" data-key="1b-g" data-say="Question 1(b) grams" placeholder="_______">
+    <span class="unit">g</span>
+  </label>
+</section>
+
+<section class="q" aria-labelledby="q1c">
+  <div id="q1c" class="qtitle">1(c) books — mass in kilograms and grams</div>
+  <label>
+    <span>1(c) kg:</span>
+    <input class="answer" data-key="1c-kg" data-say="Question 1(c) kilograms" placeholder="_______">
+    <span class="unit">kg</span>
+  </label>
+  <label>
+    <span>1(c) g:</span>
+    <input class="answer" data-key="1c-g" data-say="Question 1(c) grams" placeholder="_______">
+    <span class="unit">g</span>
+  </label>
+</section>
+
+<section class="q" aria-labelledby="q1d">
+  <div id="q1d" class="qtitle">1(d) detergent — mass in kilograms and grams</div>
+  <label>
+    <span>1(d) kg:</span>
+    <input class="answer" data-key="1d-kg" data-say="Question 1(d) kilograms" placeholder="_______">
+    <span class="unit">kg</span>
+  </label>
+  <label>
+    <span>1(d) g:</span>
+    <input class="answer" data-key="1d-g" data-say="Question 1(d) grams" placeholder="_______">
+    <span class="unit">g</span>
+  </label>
+</section>
+
+<div class="btns">
+  <button type="button" id="clearAll">Clear all</button>
+</div>
+
+<script>
+  (function(){
+    const answers = {
+      "1a-kg":"1","1a-g":"600",
+      "1b-kg":"3","1b-g":"100",
+      "1c-kg":"2","1c-g":"900",
+      "1d-kg":"2","1d-g":"200"
+    };
+    const which = document.getElementById('which');
+    const fields = document.querySelectorAll('input.answer');
+
+    function scrub(v){
+      if(!v) return "";
+      const m = String(v).match(/\d+/g);
+      return m ? m.join('') : "";
+    }
+    function paint(el, ok){
+      el.classList.remove('ok','bad');
+      if(el.value.trim()===""){ return; }
+      el.classList.add(ok ? 'ok' : 'bad');
+    }
+    function check(el){
+      const key = el.dataset.key;
+      const want = answers[key];
+      const got = scrub(el.value);
+      paint(el, got === want);
+    }
+    fields.forEach(el=>{
+      el.addEventListener('input', ()=>check(el));
+      el.addEventListener('focus', ()=>{
+        which.textContent = "You are filling: " + (el.dataset.say || "this field") + ".";
+      });
+      el.addEventListener('blur', ()=>{
+        if(document.activeElement!==el) which.textContent = "Keep going. I will say which question you are filling when you click a box.";
+      });
+    });
+
+    document.getElementById('clearAll').addEventListener('click', ()=>{
+      fields.forEach(el=>{ el.value=""; el.classList.remove('ok','bad'); });
+      which.textContent="All cleared. Click a box to begin again.";
+    });
+  })();
+</script>
+</body>
+</html>

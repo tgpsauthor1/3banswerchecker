@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Practice 5: Arrange the Fractions</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 700px;
+      margin: 2em auto;
+      padding: 0 1em;
+    }
+    h1 { text-align: center; }
+    .hint {
+      border: 1px solid #888;
+      padding: .5em;
+      min-height: 3em;
+      margin-bottom: 1em;
+    }
+    .question {
+      margin: 2em 0;
+    }
+    .slots {
+      font-size: 1.2em;
+      line-height: 2.5em;
+    }
+    .fraction {
+      display: inline-block;
+      text-align: center;
+      margin: 0 .5em;
+    }
+    .fraction input {
+      width: 3em;        
+      text-align: center;
+      padding: 2px;
+      font-size: 1em;
+      margin: 0;
+    }
+    .fraction .bar {
+      display: block;
+      height: 1px;
+      background: #000;
+      margin: 2px 0;
+    }
+    /* remove spinners */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+    input.correct { background: #ccffcc; }
+    input.incorrect { background: #ffcccc; }
+    .order-label {
+      margin-top: .5em;
+      font-style: italic;
+    }
+    button.speak { margin-left: 1em; }
+  </style>
+</head>
+<body>
+
+  <h1>Practice 5: Arrange the Fractions</h1>
+  <div id="hint" class="hint"></div>
+
+  <!-- 5a -->
+  <div class="question" id="q5a">
+    <strong>5a.</strong>
+    <div class="slots">
+      <span class="fraction">
+        <input id="q5a_1_n" type="number" min="0" placeholder="?" />  
+        <div class="bar"></div>
+        <input id="q5a_1_d" type="number" min="1" placeholder="?" />
+      </span>,
+      <span class="fraction">
+        <input id="q5a_2_n" type="number" min="0" placeholder="?" />
+        <div class="bar"></div>
+        <input id="q5a_2_d" type="number" min="1" placeholder="?" />
+      </span>,
+      <span class="fraction">
+        <input id="q5a_3_n" type="number" min="0" placeholder="?" />
+        <div class="bar"></div>
+        <input id="q5a_3_d" type="number" min="1" placeholder="?" />
+      </span>
+    </div>
+    <div class="order-label">smallest</div>
+  </div>
+
+  <!-- 5b -->
+  <div class="question" id="q5b">
+    <strong>5b.</strong>
+    <div class="slots">
+      <span class="fraction">
+        <input id="q5b_1_n" type="number" min="0" placeholder="?" />
+        <div class="bar"></div>
+        <input id="q5b_1_d" type="number" min="1" placeholder="?" />
+      </span>,
+      <span class="fraction">
+        <input id="q5b_2_n" type="number" min="0" placeholder="?" />
+        <div class="bar"></div>
+        <input id="q5b_2_d" type="number" min="1" placeholder="?" />
+      </span>,
+      <span class="fraction">
+        <input id="q5b_3_n" type="number" min="0" placeholder="?" />
+        <div class="bar"></div>
+        <input id="q5b_3_d" type="number" min="1" placeholder="?" />
+      </span>
+    </div>
+    <div class="order-label">greatest</div>
+  </div>
+
+  <!-- 5c -->
+  <div class="question" id="q5c">
+    <strong>5c.</strong>
+    <div class="slots">
+      <span class="fraction">
+        <input id="q5c_1_n" type="number" min="0" placeholder="?" />
+        <div class="bar"></div>
+        <input id="q5c_1_d" type="number" min="1" placeholder="?" />
+      </span>,
+      <span class="fraction">
+        <input id="q5c_2_n" type="number" min="0" placeholder="?" />
+        <div class="bar"></div>
+        <input id="q5c_2_d" type="number" min="1" placeholder="?" />
+      </span>,
+      <span class="fraction">
+        <input id="q5c_3_n" type="number" min="0" placeholder="?" />
+        <div class="bar"></div>
+        <input id="q5c_3_d" type="number" min="1" placeholder="?" />
+      </span>,
+      <span class="fraction">
+        <input id="q5c_4_n" type="number" min="0" placeholder="?" />
+        <div class="bar"></div>
+        <input id="q5c_4_d" type="number" min="1" placeholder="?" />
+      </span>
+    </div>
+    <div class="order-label">smallest</div>
+  </div>
+
+  <!-- 5d -->
+  <div class="question" id="q5d">
+    <strong>5d.</strong>
+    <div class="slots">
+      <span class="fraction">
+        <input id="q5d_1_n" type="number" min="0" placeholder="?" />
+        <div class="bar"></div>
+        <input id="q5d_1_d" type="number" min="1" placeholder="?" />
+      </span>,
+      <span class="fraction">
+        <input id="q5d_2_n" type="number" min="0" placeholder="?" />
+        <div class="bar"></div>
+        <input id="q5d_2_d" type="number" min="1" placeholder="?" />
+      </span>,
+      <span class="fraction">
+        <input id="q5d_3_n" type="number" min="0" placeholder="?" />
+        <div class="bar"></div>
+        <input id="q5d_3_d" type="number" min="1" placeholder="?" />
+      </span>,
+      <span class="fraction">
+        <input id="q5d_4_n" type="number" min="0" placeholder="?" />
+        <div class="bar"></div>
+        <input id="q5d_4_d" type="number" min="1" placeholder="?" />
+      </span>
+    </div>
+    <div class="order-label">greatest</div>
+  </div>
+
+  <script>
+    const answers = {
+      q5a: [
+        { n: 1, d: 8 },
+        { n: 1, d: 7 },
+        { n: 1, d: 3 }
+      ],
+      q5b: [
+        { n: 9, d: 10 },
+        { n: 7, d: 10 },
+        { n: 4, d: 10 }
+      ],
+      q5c: [
+        { n: 1, d: 11 },
+        { n: 1, d: 10 },
+        { n: 1, d: 5 },
+        { n: 1, d: 2 }
+      ],
+      q5d: [
+        { n: 7, d: 8 },
+        { n: 6, d: 8 },
+        { n: 3, d: 8 },
+        { n: 1, d: 8 }
+      ]
+    };
+
+    const hints = {
+      q5a: "Remember that if the numerator is the same, the fraction with the greatest denominator is the smallest. The fraction with the smallest denominator is the greatest.",
+      q5b: "Remember that when the denominator is the same, the fraction with the greatest numerator is the greatest and the fraction with the smallest numerator is the smallest.",
+      q5c: "Remember that if the numerator is the same, the fraction with the greatest denominator is the smallest. The fraction with the smallest denominator is the greatest.",
+      q5d: "Remember that when the denominator is the same, the fraction with the greatest numerator is the greatest and the fraction with the smallest numerator is the smallest."
+    };
+
+    let currentHint = "";
+
+    function speakHint() {
+      if (!currentHint) return;
+      const utter = new SpeechSynthesisUtterance(currentHint);
+      window.speechSynthesis.speak(utter);
+    }
+
+    function showHint(text) {
+      currentHint = text;
+      const h = document.getElementById("hint");
+      h.innerHTML = text + '<button class="speak" onclick="speakHint()">Speak</button>';
+    }
+
+    function clearHint() {
+      currentHint = "";
+      document.getElementById("hint").textContent = "";
+    }
+
+    function checkQuestion(qId) {
+      const slots = answers[qId];
+      let allGood = true;
+
+      slots.forEach((ans, idx) => {
+        const nIn = document.getElementById(`${qId}_${idx+1}_n`);
+        const dIn = document.getElementById(`${qId}_${idx+1}_d`);
+        const nv = parseInt(nIn.value, 10), dv = parseInt(dIn.value, 10);
+        if (nv === ans.n && dv === ans.d) {
+          nIn.classList.add("correct"); nIn.classList.remove("incorrect");
+          dIn.classList.add("correct"); dIn.classList.remove("incorrect");
+        } else {
+          nIn.classList.add("incorrect"); nIn.classList.remove("correct");
+          dIn.classList.add("incorrect"); dIn.classList.remove("correct");
+          allGood = false;
+        }
+      });
+
+      if (allGood) {
+        clearHint();
+      } else {
+        showHint(hints[qId]);
+      }
+    }
+
+    Object.keys(answers).forEach(qId => {
+      for (let i = 1; i <= answers[qId].length; i++) {
+        ["n","d"].forEach(part => {
+          document
+            .getElementById(`${qId}_${i}_${part}`)
+            .addEventListener("input", () => checkQuestion(qId));
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>

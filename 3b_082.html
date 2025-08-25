@@ -1,0 +1,216 @@
+
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Distance Practice Checker</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+ body{font-family:Arial,Helvetica,sans-serif;line-height:1.35;margin:16px;color:#222}
+ h1{font-size:18px;margin:0 0 8px}
+ .note{font-size:13px;color:#444;margin:0 0 16px}
+ .q{margin:14px 0;padding:10px 12px;border:1px solid #ddd;border-radius:8px}
+ .tag{display:inline-block;font-size:12px;color:#666;margin:4px 6px 2px 0}
+ .row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:6px 0}
+ .eq input,.ans input{padding:8px 10px;font-size:16px;width:140px;border:1px solid #999;border-radius:6px}
+ .eq .result{width:160px}
+ .wide{width:220px}
+ select{padding:8px 10px;font-size:16px;border:1px solid #999;border-radius:6px;background:#fff}
+ .correct{background:#c9f7c3;border-color:#39a33d}
+ .wrong{background:#ffd9d9;border-color:#c03}
+ .helper{font-size:14px;color:#000;margin:6px 0}
+ .equals{padding:0 4px}
+ .unit{margin-left:2px}
+ .inline{display:inline-flex;align-items:center;gap:6px}
+ .small{font-size:12px;color:#666}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<p class="note">Choose the operation from the dropdown. Make sure you also enter the complete equation.</p>
+
+<section class="q" id="q1">
+  <div class="tag">Q1 (a) Daniel walked from School to Samy’s house, then to Alan’s house.</div>
+  <div class="row eq" aria-label="Q1 equation">
+    <span class="tag">Q1 equation: first distance</span>
+    <input type="text" class="v1">
+    <select class="op" aria-label="Q1 operation">
+      <option value="">Select op</option>
+      <option>+</option>
+      <option>-</option>
+      <option>×</option>
+      <option>÷</option>
+    </select>
+    <span class="tag">Q1 equation: second distance</span>
+    <input type="text" class="v2">
+    <span class="equals">=</span>
+    <span class="tag">Q1 equation: total</span>
+    <input type="text" class="result result1">
+  </div>
+  <div class="helper">Daniel walked __________________________ altogether.</div>
+  <div class="row ans">
+    <span class="tag">Q1 final answer (type with unit)</span>
+    <input type="text" class="final" aria-label="Q1 final answer">
+  </div>
+</section>
+
+<section class="q" id="q2">
+  <div class="tag">Q2 (b) Teacher Lee walked from School to the Library and back.</div>
+  <div class="row eq" aria-label="Q2 equation">
+    <span class="tag">Q2 equation: first value</span>
+    <input type="text" class="v1">
+    <select class="op" aria-label="Q2 operation">
+      <option value="">Select op</option>
+      <option>+</option>
+      <option>-</option>
+      <option>×</option>
+      <option>÷</option>
+    </select>
+    <span class="tag">Q2 equation: second value</span>
+    <input type="text" class="v2">
+    <span class="equals">=</span>
+    <span class="tag">Q2 equation: total</span>
+    <input type="text" class="result result2">
+  </div>
+  <div class="helper">Give your answer in kilometres and metres.</div>
+  <div class="row ans inline" aria-label="Q2 final answer">
+    <span class="tag">Q2 final: kilometres</span>
+    <input type="text" class="km" style="width:70px">
+    <span class="unit">km</span>
+    <span class="tag">Q2 final: metres</span>
+    <input type="text" class="m" style="width:90px">
+    <span class="unit">m</span>
+  </div>
+  <div class="small">For litres, the symbol L will be provided for you. You do not need to type it.</div>
+</section>
+
+<section class="q" id="q3">
+  <div class="tag">Q3 (c) How much further is School→Alan’s house than School→Samy’s house?</div>
+  <div class="row eq" aria-label="Q3 equation">
+    <span class="tag">Q3 equation: first distance</span>
+    <input type="text" class="v1">
+    <select class="op" aria-label="Q3 operation">
+      <option value="">Select op</option>
+      <option>+</option>
+      <option>-</option>
+      <option>×</option>
+      <option>÷</option>
+    </select>
+    <span class="tag">Q3 equation: second distance</span>
+    <input type="text" class="v2">
+    <span class="equals">=</span>
+    <span class="tag">Q3 equation: difference</span>
+    <input type="text" class="result result3">
+  </div>
+  <div class="helper">The distance is __________________________ further.</div>
+  <div class="row ans">
+    <span class="tag">Q3 final answer (type with unit)</span>
+    <input type="text" class="final" aria-label="Q3 final answer">
+  </div>
+</section>
+
+<script>
+(function(){
+  // Utilities
+  const num = s => Number((s||'').toString().trim());
+  const clean = s => (s||'').trim().toLowerCase().replace(/\s+/g,' ');
+  function setState(el, ok){
+    el.classList.remove('correct','wrong');
+    if(!(el.value||'').trim()) return;
+    el.classList.add(ok?'correct':'wrong');
+  }
+
+  // Generic numeric equation checker (no units required in equation boxes)
+  function attachNumericEq(sectionId, predicate){
+    const sec = document.getElementById(sectionId);
+    const a = sec.querySelector('.v1');
+    const b = sec.querySelector('.v2');
+    const op = sec.querySelector('.op');
+    const r = sec.querySelector('.result');
+
+    function run(){
+      const ai = num(a.value);
+      const bi = num(b.value);
+      const ri = num(r.value);
+      const oper = op.value;  // '+', '-', '×', '÷' or ''
+      const ok = predicate({a:ai, b:bi, op:oper, r:ri});
+
+      // Per-field feedback
+      // We'll mark numbers as correct if they fit ANY allowed ordering for the chosen operator & result.
+      const fieldOK = predicate({a:ai, b:bi, op:oper, r:ri}, true);
+      setState(a, fieldOK.a);
+      setState(b, fieldOK.b);
+      setState(op, fieldOK.op);
+      setState(r, fieldOK.r);
+    }
+
+    [a,b,op,r].forEach(el=>{
+      el.addEventListener('input', run);
+      el.addEventListener('change', run);
+    });
+  }
+
+  // Q1: allow 550 + 630 or 630 + 550, result 1180
+  attachNumericEq('q1', (vals, perField=false) => {
+    const {a,b,op,r} = vals;
+    const pairOK = (a===550 && b===630) || (a===630 && b===550);
+    const resOK = (r===1180);
+    const opOK = (op==='+');
+    if(perField){
+      return {a: (a===550 || a===630), b:(b===550 || b===630), op: opOK, r: (r===1180)};
+    }
+    return pairOK && opOK && resOK;
+  });
+
+  // Q1 final: allow "1180m", "1180 m", "1km 180m", "1 km 180 m"
+  document.querySelector('#q1 .final').addEventListener('input', function(){
+    const v = clean(this.value);
+    const ok = /^1180\s*m$/.test(v) || /^1\s*km\s*180\s*m$/.test(v);
+    setState(this, ok);
+  });
+
+  // Q2: allow "900 + 900" OR "900 × 2" OR "2 × 900", result 1800
+  attachNumericEq('q2', (vals, perField=false) => {
+    const {a,b,op,r} = vals;
+    const addOK = (op==='+' && a===900 && b===900 && r===1800);
+    const mulOK1 = (op==='×' && a===900 && b===2   && r===1800);
+    const mulOK2 = (op==='×' && a===2   && b===900 && r===1800);
+    if(perField){
+      const aOK = (a===900 || a===2);
+      const bOK = (b===900 || b===2);
+      const opOK = (op==='+' || op==='×');
+      const rOK = (r===1800);
+      return {a:aOK, b:bOK, op:opOK, r:rOK};
+    }
+    return addOK || mulOK1 || mulOK2;
+  });
+
+  // Q2 final: two boxes -> must be 1 km and 800 m
+  const q2km = document.querySelector('#q2 .km');
+  const q2m  = document.querySelector('#q2 .m');
+  function checkQ2Final(){
+    setState(q2km, q2km.value.trim()==='1');
+    setState(q2m,  q2m.value.trim()==='800');
+  }
+  q2km.addEventListener('input',checkQ2Final);
+  q2m.addEventListener('input',checkQ2Final);
+
+  // Q3: numeric equation 800 - 550 = 250
+  attachNumericEq('q3', (vals, perField=false) => {
+    const {a,b,op,r} = vals;
+    const ok = (a===800 && b===550 && op==='-' && r===250);
+    if(perField){
+      return {a:(a===800), b:(b===550), op:(op==='-'), r:(r===250)};
+    }
+    return ok;
+  });
+
+  // Q3 final: allow "250m" or "250 m"
+  document.querySelector('#q3 .final').addEventListener('input', function(){
+    const v = clean(this.value);
+    const ok = /^250\s*m$/.test(v);
+    setState(this, ok);
+  });
+})();
+</script>
+</body>
+</html>
