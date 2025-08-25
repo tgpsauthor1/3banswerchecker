@@ -1,0 +1,99 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Area Check – Q4</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.35;margin:16px;color:#222}
+  h1{font-size:18px;margin:0 0 12px}
+  .reminder{background:#f4faff;border:1px solid #cfe8ff;padding:8px 10px;border-radius:6px;margin:8px 0 16px;font-size:14px}
+  .qbox{border:1px solid #e5e5e5;border-radius:8px;padding:12px;margin:12px 0}
+  .qtitle{font-weight:700;margin:0 0 8px}
+  label{display:block;margin:8px 0 4px;font-size:14px}
+  input[type="text"]{font-size:18px;padding:8px 10px;width:120px;border:2px solid #bbb;border-radius:6px}
+  .unit-group{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+  .unit-group button{border:1px solid #666;background:#fff;color:#222;padding:6px 10px;border-radius:18px;cursor:pointer;font-size:16px}
+  .unit-group button.sel{background:#333;color:#fff;border-color:#111}
+  .ok{background:#c9f7c7 !important}
+  .bad{background:#ffd6d6 !important}
+  small.hint{display:block;color:#666;margin-top:6px}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+
+<div class="reminder">Remember: write the correct units in your workbook.</div>
+
+<div class="qbox" id="q-4a">
+  <div class="qtitle">Question 4(a) – Area</div>
+  <label for="val-4a">Q4(a) numeric value (enter only the number)</label>
+  <input id="val-4a" type="text" inputmode="decimal" autocomplete="off" placeholder="" aria-label="Q4(a) numeric value">
+  <label>Q4(a) choose unit</label>
+  <div class="unit-group" data-q="4a" data-unit="">
+    <button type="button" data-unit="cm">cm</button>
+    <button type="button" data-unit="m">m</button>
+    <button type="button" data-unit="m²">m<sup>2</sup></button>
+    <button type="button" data-unit="cm²">cm<sup>2</sup></button>
+  </div>
+  <small class="hint">Enter the value and pick the correct unit.</small>
+</div>
+
+<div class="qbox" id="q-4b">
+  <div class="qtitle">Question 4(b) – Area</div>
+  <label for="val-4b">Q4(b) numeric value (enter only the number)</label>
+  <input id="val-4b" type="text" inputmode="decimal" autocomplete="off" placeholder="" aria-label="Q4(b) numeric value">
+  <label>Q4(b) choose unit</label>
+  <div class="unit-group" data-q="4b" data-unit="">
+    <button type="button" data-unit="cm">cm</button>
+    <button type="button" data-unit="m">m</button>
+    <button type="button" data-unit="m²">m<sup>2</sup></button>
+    <button type="button" data-unit="cm²">cm<sup>2</sup></button>
+  </div>
+  <small class="hint">Enter the value and pick the correct unit.</small>
+</div>
+
+<script>
+(function(){
+  const cfg = {
+    "4a": {answer:24, unit:"cm²"},
+    "4b": {answer:21, unit:"m²"}
+  };
+
+  function cleanNumber(str){
+    const m = String(str||"").trim().replace(/,/g,"").match(/-?\d+(\.\d+)?/);
+    return m ? parseFloat(m[0]) : NaN;
+  }
+
+  function setState(el, ok){
+    el.classList.remove('ok','bad');
+    if(ok===true) el.classList.add('ok');
+    else if(ok===false) el.classList.add('bad');
+  }
+
+  function attach(qid){
+    const inp = document.getElementById('val-'+qid);
+    const grp = document.querySelector('.unit-group[data-q="'+qid+'"]');
+    function evaluate(){
+      const num = cleanNumber(inp.value);
+      const unit = grp.dataset.unit || "";
+      if(!inp.value.trim()){ setState(inp,null); setState(grp,null); return; }
+      const correct = (num === cfg[qid].answer) && (unit === cfg[qid].unit);
+      setState(inp, correct ? true : false);
+      if(unit){ setState(grp, correct ? true : false); } else { setState(grp,null); }
+    }
+    ['input','change','keyup','blur'].forEach(ev=>inp.addEventListener(ev,evaluate));
+    grp.addEventListener('click', e=>{
+      const b = e.target.closest('button'); if(!b) return;
+      grp.querySelectorAll('button').forEach(x=>x.classList.remove('sel'));
+      b.classList.add('sel');
+      grp.dataset.unit = b.dataset.unit;
+      evaluate();
+    });
+  }
+
+  attach('4a');
+  attach('4b');
+})();
+</script>
+</body>
+</html>

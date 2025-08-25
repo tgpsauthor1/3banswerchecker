@@ -1,0 +1,90 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Activity Checker - Time</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+ body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.35;margin:0;padding:20px;max-width:900px}
+ h1{font-size:1.1rem;margin:0 0 6px}
+ .reminder{color:#b00;font-size:.95rem;margin:0 0 16px}
+ .q{margin:18px 0;padding:12px;border:1px solid #ddd;border-radius:8px}
+ .q h2{margin:0 0 10px;font-size:1rem}
+ label.tag{display:inline-block;font-size:.8rem;color:#555;margin-right:6px}
+ .ans{font-size:1.05rem;padding:8px 10px;border:1px solid #888;border-radius:6px;min-width:6ch}
+ .wide{min-width:18ch}
+ .right{background:#c8f7cf}
+ .wrong{background:#ffd7d7}
+ input.ans{outline:none}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<p class="reminder">Reminder: Use the timeline to work out the answers. Type plain numbers only; operations like + or − are not accepted, except for Question 8(d)(ii) where an equation or calculation is allowed.</p>
+
+<section class="q" id="q8c">
+  <h2>Question 8(c)</h2>
+  <div>
+    <label class="tag" for="cH">Q8(c) hours</label>
+    Her piano lesson was
+    <input id="cH" class="ans" inputmode="numeric" autocomplete="off" aria-label="Q8(c) hours"> h
+    <label class="tag" for="cM">Q8(c) minutes</label>
+    <input id="cM" class="ans" inputmode="numeric" autocomplete="off" aria-label="Q8(c) minutes"> min long.
+  </div>
+</section>
+
+<section class="q" id="q8di">
+  <h2>Question 8(d)(i)</h2>
+  <div>
+    <label class="tag" for="di">Q8(d)(i) hours per day</label>
+    He exercises <input id="di" class="ans" inputmode="numeric" autocomplete="off" aria-label="Q8(d)(i) hours per day"> hours a day.
+  </div>
+</section>
+
+<section class="q" id="q8dii">
+  <h2>Question 8(d)(ii)</h2>
+  <div>
+    <label class="tag" for="dii">Q8(d)(ii) hours in a week</label>
+    He exercises for <input id="dii" class="ans wide" autocomplete="off" aria-label="Q8(d)(ii) hours in a week"> hours in a week.
+  </div>
+</section>
+
+<script>
+(function(){
+  const opRe=/[+\-xX*÷/=]/;
+  const set=(el,state)=>{el.classList.remove('right','wrong'); if(state) el.classList.add(state);};
+  const numEq=(el,expected,{denyOps=true}={})=>{
+    const v=el.value.trim();
+    if(!v){set(el);return;}
+    if(denyOps && opRe.test(v)){set(el,'wrong');return;}
+    if(/^\d+$/.test(v) && parseInt(v,10)===expected){set(el,'right');}else{set(el,'wrong');}
+  };
+  const checkDii=(el)=>{
+    let v=el.value.trim();
+    if(!v){set(el);return;}
+    let expr=v.replace(/\s+/g,'').replace(/[xX]/g,'*').replace(/÷/g,'/');
+    if(!/^[0-9+\-*/=]+$/.test(expr)){set(el,'wrong');return;}
+    let ok=false;
+    try{
+      if(expr.includes('=')){
+        const [L,R]=expr.split('=');
+        if(L && R){
+          const l=Function('return '+L)();
+          const r=Function('return '+R)();
+          if(Number.isFinite(l)&&Number.isFinite(r)&&Math.abs(l-r)<1e-9&&Math.abs(l-6)<1e-9) ok=true;
+        }
+      }else{
+        const r=Function('return '+expr)();
+        if(Number.isFinite(r)&&Math.abs(r-6)<1e-9) ok=true;
+      }
+    }catch(e){}
+    if(expr==='6') ok=true;
+    set(el, ok?'right':'wrong');
+  };
+  document.getElementById('cH').addEventListener('input',e=>numEq(e.target,1,{denyOps:true}));
+  document.getElementById('cM').addEventListener('input',e=>numEq(e.target,15,{denyOps:true}));
+  document.getElementById('di').addEventListener('input',e=>numEq(e.target,2,{denyOps:true}));
+  document.getElementById('dii').addEventListener('input',e=>checkDii(e.target));
+})();
+</script>
+</body>
+</html>

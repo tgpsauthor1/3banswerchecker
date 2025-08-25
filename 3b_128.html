@@ -1,0 +1,192 @@
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Time Checker</title><style>
+body{font-family:Arial,Helvetica,sans-serif;margin:16px;line-height:1.4}
+h2{margin:16px 0 8px;font-size:18px}
+.note{font-weight:bold;margin-bottom:12px}
+.q{border:1px solid #ccc;border-radius:6px;padding:8px;margin:10px 0}
+.label{font-weight:bold;margin-bottom:6px}
+.row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+input[type=text]{font-size:16px;padding:6px 8px;border:1px solid #888;border-radius:4px}
+input.hh{width:4ch} input.mm{width:5ch}
+input.wide{width:8ch}
+.ok{background:#bdf0b4}
+.bad{background:#ffc9c9}
+button.toggle{border:1px solid #888;background:#f0f0f0;border-radius:4px;padding:6px 10px;cursor:pointer}
+button.toggle.sel{outline:2px solid #333}
+button.good{background:#bdf0b4}
+button.bad{background:#ffc9c9}
+.colon{font-size:18px;padding:0 2px}
+.small{font-size:12px;color:#666}
+</style></head><body>
+<div class="note">If you keep getting it wrong, raise your hand and ask your teacher for help.</div>
+
+<h2>6. Write the time in 24-hour clock.</h2>
+
+<div class="q"><div class="label">Q6a</div>
+<div class="row"><input class="wide q24" id="q6a" type="text" inputmode="numeric" aria-label="Q6a 24-hour answer"></div></div>
+
+<div class="q"><div class="label">Q6b</div>
+<div class="row"><input class="wide q24" id="q6b" type="text" inputmode="numeric" aria-label="Q6b 24-hour answer"></div></div>
+
+<div class="q"><div class="label">Q6c</div>
+<div class="row"><input class="wide q24" id="q6c" type="text" inputmode="numeric" aria-label="Q6c 24-hour answer"></div></div>
+
+<div class="q"><div class="label">Q6d</div>
+<div class="row"><input class="wide q24" id="q6d" type="text" inputmode="numeric" aria-label="Q6d 24-hour answer"></div></div>
+
+<div class="q"><div class="label">Q6e</div>
+<div class="row"><input class="wide q24" id="q6e" type="text" inputmode="numeric" aria-label="Q6e 24-hour answer"></div></div>
+
+<div class="q"><div class="label">Q6f</div>
+<div class="row"><input class="wide q24" id="q6f" type="text" inputmode="numeric" aria-label="Q6f 24-hour answer"></div></div>
+
+<h2>7. Write the time in 12-hour clock.</h2>
+
+<div class="q" id="q7a" data-h="3" data-m="45" data-mer="am">
+  <div class="label">Q7a</div>
+  <div class="row">
+    <input class="hh" type="text" inputmode="numeric" aria-label="Q7a hours">
+    <span class="colon">:</span>
+    <input class="mm" type="text" inputmode="numeric" aria-label="Q7a minutes">
+    <button class="toggle btn-am" type="button">am</button>
+    <button class="toggle btn-pm" type="button">pm</button>
+  </div>
+</div>
+
+<div class="q" id="q7b" data-h="3" data-m="20" data-mer="pm">
+  <div class="label">Q7b</div>
+  <div class="row">
+    <input class="hh" type="text" inputmode="numeric" aria-label="Q7b hours">
+    <span class="colon">:</span>
+    <input class="mm" type="text" inputmode="numeric" aria-label="Q7b minutes">
+    <button class="toggle btn-am" type="button">am</button>
+    <button class="toggle btn-pm" type="button">pm</button>
+  </div>
+</div>
+
+<div class="q" id="q7c" data-h="8" data-m="0" data-mer="pm">
+  <div class="label">Q7c</div>
+  <div class="row">
+    <input class="hh" type="text" inputmode="numeric" aria-label="Q7c hours">
+    <span class="colon">:</span>
+    <input class="mm" type="text" inputmode="numeric" aria-label="Q7c minutes">
+    <button class="toggle btn-am" type="button">am</button>
+    <button class="toggle btn-pm" type="button">pm</button>
+  </div>
+</div>
+
+<div class="q" id="q7d" data-h="5" data-m="35" data-mer="am">
+  <div class="label">Q7d</div>
+  <div class="row">
+    <input class="hh" type="text" inputmode="numeric" aria-label="Q7d hours">
+    <span class="colon">:</span>
+    <input class="mm" type="text" inputmode="numeric" aria-label="Q7d minutes">
+    <button class="toggle btn-am" type="button">am</button>
+    <button class="toggle btn-pm" type="button">pm</button>
+  </div>
+</div>
+
+<div class="q" id="q7e" data-h="11" data-m="45" data-mer="pm">
+  <div class="label">Q7e</div>
+  <div class="row">
+    <input class="hh" type="text" inputmode="numeric" aria-label="Q7e hours">
+    <span class="colon">:</span>
+    <input class="mm" type="text" inputmode="numeric" aria-label="Q7e minutes">
+    <button class="toggle btn-am" type="button">am</button>
+    <button class="toggle btn-pm" type="button">pm</button>
+  </div>
+</div>
+
+<div class="q" id="q7f" data-h="12" data-m="15" data-mer="pm">
+  <div class="label">Q7f</div>
+  <div class="row">
+    <input class="hh" type="text" inputmode="numeric" aria-label="Q7f hours">
+    <span class="colon">:</span>
+    <input class="mm" type="text" inputmode="numeric" aria-label="Q7f minutes">
+    <button class="toggle btn-am" type="button">am</button>
+    <button class="toggle btn-pm" type="button">pm</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  const answers24={q6a:'0715',q6b:'2320',q6c:'1430',q6d:'0010',q6e:'0440',q6f:'2259'};
+
+  function setState(el,state){
+    el.classList.remove('ok','bad');
+    if(state==='ok') el.classList.add('ok');
+    if(state==='bad') el.classList.add('bad');
+  }
+
+  // Q6: 24-hour, must be 4 digits; allow a space between HH and MM
+  function check24(el){
+    const raw=(el.value||'').trim();
+    if(!raw){setState(el);return;}
+    const s=raw.replace(/\s+/g,'');
+    if(!/^\d{4}$/.test(s)){setState(el,'bad');return;}
+    const hh=+s.slice(0,2),mm=+s.slice(2);
+    if(hh>23||mm>59){setState(el,'bad');return;}
+    setState(el, s===answers24[el.id] ? 'ok':'bad');
+  }
+  document.querySelectorAll('.q24').forEach(inp=>{
+    inp.addEventListener('input',e=>{
+      e.target.value=e.target.value.replace(/[^\d\s]/g,'');
+      check24(e.target);
+    });
+  });
+
+  // Q7: Accept 1–2 digit hour BUT reject leading-zero hours (e.g., "03"), minutes must be exactly two digits.
+  const pad2 = v => String(v).padStart(2,'0');
+
+  function setup12(q){
+    const hh=q.querySelector('.hh'),mm=q.querySelector('.mm'),am=q.querySelector('.btn-am'),pm=q.querySelector('.btn-pm');
+    const H=+q.dataset.h, M=+q.dataset.m, MER=q.dataset.mer;
+
+    function markBtn(btn,cls){btn.classList.remove('good','bad'); if(cls) btn.classList.add(cls);}
+
+    function validate(){
+      const hVal=(hh.value||'').trim();
+      const mVal=(mm.value||'').trim();
+
+      // hour: 1–2 digits, 1..12, but if two digits, cannot start with 0 (so "03" is invalid)
+      const hDigits=/^\d{1,2}$/.test(hVal);
+      const hRange=hDigits && +hVal>=1 && +hVal<=12;
+      const hNoLeadingZero = !(hVal.length===2 && hVal.startsWith('0'));
+      const hFmtOk = hDigits && hRange && hNoLeadingZero;
+
+      // minute: exactly two digits 00..59
+      const mFmtOk=/^\d{2}$/.test(mVal) && +mVal>=0 && +mVal<=59;
+
+      if(hVal===''){ setState(hh); }
+      else{ setState(hh, hFmtOk && (+hVal===H) ? 'ok' : 'bad'); }
+
+      if(mVal===''){ setState(mm); }
+      else{ setState(mm, mFmtOk && (mVal===pad2(M)) ? 'ok' : 'bad'); }
+
+      const sel=am.classList.contains('sel')?'am':(pm.classList.contains('sel')?'pm':'');
+      markBtn(am); markBtn(pm);
+      if(sel){
+        if(sel===MER) (sel==='am'?am:pm).classList.add('good');
+        else (sel==='am'?am:pm).classList.add('bad');
+      }
+    }
+
+    [hh,mm].forEach(i=>i.addEventListener('input',e=>{
+      e.target.value=e.target.value.replace(/\D/g,'').slice(0,2);
+      validate();
+    }));
+    am.addEventListener('click',()=>{am.classList.add('sel');pm.classList.remove('sel');validate();});
+    pm.addEventListener('click',()=>{pm.classList.add('sel');am.classList.remove('sel');validate();});
+  }
+
+  document.querySelectorAll('.q[id^="q7"]').forEach(setup12);
+})();
+</script>
+</body></html>
+
+
+
+
+
+
+
+Ask ChatGPT

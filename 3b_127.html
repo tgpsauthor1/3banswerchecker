@@ -1,0 +1,108 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Perimeter Check - Q5</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+ body{font-family:Arial,Helvetica,sans-serif;margin:16px;line-height:1.3}
+ h1{font-size:18px;margin:0 0 8px}
+ .remind{background:#fff7cc;border:1px solid #e7d77a;padding:8px;margin:8px 0;font-size:14px}
+ .q{border-left:4px solid #0b67c2;padding:10px;margin:14px 0}
+ .qtitle{font-weight:bold;margin-bottom:6px}
+ label{display:block;margin:8px 0 4px;font-size:14px;color:#333}
+ input.text{width:140px;padding:8px 10px;font-size:18px;border:1px solid #777;border-radius:4px}
+ .units{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+ .units button{padding:8px 10px;font-size:16px;border:1px solid #777;border-radius:4px;background:#f3f3f3;cursor:pointer}
+ .units button.sel{outline:2px solid #0b67c2}
+ .ok{background:#c8f7c8!important}
+ .bad{background:#ffc8c8!important}
+ small.helper{display:block;color:#666;margin-top:6px}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<div class="remind">Reminder: Write the correct units next to your answers in your workbook.</div>
+
+<div class="q" id="q5a" data-correct-value="24" data-correct-unit="cm">
+  <div class="qtitle">Question 5(a) – Perimeter</div>
+  <label for="v5a">Q5(a) value (number only)</label>
+  <input id="v5a" class="text ans" type="text" inputmode="numeric" autocomplete="off">
+  <label>Q5(a) unit</label>
+  <div class="units">
+    <button type="button" data-unit="cm">cm</button>
+    <button type="button" data-unit="m">m</button>
+    <button type="button" data-unit="m2">m<sup>2</sup></button>
+    <button type="button" data-unit="cm2">cm<sup>2</sup></button>
+  </div>
+  <small class="helper">This field checks the perimeter of figure (a).</small>
+</div>
+
+<div class="q" id="q5b" data-correct-value="18" data-correct-unit="m">
+  <div class="qtitle">Question 5(b) – Perimeter</div>
+  <label for="v5b">Q5(b) value (number only)</label>
+  <input id="v5b" class="text ans" type="text" inputmode="numeric" autocomplete="off">
+  <label>Q5(b) unit</label>
+  <div class="units">
+    <button type="button" data-unit="cm">cm</button>
+    <button type="button" data-unit="m">m</button>
+    <button type="button" data-unit="m2">m<sup>2</sup></button>
+    <button type="button" data-unit="cm2">cm<sup>2</sup></button>
+  </div>
+  <small class="helper">This field checks the perimeter of figure (b).</small>
+</div>
+
+<script>
+(function(){
+  function parseNumber(txt){
+    if(!txt) return NaN;
+    const cleaned = (txt+"").replace(/[^\d.\-]/g,'').trim();
+    return cleaned ? Number(cleaned) : NaN;
+  }
+  function setUnit(qEl, unit, btn){
+    qEl.dataset.selectedUnit = unit;
+    qEl.querySelectorAll('.units button').forEach(b=>b.classList.toggle('sel', b===btn));
+  }
+  function setState(el, correct){
+    el.classList.remove('ok','bad');
+    if(correct===true) el.classList.add('ok');
+    else if(correct===false) el.classList.add('bad');
+  }
+  function validate(qEl){
+    const correctValue = Number(qEl.dataset.correctValue);
+    const correctUnit  = qEl.dataset.correctUnit;
+    const valInput = qEl.querySelector('.ans');
+    const entered = parseNumber(valInput.value);
+    const unit = qEl.dataset.selectedUnit || '';
+    const haveValue = !isNaN(entered);
+    const haveUnit = unit !== '';
+    if(!haveValue && !haveUnit){ setState(valInput,null); qEl.querySelectorAll('.units button').forEach(b=>setState(b,null)); return; }
+    const ok = (entered===correctValue && unit===correctUnit);
+    setState(valInput, haveValue ? (entered===correctValue) : null);
+    qEl.querySelectorAll('.units button').forEach(b=>{
+      if(!haveUnit){ setState(b,null); return; }
+      const isSel = b.classList.contains('sel');
+      setState(b, isSel ? (unit===correctUnit) : null);
+    });
+    // If both parts provided but not both correct, tint input red if wrong
+    if(haveValue && haveUnit){
+      if(ok){
+        valInput.classList.add('ok'); valInput.classList.remove('bad');
+      }else{
+        valInput.classList.add('bad'); valInput.classList.remove('ok');
+      }
+    }
+  }
+  document.querySelectorAll('.q').forEach(qEl=>{
+    const input = qEl.querySelector('.ans');
+    input.addEventListener('input', ()=>validate(qEl));
+    qEl.querySelectorAll('.units button').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        setUnit(qEl, btn.dataset.unit, btn);
+        validate(qEl);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

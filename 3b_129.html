@@ -1,0 +1,51 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Activity Book Checker - Q8</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;margin:16px;line-height:1.35}
+h1{font-size:18px;margin:0 0 6px 0}
+.note{color:#333;margin:0 0 14px 0}
+label{display:block;margin:14px 0 6px 0}
+.ans{width:260px;font-size:20px;padding:8px;border:1px solid #777;border-radius:4px}
+.green{background:#d6ffd6}
+.red{background:#ffd6d6}
+.answer-label{color:#c00}
+</style>
+</head>
+<body>
+<h1>If you keep getting it wrong, raise your hand and ask your teacher for help.</h1>
+<div class="note">Reminder: Use the timeline in your book to help you. Do not type + or -; those will not be accepted.</div>
+
+<label for="q8a"><strong>Q8(a)</strong> — What time did he reach the school? <span class="answer-label">(Answer)</span></label>
+<input id="q8a" class="ans" type="text" autocomplete="off" inputmode="text">
+
+<label for="q8b"><strong>Q8(b)</strong> — What time did she start work? <span class="answer-label">(Answer)</span></label>
+<input id="q8b" class="ans" type="text" autocomplete="off" inputmode="text">
+
+<script>
+function setColor(el, ok){
+  el.classList.remove('green','red');
+  if(el.value.trim()==='') return;
+  el.classList.add(ok?'green':'red');
+}
+function validate(id, v){
+  v=v.trim();
+  if(/[+-]/.test(v)) return false;
+  if(id==='q8a'){
+    return /^07\s?05$/.test(v) || /^7:05\s?am$/i.test(v);
+  }
+  if(id==='q8b'){
+    return /^10\s?40$/.test(v) || /^10:40\s?am$/i.test(v);
+  }
+  return false;
+}
+document.querySelectorAll('.ans').forEach(inp=>{
+  inp.addEventListener('input', e=>{
+    const ok=validate(e.target.id, e.target.value);
+    setColor(e.target, ok);
+  });
+});
+</script>
+</body>
+</html>
